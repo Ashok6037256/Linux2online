@@ -1,0 +1,82 @@
+Class 1 16/05/2025
+
+1) INTRODUCTION TO LINUX
+=========================
+
+What is Operating System? OS, Kernel, system
+
+Definition of the OS:
+=====================
+Operating System is an interface between user and the computer hardware.
+
+Hardware Components: CPU,Memory and Disk
+
+Covered topics in this course?
+==============================
+Linux: RedHat Linux OS
+
+INTRODUCTION TO LINUX
+FILE SYSTEM HIERARCHY AND ARCHITECTURE
+BASIC COMMANDS
+PERMISSIONS AND ADVANCED PERMISSIONS
+USER AND GROUP ADMINISTRATION
+MANAGING FILE SYSTEMS AND PARTITIONS
+LOGICAL VOLUME MANAGEMENT (LVM)
+NFS (NETWORK FILE SYSTEM) SERVER
+BOOTING PROCEDURE AND KERNEL PARAMETERS
+JOB AUTOMATION
+ADMINISTRATING REMOTE SYSTEM
+ENHANCED USER SECURITY WITH SUDO
+SOFTWARE MANAGEMENT
+MANAGE INSTALLED SERVICES
+MANAGING PROCESSES
+BACKUP AND RESTORE USING TAR AND GZIP
+NETWORK CONFIGURATION AND TROUBLESHOOTING
+DNS (DOMAIN NAME SYSTEM) SERVER
+WEB SERVER (APACHE)
+HARDWARE MANAGEMENT
+(DISK, NIC, FAN'S AND OTHER COMPONENTS FAILURES IDENTIFIACTION AND RECOVERY)
+
+Requirememts: Internet 30Mb, 1Laptop with 200Gb, 1 Monitor, 3 Spiral Notebooks, one plank, ontime Practice...
+ 
+What is the resposibulities and work style of System Administrator?
+1) Manage OS and work for stabulity
+2) Manage the undelying Hardware
+3) Manage and Modify the services
+4) Handle and manage the configurations
+5) Patching
+6) Incident Management SLA
+7) Change Management downtime 
+8) Job management scheduler 
+
+Types of Operating System:
+==========================
+Single User - Single Tasking Operating System Ex:MS-DOS
+Single User - Multitasking Operating System Ex:Win98, vista,Win7
+Multi User - Multitasking Operating System Ex:Unix, Linux, Solaris
+
+Origin of UNIX?
+===============
+1969 Ken Thompson & Dennis Ritchie invented UNIX from "C" at AT&T labs
+1974 the OS was licenced and started using universities for education purpose
+
+Sun 10Develop Unix====> Solaris
+IBM 10Developers Unix ====> AIX
+HP 10Developers Unix =====> HpUx
+
+Linus Thorvalds Unix ========> Linux
+
+Origin of Linux?
+================
+1991 Linus Torvalds invented Linux
+
+Open source development model 
+Supports wide variety of hardware 
+
+RedHat 10Developer Linux ===> RedHat Linux HP
+Fedora 10Developer Linux ===> Fedora
+Kali 10Developer Linux ===> Kali Linux
+Suse 10Developer Linux ===> SuseLinux
+Oracle 10Developer Linux ===> Oracle Enterprise Linux (OEL)
+
+https://github.com/Ashok6037256/Linux2online.git
