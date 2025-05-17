@@ -1,0 +1,1088 @@
+Class 2 17/05/2025
+
+FILESYSTEM HIERARCHY SYSTEM 
+===========================
+  
+/  This is top level directory 
+   It is parent directory for all other directories 
+   It is called as ROOT directory 
+   It is represented by forward slash (/) 
+   C:\ of windows  
+  
+/root  it is home directory for root user (super user) 
+   It provides working environment for root user 
+   C:\Documents and Settings\Administrator 
+ 
+/home  it is home directory for other users 
+     It provide working environment for other users (other than root) 
+   c:\Documents and Settings\username 
+  
+/boot  it contains bootable files for Linux 
+   Like vmlinuz (kernel)..... ntoskrnl 
+   Initrd (INITial Ram Disk)and 
+   GRUB (GRand Unified Boot loader)....  boot.ini, ntldr 
+ 
+/etc  it contains all configuration files 
+   Like /etc/passwd.....  User info 
+    /etc/resolv.conf... Preferred DNS 
+    /etc/dhcpd.conf.... DHCP server 
+   C:\windows\system32\dirvers\ 
+ 
+/usr  by default soft wares are installed in /usr directory 
+   (UNIX Sharable Resources) 
+   c:\program files 
+ 
+/opt  It is optional directory for /usr 
+   It contains third party softwares 
+   c:\program files 
+ 
+/bin  it contains commands used by all users 
+   (Binary files) 
+  
+/sbin  it contains commands used by only Super User (root) 
+   (Super user's binary files) 
+ 
+/dev  it contains device files 
+   Like  /dev/hda  ... for hard disk 
+   /dev/cd rom ... for cd rom 
+   Similar to device manager of windows 
+ 
+/proc  it contain process files 
+   Its contents are not permanent, they keep changing 
+   It is also called as Virtual Directory 
+   Its file contain useful information used by OS 
+   like /proc/meminfo ... information of RAM/SWAP 
+   /proc/cpuinfo ... information of CPU 
+ 
+/var  it is containing variable data like mails, log files 
+   
+/mnt  it is default mount point for any partition 
+   It is empty by default 
+ 
+/media it contains all of removable media like CD-ROM, pen drive 
+   
+/lib  it contains library files which are used by OS 
+   It is similar to dll files of windows 
+   Library files in Linux are SO (shared object) files
+
+
+
+
+Class Session Output:
+=====================
+
+Network error: Connection timed out
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+
+Network error: Connection timed out
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.176                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Thu May 15 19:23:47 2025 from 192.168.29.79
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls
+ansible-playbook  bin   dev  export  Imran_md  jupiter  lib64  mnt        opt     private  public  run   srv  tmp  var       webdata2
+ansiroles         boot  etc  home    IPL-2025  lib      media  nohup.out  oracle  proc     root    sbin  sys  usr  webdata1
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.1G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+/dev/mapper/webdatavg-webdatalv1  4.7G   20M  4.5G   1% /webdata1
+tmpfs                              48M     0   48M   0% /run/user/0
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls -l
+total 36
+drwxrwxrwx    5 root root 4096 May 29  2024 ansible-playbook
+drwxrwxrwx    3 root root   24 May 22  2024 ansiroles
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Apr 29  2024 boot
+drwxr-xr-x   21 root root 3440 May 17 16:38 dev
+drwxr-xr-x.  88 root root 8192 May 17 16:38 etc
+drwxr-xr-x    3 root root   18 May 10 19:41 export
+drwxr-xr-x.  10 root root  125 May 13 19:52 home
+drwxr-xr-x    2 root root   19 May  5 21:06 Imran_md
+drwxr-xr-x    5 root root   50 May  1 20:49 IPL-2025
+drwxrwsrwx    4 root root   76 May 15 19:57 jupiter
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Apr 29  2024 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+-rw-------.   1 root root    0 Apr 29  2024 nohup.out
+drwxr-xr-x.   4 root root   42 May 29  2024 opt
+drwxr-xr-x    3 root root   21 May  5 19:42 oracle
+drwxr-xr-x    2 root root    6 May  5 21:01 private
+dr-xr-xr-x  183 root root    0 May 17 16:38 proc
+drwxrwxrwt    4 root root   58 May 15 20:04 public
+dr-xr-x---.   6 root root  239 May 29  2024 root
+drwxr-xr-x   26 root root  800 May 17 16:38 run
+lrwxrwxrwx.   1 root root    8 Apr 29  2024 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 May 17 16:38 sys
+drwxrwxrwt.  19 root root 4096 May 17 16:38 tmp
+drwxr-xr-x.  13 root root  155 Apr 29  2024 usr
+drwxr-xr-x.  21 root root 4096 May 11  2024 var
+drwxrwsr-x    3 root root 4096 May  6  2024 webdata1
+drwxrwsr-x    2 root root    6 May  6  2024 webdata2
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# pwd
+/
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# cd
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# pwd
+/root
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /
+[root@gvnkansiblesrv /]# pwd
+/
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# tail /etc/passwd
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+admin:x:5301:5301::/home/admin:/bin/bash
+gvnk:x:5302:5302::/home/gvnk:/bin/bash
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+tomcat:x:91:91:Apache Tomcat:/usr/share/tomcat:/sbin/nologin
+unixuser1:x:1235:5301:unixuser1@google.comEMID-20645:/home/unixuser1:/bin/bash
+unixuser2:x:1237:5301:unixuser1@google.com;EMID-2045:/home/unixuser2:/bin/bash
+ashok:x:5303:5303::/home/ashok:/bin/bash
+imran:x:5304:5304::/home/imran:/bin/bash
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls -l /home/
+total 0
+drwx------ 2 admin     admin      97 May 13 19:39 admin
+drwx------ 6 ansiadmin ansiadmin 172 May 29  2024 ansiadmin
+drwx------ 6 ashok     ashok     197 May 14 20:13 ashok
+drwx------ 3 gvnk      gvnk      113 May  7 19:43 gvnk
+drwx------ 2 imran     imran      97 May 14 20:21 imran
+drwx------ 3      1490      5200 126 May  7 21:01 imran.old
+drwx------ 3 unixuser1      1200 126 May  8 19:58 unixuser1
+drwx------ 2 unixuser2      1200  76 May  7 20:39 unixuser2
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls -l /boot
+total 86300
+-rw-r--r--. 1 root root   140915 Jan 14  2018 config-3.10.0-693.17.1.el7.x86_64
+drwxr-xr-x. 3 root root       17 Apr 29  2024 efi
+drwx------. 5 root root       97 Apr 29  2024 grub2
+-rw-------. 1 root root 51437051 Apr 29  2024 initramfs-0-rescue-5de59b8ef11642159899d1f06f11166a.img
+-rw-------. 1 root root 20863592 Apr 29  2024 initramfs-3.10.0-693.17.1.el7.x86_64.img
+-rw-r--r--. 1 root root   610400 Apr 29  2024 initrd-plymouth.img
+-rw-r--r--. 1 root root   293109 Jan 14  2018 symvers-3.10.0-693.17.1.el7.x86_64.gz
+-rw-------. 1 root root  3232454 Jan 14  2018 System.map-3.10.0-693.17.1.el7.x86_64
+-rwxr-xr-x. 1 root root  5889296 Apr 29  2024 vmlinuz-0-rescue-5de59b8ef11642159899d1f06f11166a
+-rwxr-xr-x. 1 root root  5889296 Jan 14  2018 vmlinuz-3.10.0-693.17.1.el7.x86_64
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+Remote side unexpectedly closed network connection
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.176                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat May 17 17:00:32 2025
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.1G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+/dev/mapper/webdatavg-webdatalv1  4.7G   20M  4.5G   1% /webdata1
+tmpfs                              48M     0   48M   0% /run/user/0
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# ls -l /boot
+total 86300
+-rw-r--r--. 1 root root   140915 Jan 14  2018 config-3.10.0-693.17.1.el7.x86_64
+drwxr-xr-x. 3 root root       17 Apr 29  2024 efi
+drwx------. 5 root root       97 Apr 29  2024 grub2
+-rw-------. 1 root root 51437051 Apr 29  2024 initramfs-0-rescue-5de59b8ef11642159899d1f06f11166a.img
+-rw-------. 1 root root 20863592 Apr 29  2024 initramfs-3.10.0-693.17.1.el7.x86_64.img
+-rw-r--r--. 1 root root   610400 Apr 29  2024 initrd-plymouth.img
+-rw-r--r--. 1 root root   293109 Jan 14  2018 symvers-3.10.0-693.17.1.el7.x86_64.gz
+-rw-------. 1 root root  3232454 Jan 14  2018 System.map-3.10.0-693.17.1.el7.x86_64
+-rwxr-xr-x. 1 root root  5889296 Apr 29  2024 vmlinuz-0-rescue-5de59b8ef11642159899d1f06f11166a
+-rwxr-xr-x. 1 root root  5889296 Jan 14  2018 vmlinuz-3.10.0-693.17.1.el7.x86_64
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd
+[root@gvnkansiblesrv ~]# ls
+anaconda-ks.cfg
+[root@gvnkansiblesrv ~]# cd /
+[root@gvnkansiblesrv /]# ls
+ansible-playbook  bin   dev  export  Imran_md  jupiter  lib64  mnt        opt     private  public  run   srv  tmp  var       webdata2
+ansiroles         boot  etc  home    IPL-2025  lib      media  nohup.out  oracle  proc     root    sbin  sys  usr  webdata1
+[root@gvnkansiblesrv /]# ls -l etc
+total 1168
+-rw-r--r--.  1 root root       16 Apr 29  2024 adjtime
+-rw-r--r--.  1 root root     1518 Jun  7  2013 aliases
+-rw-r--r--.  1 root root    12288 Apr 29  2024 aliases.db
+drwxr-xr-x.  2 root root     4096 May 18  2024 alternatives
+-rw-------.  1 root root      541 Mar 29  2017 anacrontab
+drwxr-xr-x   3 root root       51 May 17  2024 ansible
+-rw-r--r--.  1 root root       55 Mar  1  2017 asound.conf
+drwxr-x---.  3 root root       43 Apr 29  2024 audisp
+drwxr-x---.  3 root root       83 Apr 29  2024 audit
+drwxr-xr-x.  2 root root     4096 May 25  2024 bash_completion.d
+-rw-r--r--.  1 root root     2853 May  4  2016 bashrc
+drwxr-xr-x.  2 root root        6 Jan  9  2018 binfmt.d
+drwxr-xr-x.  2 root root        6 Jun  6  2017 chkconfig.d
+drwxr-xr-x.  2 root root       21 Apr 29  2024 cron.d
+drwxr-xr-x.  2 root root       55 Apr 29  2024 cron.daily
+-rw-------.  1 root root        0 Mar 29  2017 cron.deny
+drwxr-xr-x.  2 root root       22 Apr 29  2024 cron.hourly
+drwxr-xr-x.  2 root root        6 Dec 28  2013 cron.monthly
+-rw-r--r--.  1 root root      451 Dec 28  2013 crontab
+drwxr-xr-x.  2 root root        6 Dec 28  2013 cron.weekly
+-rw-------.  1 root root        0 Apr 29  2024 crypttab
+-rw-r--r--.  1 root root     1620 May  4  2016 csh.cshrc
+-rw-r--r--.  1 root root      841 Jun  7  2013 csh.login
+drwxr-xr-x.  4 root root       78 Apr 29  2024 dbus-1
+drwxr-xr-x.  2 root root       44 Apr 29  2024 default
+drwxr-xr-x.  2 root root       23 Apr 29  2024 depmod.d
+drwxr-x---.  4 root root       53 Apr 29  2024 dhcp
+-rw-r--r--.  1 root root     5090 Jun 30  2016 DIR_COLORS
+-rw-r--r--.  1 root root     5725 Jun 30  2016 DIR_COLORS.256color
+-rw-r--r--.  1 root root     4669 Jun 30  2016 DIR_COLORS.lightbgcolor
+-rw-r--r--.  1 root root     1285 Dec 18  2017 dracut.conf
+drwxr-xr-x.  2 root root        6 Dec 18  2017 dracut.conf.d
+-rw-r--r--.  1 root root      112 Mar 16  2017 e2fsck.conf
+-rw-r--r--.  1 root root        0 May  4  2016 environment
+-rw-r--r--.  1 root root     1317 Jun 30  2016 ethertypes
+-rw-r--r--   1 root root       34 May 11  2024 exports
+drwxr-xr-x   2 root root        6 Nov 30  2017 exports.d
+lrwxrwxrwx.  1 root root       56 Apr 29  2024 favicon.png -> /usr/share/icons/hicolor/16x16/apps/fedora-logo-icon.png
+-rw-r--r--.  1 root root       70 May  4  2016 filesystems
+drwxr-x---.  7 root root      133 Apr 29  2024 firewalld
+drwxr-xr-x   3 root root       38 May 18  2024 fonts
+-rw-r--r--   1 root root      519 May 23  2024 fstab
+-rw-r--r--   1 root root      519 May 23  2024 fstab.bkp
+-rw-r--r--.  1 root root       38 May  2  2017 fuse.conf
+drwxr-xr-x.  2 root root        6 Feb 28  2017 gcrypt
+-rw-r--r--.  1 root root      842 Jun 29  2016 GeoIP.conf
+-rw-r--r--.  1 root root      858 Jun 29  2016 GeoIP.conf.default
+drwxr-xr-x.  2 root root        6 Mar 24  2016 gnupg
+-rw-r--r--.  1 root root       94 Mar 24  2017 GREP_COLORS
+drwxr-xr-x.  4 root root       40 Apr 29  2024 groff
+-rw-r--r--   1 root root      604 May 13 19:52 group
+-rw-r--r--.  1 root root      590 May 13 19:39 group-
+lrwxrwxrwx.  1 root root       22 Apr 29  2024 grub2.cfg -> ../boot/grub2/grub.cfg
+drwx------.  2 root root      182 Apr 29  2024 grub.d
+----------   1 root root      481 May 13 19:52 gshadow
+----------.  1 root root      471 May 13 19:39 gshadow-
+drwxr-xr-x.  3 root root       20 Apr 29  2024 gss
+drwxr-xr-x   2 root root       79 May  1  2024 gssproxy
+-rw-r--r--.  1 root root        9 Jun  7  2013 host.conf
+-rw-r--r--   1 root root       15 Apr 30  2024 hostname
+-rw-r--r--   1 root root      250 May 11  2024 hosts
+-rw-r--r--.  1 root root      370 Jun  7  2013 hosts.allow
+-rw-r--r--.  1 root root      460 Jun  7  2013 hosts.deny
+drwxr-xr-x   5 root root       92 May 11  2024 httpd
+-rw-r--r--   1 root root     4849 Feb 17  2017 idmapd.conf
+lrwxrwxrwx.  1 root root       11 Apr 29  2024 init.d -> rc.d/init.d
+-rw-r--r--.  1 root root      511 Nov  3  2017 inittab
+-rw-r--r--.  1 root root      942 Jun  7  2013 inputrc
+drwxr-xr-x.  2 root root      140 Apr 29  2024 iproute2
+-rw-r--r--.  1 root root       23 Jun 29  2017 issue
+-rw-r--r--.  1 root root       22 Jun 29  2017 issue.net
+drwxr-xr-x   3 root root       62 May 18  2024 java
+drwxr-xr-x   2 root root        6 Jul  2  2015 jvm
+drwxr-xr-x   2 root root        6 Jul  2  2015 jvm-commmon
+-rw-r--r--.  1 root root     7265 Apr 29  2024 kdump.conf
+drwxr-xr-x.  3 root root       24 Apr 29  2024 kernel
+-rw-r--r--.  1 root root      590 Apr 29  2017 krb5.conf
+drwxr-xr-x.  2 root root        6 Apr 29  2017 krb5.conf.d
+-rw-r--r--   1 root root    28356 May 29  2024 ld.so.cache
+-rw-r--r--.  1 root root       28 Feb 28  2013 ld.so.conf
+drwxr-xr-x.  2 root root       79 Apr 29  2024 ld.so.conf.d
+-rw-r-----.  1 root root      191 Apr 19  2017 libaudit.conf
+drwxr-xr-x.  2 root root       35 Apr 29  2024 libnl
+-rw-r--r--.  1 root root     2391 Oct 13  2013 libuser.conf
+-rw-r--r--.  1 root root       19 Apr 29  2024 locale.conf
+lrwxrwxrwx.  1 root root       34 Apr 29  2024 localtime -> ../usr/share/zoneinfo/Asia/Kolkata
+-rw-r--r--.  1 root root     2028 Jun 28  2016 login.defs
+-rw-r--r--.  1 root root      662 Jul 31  2013 logrotate.conf
+drwxr-xr-x.  2 root root      152 May 18  2024 logrotate.d
+drwxr-xr-x.  6 root root      100 Apr 29  2024 lvm
+-r--r--r--.  1 root root       33 Apr 29  2024 machine-id
+-rw-r--r--.  1 root root      111 Jun 27  2016 magic
+-rw-r--r--   1 root root      272 May 15  2013 mailcap
+-rw-r--r--.  1 root root     5122 Sep 26  2017 makedumpfile.conf.sample
+-rw-r--r--.  1 root root     5171 Mar 17  2014 man_db.conf
+drwxr-xr-x   2 root root        6 Jul  2  2015 maven
+-rw-r--r--   1 root root    51787 May 15  2013 mime.types
+-rw-r--r--.  1 root root      936 Mar 16  2017 mke2fs.conf
+drwxr-xr-x.  2 root root       42 May  1  2024 modprobe.d
+drwxr-xr-x.  2 root root        6 Jan  9  2018 modules-load.d
+-rw-r--r--.  1 root root        0 Jun  7  2013 motd
+lrwxrwxrwx.  1 root root       17 Apr 29  2024 mtab -> /proc/self/mounts
+-rw-r--r--.  1 root root      570 Jun  8  2017 my.cnf
+drwxr-xr-x.  2 root root       31 Apr 29  2024 my.cnf.d
+-rw-r--r--   1 root root      767 May 17  2017 netconfig
+drwxr-xr-x.  7 root root      134 Dec 13  2017 NetworkManager
+-rw-r--r--.  1 root root       58 Nov  3  2017 networks
+-rw-r--r--   1 root root      955 Nov 30  2017 nfs.conf
+-rw-r--r--   1 root root     3390 Nov 30  2017 nfsmount.conf
+-rw-r--r--.  1 root root     1746 Apr 29  2024 nsswitch.conf
+-rw-r--r--.  1 root root     1735 Nov 23  2017 nsswitch.conf.bak
+drwxr-xr-x.  3 root root       36 Apr 29  2024 openldap
+drwxr-xr-x.  2 root root        6 Mar 10  2016 opt
+-rw-r--r--.  1 root root      532 Jun 29  2017 os-release
+drwxr-xr-x.  2 root root     4096 Apr 29  2024 pam.d
+-rw-r--r--   1 root root     1469 May 13 19:52 passwd
+-rw-r--r--.  1 root root     1428 May 10 20:54 passwd-
+drwxr-xr-x.  3 root root       21 Apr 29  2024 pkcs11
+drwxr-xr-x. 14 root root      189 Apr 29  2024 pki
+drwxr-xr-x.  2 root root       28 Apr 29  2024 plymouth
+drwxr-xr-x.  5 root root       52 Apr 29  2024 pm
+drwxr-xr-x.  5 root root       72 Apr 29  2024 polkit-1
+drwxr-xr-x.  2 root root        6 Jan 27  2014 popt.d
+drwxr-xr-x.  2 root root      154 Apr 29  2024 postfix
+drwxr-xr-x.  3 root root      123 Apr 29  2024 ppp
+drwxr-xr-x.  2 root root       78 Apr 29  2024 prelink.conf.d
+-rw-r--r--.  1 root root      233 Jun  7  2013 printcap
+-rw-r--r--.  1 root root     1795 May  4  2016 profile
+drwxr-xr-x.  2 root root      218 Apr 29  2024 profile.d
+-rw-r--r--.  1 root root     6545 Jun  7  2013 protocols
+drwxr-xr-x.  2 root root       35 Apr 29  2024 python
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc0.d -> rc.d/rc0.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc1.d -> rc.d/rc1.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc2.d -> rc.d/rc2.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc3.d -> rc.d/rc3.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc4.d -> rc.d/rc4.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc5.d -> rc.d/rc5.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc6.d -> rc.d/rc6.d
+drwxr-xr-x. 10 root root      127 Apr 29  2024 rc.d
+lrwxrwxrwx.  1 root root       13 Apr 29  2024 rc.local -> rc.d/rc.local
+-rw-r--r--.  1 root root       52 Jun 29  2017 redhat-release
+-rw-r--r--   1 root root     1787 Jan 26  2014 request-key.conf
+drwxr-xr-x   2 root root       30 May  1  2024 request-key.d
+-rw-r--r--   1 root root       56 May 17 17:00 resolv.conf
+-rw-r--r--   1 root root       95 May  6  2024 resolv.conf.4JY5M2
+drwxr-xr-x.  5 root root       86 Apr 29  2024 rhsm
+-rw-r--r--.  1 root root     1634 Dec 25  2012 rpc
+drwxr-xr-x.  2 root root      109 May 25  2024 rpm
+-rw-r--r--   1 root root      458 Feb 14  2017 rsyncd.conf
+-rw-r--r--.  1 root root     3232 May 10  2017 rsyslog.conf
+drwxr-xr-x.  2 root root       25 May 10  2017 rsyslog.d
+-rw-r--r--.  1 root root      966 Nov  3  2017 rwtab
+drwxr-xr-x.  2 root root       23 Nov  3  2017 rwtab.d
+drwxr-xr-x.  2 root root       24 Apr 29  2024 sasl2
+-rw-------.  1 root root      221 May  4  2016 securetty
+drwxr-xr-x.  6 root root     4096 Apr 29  2024 security
+drwxr-xr-x.  5 root root       81 Apr 29  2024 selinux
+-rw-r--r--.  1 root root   670293 Jun  7  2013 services
+-rw-r--r--.  1 root root      216 May 26  2017 sestatus.conf
+----------   1 root root     1461 May 15 19:28 shadow
+----------.  1 root root     1337 May 13 19:38 shadow-
+-rw-r--r--.  1 root root       85 Apr 30  2024 shells
+drwxr-xr-x.  2 root root       76 Apr 30  2024 skel
+drwxr-xr-x.  2 root root      225 May  5 20:45 ssh
+drwxr-xr-x.  2 root root       19 Apr 29  2024 ssl
+-rw-r--r--.  1 root root      212 Nov  3  2017 statetab
+drwxr-xr-x.  2 root root        6 Nov  3  2017 statetab.d
+-rw-r--r--.  1 root root        0 May  4  2016 subgid
+-rw-r--r--.  1 root root        0 May  4  2016 subuid
+-rw-r-----.  1 root root     1786 Aug 18  2017 sudo.conf
+-r--r-----   1 root root     3972 Apr 30  2024 sudoers
+drwxr-x---.  2 root root        6 Aug 18  2017 sudoers.d
+-rw-r-----.  1 root root     3181 Aug 18  2017 sudo-ldap.conf
+drwxr-xr-x.  7 root root     4096 May 25  2024 sysconfig
+-rw-r--r--   1 root root      602 May 28  2024 sysctl.conf
+drwxr-xr-x.  2 root root       28 Apr 29  2024 sysctl.d
+drwxr-xr-x.  4 root root      151 Apr 29  2024 systemd
+lrwxrwxrwx.  1 root root       14 Apr 29  2024 system-release -> redhat-release
+-rw-r--r--.  1 root root       45 Jun 29  2017 system-release-cpe
+drwxr-xr-x.  2 root root        6 Aug 15  2017 terminfo
+drwxr-xr-x.  2 root root        6 Jan  9  2018 tmpfiles.d
+drwxr-xr-x   4 root tomcat    231 May 18  2024 tomcat
+drwxr-xr-x.  2 root root       70 Apr 29  2024 tuned
+drwxr-xr-x.  3 root root       54 Apr 29  2024 udev
+-rw-r--r--.  1 root root       37 Apr 29  2024 vconsole.conf
+-rw-r--r--.  1 root root     1982 Jan 20  2017 virc
+drwxr-xr-x.  5 root root      231 Apr 29  2024 vmware-tools
+drwxr-xr-x.  2 root root       88 Apr 29  2024 vsftpd
+-rw-r--r--   1 root root     4479 Oct 24  2017 wgetrc
+drwxr-xr-x.  2 root root       33 Apr 29  2024 wpa_supplicant
+drwxr-xr-x.  5 root root       57 Apr 29  2024 X11
+drwxr-xr-x.  4 root root       38 Apr 29  2024 xdg
+drwxr-xr-x.  2 root root        6 Mar 10  2016 xinetd.d
+drwxr-xr-x.  6 root root      100 Apr 29  2024 yum
+-rw-r--r--.  1 root root      813 Mar 27  2017 yum.conf
+drwxr-xr-x.  4 root root      215 May 29  2024 yum.repos.d
+-rw-r--r--   1 root root      252 Feb 16  2017 zlogin
+-rw-r--r--   1 root root       86 Feb 16  2017 zlogout
+-rw-r--r--   1 root root      375 Feb 16  2017 zprofile
+-rw-r--r--   1 root root      510 Feb 16  2017 zshenv
+-rw-r--r--   1 root root     1135 Feb 16  2017 zshrc
+[root@gvnkansiblesrv /]# cd
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls -l
+total 36
+drwxrwxrwx    5 root root 4096 May 29  2024 ansible-playbook
+drwxrwxrwx    3 root root   24 May 22  2024 ansiroles
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Apr 29  2024 boot
+drwxr-xr-x   21 root root 3440 May 17 17:00 dev
+drwxr-xr-x.  88 root root 8192 May 17 17:00 etc
+drwxr-xr-x    3 root root   18 May 10 19:41 export
+drwxr-xr-x.  10 root root  125 May 13 19:52 home
+drwxr-xr-x    2 root root   19 May  5 21:06 Imran_md
+drwxr-xr-x    5 root root   50 May  1 20:49 IPL-2025
+drwxrwsrwx    4 root root   76 May 15 19:57 jupiter
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Apr 29  2024 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+-rw-------.   1 root root    0 Apr 29  2024 nohup.out
+drwxr-xr-x.   4 root root   42 May 29  2024 opt
+drwxr-xr-x    3 root root   21 May  5 19:42 oracle
+drwxr-xr-x    2 root root    6 May  5 21:01 private
+dr-xr-xr-x  216 root root    0 May 17 16:59 proc
+drwxrwxrwt    4 root root   58 May 15 20:04 public
+dr-xr-x---.   6 root root  239 May 29  2024 root
+drwxr-xr-x   26 root root  800 May 17 17:00 run
+lrwxrwxrwx.   1 root root    8 Apr 29  2024 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 May 17 16:59 sys
+drwxrwxrwt.  19 root root 4096 May 17 17:00 tmp
+drwxr-xr-x.  13 root root  155 Apr 29  2024 usr
+drwxr-xr-x.  21 root root 4096 May 11  2024 var
+drwxrwsr-x    3 root root 4096 May  6  2024 webdata1
+drwxrwsr-x    2 root root    6 May  6  2024 webdata2
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls -l opt
+total 0
+drwxr-xr-x 3 root root 27 May 28  2024 git
+drwxr-xr-x 6 root root 58 May 29  2024 git-2.9.5-install
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# pwd
+/
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# cd /etc
+[root@gvnkansiblesrv etc]#
+[root@gvnkansiblesrv etc]# ls
+adjtime            dhcp                     grub2.cfg    ld.so.cache               netconfig          python              selinux             tuned
+aliases            DIR_COLORS               grub.d       ld.so.conf                NetworkManager     rc0.d               services            udev
+aliases.db         DIR_COLORS.256color      gshadow      ld.so.conf.d              networks           rc1.d               sestatus.conf       vconsole.conf
+alternatives       DIR_COLORS.lightbgcolor  gshadow-     libaudit.conf             nfs.conf           rc2.d               shadow              virc
+anacrontab         dracut.conf              gss          libnl                     nfsmount.conf      rc3.d               shadow-             vmware-tools
+ansible            dracut.conf.d            gssproxy     libuser.conf              nsswitch.conf      rc4.d               shells              vsftpd
+asound.conf        e2fsck.conf              host.conf    locale.conf               nsswitch.conf.bak  rc5.d               skel                wgetrc
+audisp             environment              hostname     localtime                 openldap           rc6.d               ssh                 wpa_supplicant
+audit              ethertypes               hosts        login.defs                opt                rc.d                ssl                 X11
+bash_completion.d  exports                  hosts.allow  logrotate.conf            os-release         rc.local            statetab            xdg
+bashrc             exports.d                hosts.deny   logrotate.d               pam.d              redhat-release      statetab.d          xinetd.d
+binfmt.d           favicon.png              httpd        lvm                       passwd             request-key.conf    subgid              yum
+chkconfig.d        filesystems              idmapd.conf  machine-id                passwd-            request-key.d       subuid              yum.conf
+cron.d             firewalld                init.d       magic                     pkcs11             resolv.conf         sudo.conf           yum.repos.d
+cron.daily         fonts                    inittab      mailcap                   pki                resolv.conf.4JY5M2  sudoers             zlogin
+cron.deny          fstab                    inputrc      makedumpfile.conf.sample  plymouth           rhsm                sudoers.d           zlogout
+cron.hourly        fstab.bkp                iproute2     man_db.conf               pm                 rpc                 sudo-ldap.conf      zprofile
+cron.monthly       fuse.conf                issue        maven                     polkit-1           rpm                 sysconfig           zshenv
+crontab            gcrypt                   issue.net    mime.types                popt.d             rsyncd.conf         sysctl.conf         zshrc
+cron.weekly        GeoIP.conf               java         mke2fs.conf               postfix            rsyslog.conf        sysctl.d
+crypttab           GeoIP.conf.default       jvm          modprobe.d                ppp                rsyslog.d           systemd
+csh.cshrc          gnupg                    jvm-commmon  modules-load.d            prelink.conf.d     rwtab               system-release
+csh.login          GREP_COLORS              kdump.conf   motd                      printcap           rwtab.d             system-release-cpe
+dbus-1             groff                    kernel       mtab                      profile            sasl2               terminfo
+default            group                    krb5.conf    my.cnf                    profile.d          securetty           tmpfiles.d
+depmod.d           group-                   krb5.conf.d  my.cnf.d                  protocols          security            tomcat
+[root@gvnkansiblesrv etc]#
+[root@gvnkansiblesrv etc]#
+[root@gvnkansiblesrv etc]# which ls
+alias ls='ls --color=auto'
+        /usr/bin/ls
+[root@gvnkansiblesrv etc]# ls -l /usr/bin/ls
+-rwxr-xr-x. 1 root root 117656 Jun 30  2016 /usr/bin/ls
+[root@gvnkansiblesrv etc]#
+[root@gvnkansiblesrv etc]#
+[root@gvnkansiblesrv etc]# ls -l
+total 1168
+-rw-r--r--.  1 root root       16 Apr 29  2024 adjtime
+-rw-r--r--.  1 root root     1518 Jun  7  2013 aliases
+-rw-r--r--.  1 root root    12288 Apr 29  2024 aliases.db
+drwxr-xr-x.  2 root root     4096 May 18  2024 alternatives
+-rw-------.  1 root root      541 Mar 29  2017 anacrontab
+drwxr-xr-x   3 root root       51 May 17  2024 ansible
+-rw-r--r--.  1 root root       55 Mar  1  2017 asound.conf
+drwxr-x---.  3 root root       43 Apr 29  2024 audisp
+drwxr-x---.  3 root root       83 Apr 29  2024 audit
+drwxr-xr-x.  2 root root     4096 May 25  2024 bash_completion.d
+-rw-r--r--.  1 root root     2853 May  4  2016 bashrc
+drwxr-xr-x.  2 root root        6 Jan  9  2018 binfmt.d
+drwxr-xr-x.  2 root root        6 Jun  6  2017 chkconfig.d
+drwxr-xr-x.  2 root root       21 Apr 29  2024 cron.d
+drwxr-xr-x.  2 root root       55 Apr 29  2024 cron.daily
+-rw-------.  1 root root        0 Mar 29  2017 cron.deny
+drwxr-xr-x.  2 root root       22 Apr 29  2024 cron.hourly
+drwxr-xr-x.  2 root root        6 Dec 28  2013 cron.monthly
+-rw-r--r--.  1 root root      451 Dec 28  2013 crontab
+drwxr-xr-x.  2 root root        6 Dec 28  2013 cron.weekly
+-rw-------.  1 root root        0 Apr 29  2024 crypttab
+-rw-r--r--.  1 root root     1620 May  4  2016 csh.cshrc
+-rw-r--r--.  1 root root      841 Jun  7  2013 csh.login
+drwxr-xr-x.  4 root root       78 Apr 29  2024 dbus-1
+drwxr-xr-x.  2 root root       44 Apr 29  2024 default
+drwxr-xr-x.  2 root root       23 Apr 29  2024 depmod.d
+drwxr-x---.  4 root root       53 Apr 29  2024 dhcp
+-rw-r--r--.  1 root root     5090 Jun 30  2016 DIR_COLORS
+-rw-r--r--.  1 root root     5725 Jun 30  2016 DIR_COLORS.256color
+-rw-r--r--.  1 root root     4669 Jun 30  2016 DIR_COLORS.lightbgcolor
+-rw-r--r--.  1 root root     1285 Dec 18  2017 dracut.conf
+drwxr-xr-x.  2 root root        6 Dec 18  2017 dracut.conf.d
+-rw-r--r--.  1 root root      112 Mar 16  2017 e2fsck.conf
+-rw-r--r--.  1 root root        0 May  4  2016 environment
+-rw-r--r--.  1 root root     1317 Jun 30  2016 ethertypes
+-rw-r--r--   1 root root       34 May 11  2024 exports
+drwxr-xr-x   2 root root        6 Nov 30  2017 exports.d
+lrwxrwxrwx.  1 root root       56 Apr 29  2024 favicon.png -> /usr/share/icons/hicolor/16x16/apps/fedora-logo-icon.png
+-rw-r--r--.  1 root root       70 May  4  2016 filesystems
+drwxr-x---.  7 root root      133 Apr 29  2024 firewalld
+drwxr-xr-x   3 root root       38 May 18  2024 fonts
+-rw-r--r--   1 root root      519 May 23  2024 fstab
+-rw-r--r--   1 root root      519 May 23  2024 fstab.bkp
+-rw-r--r--.  1 root root       38 May  2  2017 fuse.conf
+drwxr-xr-x.  2 root root        6 Feb 28  2017 gcrypt
+-rw-r--r--.  1 root root      842 Jun 29  2016 GeoIP.conf
+-rw-r--r--.  1 root root      858 Jun 29  2016 GeoIP.conf.default
+drwxr-xr-x.  2 root root        6 Mar 24  2016 gnupg
+-rw-r--r--.  1 root root       94 Mar 24  2017 GREP_COLORS
+drwxr-xr-x.  4 root root       40 Apr 29  2024 groff
+-rw-r--r--   1 root root      604 May 13 19:52 group
+-rw-r--r--.  1 root root      590 May 13 19:39 group-
+lrwxrwxrwx.  1 root root       22 Apr 29  2024 grub2.cfg -> ../boot/grub2/grub.cfg
+drwx------.  2 root root      182 Apr 29  2024 grub.d
+----------   1 root root      481 May 13 19:52 gshadow
+----------.  1 root root      471 May 13 19:39 gshadow-
+drwxr-xr-x.  3 root root       20 Apr 29  2024 gss
+drwxr-xr-x   2 root root       79 May  1  2024 gssproxy
+-rw-r--r--.  1 root root        9 Jun  7  2013 host.conf
+-rw-r--r--   1 root root       15 Apr 30  2024 hostname
+-rw-r--r--   1 root root      250 May 11  2024 hosts
+-rw-r--r--.  1 root root      370 Jun  7  2013 hosts.allow
+-rw-r--r--.  1 root root      460 Jun  7  2013 hosts.deny
+drwxr-xr-x   5 root root       92 May 11  2024 httpd
+-rw-r--r--   1 root root     4849 Feb 17  2017 idmapd.conf
+lrwxrwxrwx.  1 root root       11 Apr 29  2024 init.d -> rc.d/init.d
+-rw-r--r--.  1 root root      511 Nov  3  2017 inittab
+-rw-r--r--.  1 root root      942 Jun  7  2013 inputrc
+drwxr-xr-x.  2 root root      140 Apr 29  2024 iproute2
+-rw-r--r--.  1 root root       23 Jun 29  2017 issue
+-rw-r--r--.  1 root root       22 Jun 29  2017 issue.net
+drwxr-xr-x   3 root root       62 May 18  2024 java
+drwxr-xr-x   2 root root        6 Jul  2  2015 jvm
+drwxr-xr-x   2 root root        6 Jul  2  2015 jvm-commmon
+-rw-r--r--.  1 root root     7265 Apr 29  2024 kdump.conf
+drwxr-xr-x.  3 root root       24 Apr 29  2024 kernel
+-rw-r--r--.  1 root root      590 Apr 29  2017 krb5.conf
+drwxr-xr-x.  2 root root        6 Apr 29  2017 krb5.conf.d
+-rw-r--r--   1 root root    28356 May 29  2024 ld.so.cache
+-rw-r--r--.  1 root root       28 Feb 28  2013 ld.so.conf
+drwxr-xr-x.  2 root root       79 Apr 29  2024 ld.so.conf.d
+-rw-r-----.  1 root root      191 Apr 19  2017 libaudit.conf
+drwxr-xr-x.  2 root root       35 Apr 29  2024 libnl
+-rw-r--r--.  1 root root     2391 Oct 13  2013 libuser.conf
+-rw-r--r--.  1 root root       19 Apr 29  2024 locale.conf
+lrwxrwxrwx.  1 root root       34 Apr 29  2024 localtime -> ../usr/share/zoneinfo/Asia/Kolkata
+-rw-r--r--.  1 root root     2028 Jun 28  2016 login.defs
+-rw-r--r--.  1 root root      662 Jul 31  2013 logrotate.conf
+drwxr-xr-x.  2 root root      152 May 18  2024 logrotate.d
+drwxr-xr-x.  6 root root      100 Apr 29  2024 lvm
+-r--r--r--.  1 root root       33 Apr 29  2024 machine-id
+-rw-r--r--.  1 root root      111 Jun 27  2016 magic
+-rw-r--r--   1 root root      272 May 15  2013 mailcap
+-rw-r--r--.  1 root root     5122 Sep 26  2017 makedumpfile.conf.sample
+-rw-r--r--.  1 root root     5171 Mar 17  2014 man_db.conf
+drwxr-xr-x   2 root root        6 Jul  2  2015 maven
+-rw-r--r--   1 root root    51787 May 15  2013 mime.types
+-rw-r--r--.  1 root root      936 Mar 16  2017 mke2fs.conf
+drwxr-xr-x.  2 root root       42 May  1  2024 modprobe.d
+drwxr-xr-x.  2 root root        6 Jan  9  2018 modules-load.d
+-rw-r--r--.  1 root root        0 Jun  7  2013 motd
+lrwxrwxrwx.  1 root root       17 Apr 29  2024 mtab -> /proc/self/mounts
+-rw-r--r--.  1 root root      570 Jun  8  2017 my.cnf
+drwxr-xr-x.  2 root root       31 Apr 29  2024 my.cnf.d
+-rw-r--r--   1 root root      767 May 17  2017 netconfig
+drwxr-xr-x.  7 root root      134 Dec 13  2017 NetworkManager
+-rw-r--r--.  1 root root       58 Nov  3  2017 networks
+-rw-r--r--   1 root root      955 Nov 30  2017 nfs.conf
+-rw-r--r--   1 root root     3390 Nov 30  2017 nfsmount.conf
+-rw-r--r--.  1 root root     1746 Apr 29  2024 nsswitch.conf
+-rw-r--r--.  1 root root     1735 Nov 23  2017 nsswitch.conf.bak
+drwxr-xr-x.  3 root root       36 Apr 29  2024 openldap
+drwxr-xr-x.  2 root root        6 Mar 10  2016 opt
+-rw-r--r--.  1 root root      532 Jun 29  2017 os-release
+drwxr-xr-x.  2 root root     4096 Apr 29  2024 pam.d
+-rw-r--r--   1 root root     1469 May 13 19:52 passwd
+-rw-r--r--.  1 root root     1428 May 10 20:54 passwd-
+drwxr-xr-x.  3 root root       21 Apr 29  2024 pkcs11
+drwxr-xr-x. 14 root root      189 Apr 29  2024 pki
+drwxr-xr-x.  2 root root       28 Apr 29  2024 plymouth
+drwxr-xr-x.  5 root root       52 Apr 29  2024 pm
+drwxr-xr-x.  5 root root       72 Apr 29  2024 polkit-1
+drwxr-xr-x.  2 root root        6 Jan 27  2014 popt.d
+drwxr-xr-x.  2 root root      154 Apr 29  2024 postfix
+drwxr-xr-x.  3 root root      123 Apr 29  2024 ppp
+drwxr-xr-x.  2 root root       78 Apr 29  2024 prelink.conf.d
+-rw-r--r--.  1 root root      233 Jun  7  2013 printcap
+-rw-r--r--.  1 root root     1795 May  4  2016 profile
+drwxr-xr-x.  2 root root      218 Apr 29  2024 profile.d
+-rw-r--r--.  1 root root     6545 Jun  7  2013 protocols
+drwxr-xr-x.  2 root root       35 Apr 29  2024 python
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc0.d -> rc.d/rc0.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc1.d -> rc.d/rc1.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc2.d -> rc.d/rc2.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc3.d -> rc.d/rc3.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc4.d -> rc.d/rc4.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc5.d -> rc.d/rc5.d
+lrwxrwxrwx.  1 root root       10 Apr 29  2024 rc6.d -> rc.d/rc6.d
+drwxr-xr-x. 10 root root      127 Apr 29  2024 rc.d
+lrwxrwxrwx.  1 root root       13 Apr 29  2024 rc.local -> rc.d/rc.local
+-rw-r--r--.  1 root root       52 Jun 29  2017 redhat-release
+-rw-r--r--   1 root root     1787 Jan 26  2014 request-key.conf
+drwxr-xr-x   2 root root       30 May  1  2024 request-key.d
+-rw-r--r--   1 root root       56 May 17 17:00 resolv.conf
+-rw-r--r--   1 root root       95 May  6  2024 resolv.conf.4JY5M2
+drwxr-xr-x.  5 root root       86 Apr 29  2024 rhsm
+-rw-r--r--.  1 root root     1634 Dec 25  2012 rpc
+drwxr-xr-x.  2 root root      109 May 25  2024 rpm
+-rw-r--r--   1 root root      458 Feb 14  2017 rsyncd.conf
+-rw-r--r--.  1 root root     3232 May 10  2017 rsyslog.conf
+drwxr-xr-x.  2 root root       25 May 10  2017 rsyslog.d
+-rw-r--r--.  1 root root      966 Nov  3  2017 rwtab
+drwxr-xr-x.  2 root root       23 Nov  3  2017 rwtab.d
+drwxr-xr-x.  2 root root       24 Apr 29  2024 sasl2
+-rw-------.  1 root root      221 May  4  2016 securetty
+drwxr-xr-x.  6 root root     4096 Apr 29  2024 security
+drwxr-xr-x.  5 root root       81 Apr 29  2024 selinux
+-rw-r--r--.  1 root root   670293 Jun  7  2013 services
+-rw-r--r--.  1 root root      216 May 26  2017 sestatus.conf
+----------   1 root root     1461 May 15 19:28 shadow
+----------.  1 root root     1337 May 13 19:38 shadow-
+-rw-r--r--.  1 root root       85 Apr 30  2024 shells
+drwxr-xr-x.  2 root root       76 Apr 30  2024 skel
+drwxr-xr-x.  2 root root      225 May  5 20:45 ssh
+drwxr-xr-x.  2 root root       19 Apr 29  2024 ssl
+-rw-r--r--.  1 root root      212 Nov  3  2017 statetab
+drwxr-xr-x.  2 root root        6 Nov  3  2017 statetab.d
+-rw-r--r--.  1 root root        0 May  4  2016 subgid
+-rw-r--r--.  1 root root        0 May  4  2016 subuid
+-rw-r-----.  1 root root     1786 Aug 18  2017 sudo.conf
+-r--r-----   1 root root     3972 Apr 30  2024 sudoers
+drwxr-x---.  2 root root        6 Aug 18  2017 sudoers.d
+-rw-r-----.  1 root root     3181 Aug 18  2017 sudo-ldap.conf
+drwxr-xr-x.  7 root root     4096 May 25  2024 sysconfig
+-rw-r--r--   1 root root      602 May 28  2024 sysctl.conf
+drwxr-xr-x.  2 root root       28 Apr 29  2024 sysctl.d
+drwxr-xr-x.  4 root root      151 Apr 29  2024 systemd
+lrwxrwxrwx.  1 root root       14 Apr 29  2024 system-release -> redhat-release
+-rw-r--r--.  1 root root       45 Jun 29  2017 system-release-cpe
+drwxr-xr-x.  2 root root        6 Aug 15  2017 terminfo
+drwxr-xr-x.  2 root root        6 Jan  9  2018 tmpfiles.d
+drwxr-xr-x   4 root tomcat    231 May 18  2024 tomcat
+drwxr-xr-x.  2 root root       70 Apr 29  2024 tuned
+drwxr-xr-x.  3 root root       54 Apr 29  2024 udev
+-rw-r--r--.  1 root root       37 Apr 29  2024 vconsole.conf
+-rw-r--r--.  1 root root     1982 Jan 20  2017 virc
+drwxr-xr-x.  5 root root      231 Apr 29  2024 vmware-tools
+drwxr-xr-x.  2 root root       88 Apr 29  2024 vsftpd
+-rw-r--r--   1 root root     4479 Oct 24  2017 wgetrc
+drwxr-xr-x.  2 root root       33 Apr 29  2024 wpa_supplicant
+drwxr-xr-x.  5 root root       57 Apr 29  2024 X11
+drwxr-xr-x.  4 root root       38 Apr 29  2024 xdg
+drwxr-xr-x.  2 root root        6 Mar 10  2016 xinetd.d
+drwxr-xr-x.  6 root root      100 Apr 29  2024 yum
+-rw-r--r--.  1 root root      813 Mar 27  2017 yum.conf
+drwxr-xr-x.  4 root root      215 May 29  2024 yum.repos.d
+-rw-r--r--   1 root root      252 Feb 16  2017 zlogin
+-rw-r--r--   1 root root       86 Feb 16  2017 zlogout
+-rw-r--r--   1 root root      375 Feb 16  2017 zprofile
+-rw-r--r--   1 root root      510 Feb 16  2017 zshenv
+-rw-r--r--   1 root root     1135 Feb 16  2017 zshrc
+[root@gvnkansiblesrv etc]# cd
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# parted -l
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 53.7GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  53.7GB  52.6GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 5369MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start  End  Size  File system  Name  Flags
+
+
+Error: /dev/sdc: unrecognised disk label
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 5369MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdd: 16.1GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  16.1GB  16.1GB               primary  lvm
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/webdatavg-webdatalv1: 5243MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  5243MB  5243MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/webdatavg-webdatalv2: 5243MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  5243MB  5243MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-swap: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system     Flags
+ 1      0.00B  2147MB  2147MB  linux-swap(v1)
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-root: 50.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  50.5GB  50.5GB  xfs
+
+
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Model: NECVMWar VMware SATA CD01 (scsi)
+Disk /dev/sr0: 4374MB
+Sector size (logical/physical): 2048B/2048B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 2      1442MB  1479MB  36.8MB  primary
+
+
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# which parted
+/usr/sbin/parted
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# which ls
+alias ls='ls --color=auto'
+        /usr/bin/ls
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /dev
+[root@gvnkansiblesrv dev]# ls
+agpgart        cpu_dma_latency  full          mapper              port    sda1  shm       tty11  tty21  tty31  tty41  tty51  tty61  uinput   vcs6         vhost-net
+autofs         crash            fuse          mcelog              ppp     sda2  snapshot  tty12  tty22  tty32  tty42  tty52  tty62  urandom  vcsa         vmci
+block          disk             hidraw0       mem                 ptmx    sdb   snd       tty13  tty23  tty33  tty43  tty53  tty63  usbmon0  vcsa1        vsock
+bsg            dm-0             hpet          midi                pts     sdc   sr0       tty14  tty24  tty34  tty44  tty54  tty7   usbmon1  vcsa2        webdatavg
+btrfs-control  dm-1             hugepages     mqueue              random  sdd   stderr    tty15  tty25  tty35  tty45  tty55  tty8   usbmon2  vcsa3        zero
+bus            dm-2             hwrng         net                 raw     sdd1  stdin     tty16  tty26  tty36  tty46  tty56  tty9   vcs      vcsa4
+cdrom          dm-3             initctl       network_latency     rfkill  sg0   stdout    tty17  tty27  tty37  tty47  tty57  ttyS0  vcs1     vcsa5
+char           dmmidi           input         network_throughput  rhel    sg1   tty       tty18  tty28  tty38  tty48  tty58  ttyS1  vcs2     vcsa6
+console        dri              kmsg          null                rtc     sg2   tty0      tty19  tty29  tty39  tty49  tty59  ttyS2  vcs3     vfio
+core           fb0              log           nvram               rtc0    sg3   tty1      tty2   tty3   tty4   tty5   tty6   ttyS3  vcs4     vga_arbiter
+cpu            fd               loop-control  oldmem              sda     sg4   tty10     tty20  tty30  tty40  tty50  tty60  uhid   vcs5     vhci
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.1G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.8M  231M   3% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+/dev/mapper/webdatavg-webdatalv1  4.7G   20M  4.5G   1% /webdata1
+tmpfs                              48M     0   48M   0% /run/user/0
+tmpfs                              48M     0   48M   0% /run/user/5303
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]# top
+top - 17:17:10 up 17 min,  2 users,  load average: 0.19, 0.10, 0.14
+Tasks: 176 total,   1 running, 175 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.0 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :   482556 total,   120788 free,   158208 used,   203560 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.   277900 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+  1082 tomcat    20   0 2184132  53060  14092 S  0.7 11.0   0:15.28 java
+  1428 root      20   0  157732   2288   1540 R  0.7  0.5   0:00.14 top
+   835 root      20   0  305076   6132   4768 S  0.3  1.3   0:02.99 vmtoolsd
+  1429 root      20   0       0      0      0 S  0.3  0.0   0:00.05 kworker/0:2
+     1 root      20   0  125364   3816   2508 S  0.0  0.8   0:08.44 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.45 kthreadd
+     3 root      20   0       0      0      0 S  0.0  0.0   0:00.24 ksoftirqd/0
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+     9 root      20   0       0      0      0 S  0.0  0.0   0:01.02 rcu_sched
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:00.02 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    25 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kswapd0
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    35 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    37 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    40 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    59 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    91 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kauditd
+   272 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+   273 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt/0
+   274 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ata_sff
+   275 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_0
+   276 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_0
+   280 root      20   0       0      0      0 S  0.0  0.0   0:00.01 scsi_eh_1
+   281 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_1
+   282 root      20   0       0      0      0 S  0.0  0.0   0:00.01 scsi_eh_2
+   283 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_2
+   289 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ttm_swap
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]# tail /var/log/secure
+May 17 17:00:32 gvnkansiblesrv login: ROOT LOGIN ON tty1
+May 17 17:00:41 gvnkansiblesrv login: pam_unix(login:session): session closed for user root
+May 17 17:01:22 gvnkansiblesrv sshd[1300]: Accepted password for root from 192.168.29.79 port 53962 ssh2
+May 17 17:01:22 gvnkansiblesrv sshd[1300]: pam_unix(sshd:session): session opened for user root by (uid=0)
+May 17 17:01:32 gvnkansiblesrv sshd[1302]: Accepted password for root from 192.168.29.79 port 53963 ssh2
+May 17 17:01:32 gvnkansiblesrv sshd[1302]: pam_unix(sshd:session): session opened for user root by (uid=0)
+May 17 17:11:44 gvnkansiblesrv sshd[1369]: Accepted password for ashok from 192.168.29.79 port 53981 ssh2
+May 17 17:11:44 gvnkansiblesrv sshd[1369]: pam_unix(sshd:session): session opened for user ashok by (uid=0)
+May 17 17:11:54 gvnkansiblesrv sshd[1371]: Accepted password for ashok from 192.168.29.79 port 53982 ssh2
+May 17 17:11:54 gvnkansiblesrv sshd[1371]: pam_unix(sshd:session): session opened for user ashok by (uid=0)
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]#
+[root@gvnkansiblesrv dev]# cd /
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# ls -l
+total 36
+drwxrwxrwx    5 root root 4096 May 29  2024 ansible-playbook
+drwxrwxrwx    3 root root   24 May 22  2024 ansiroles
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Apr 29  2024 boot
+drwxr-xr-x   21 root root 3440 May 17 17:00 dev
+drwxr-xr-x.  88 root root 8192 May 17 17:00 etc
+drwxr-xr-x    3 root root   18 May 10 19:41 export
+drwxr-xr-x.  10 root root  125 May 13 19:52 home
+drwxr-xr-x    2 root root   19 May  5 21:06 Imran_md
+drwxr-xr-x    5 root root   50 May  1 20:49 IPL-2025
+drwxrwsrwx    4 root root   76 May 15 19:57 jupiter
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Apr 29  2024 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+-rw-------.   1 root root    0 Apr 29  2024 nohup.out
+drwxr-xr-x.   4 root root   42 May 29  2024 opt
+drwxr-xr-x    3 root root   21 May  5 19:42 oracle
+drwxr-xr-x    2 root root    6 May  5 21:01 private
+dr-xr-xr-x  188 root root    0 May 17 16:59 proc
+drwxrwxrwt    4 root root   58 May 15 20:04 public
+dr-xr-x---.   6 root root  239 May 29  2024 root
+drwxr-xr-x   26 root root  800 May 17 17:00 run
+lrwxrwxrwx.   1 root root    8 Apr 29  2024 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 May 17 16:59 sys
+drwxrwxrwt.  19 root root 4096 May 17 17:06 tmp
+drwxr-xr-x.  13 root root  155 Apr 29  2024 usr
+drwxr-xr-x.  21 root root 4096 May 11  2024 var
+drwxrwsr-x    3 root root 4096 May  6  2024 webdata1
+drwxrwsr-x    2 root root    6 May  6  2024 webdata2
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# cd mnt
+[root@gvnkansiblesrv mnt]# ls -l
+total 0
+[root@gvnkansiblesrv mnt]#
+[root@gvnkansiblesrv mnt]#
+[root@gvnkansiblesrv mnt]#
+[root@gvnkansiblesrv mnt]# cd /
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# man ls
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# cd /lib
+[root@gvnkansiblesrv lib]# ls -l
+total 28
+drwxr-xr-x.  2 root root     6 Jan  9  2018 binfmt.d
+lrwxrwxrwx   1 root root    10 May 29  2024 cpp -> ../bin/cpp
+drwxr-xr-x.  3 root root    64 Mar 10  2016 debug
+drwxr-xr-x.  4 root root   236 Apr 29  2024 dracut
+drwxr-xr-x.  8 root root    98 Apr 29  2024 firewalld
+drwxr-xr-x. 78 root root 12288 Apr 29  2024 firmware
+dr-xr-xr-x.  2 root root     6 Mar 10  2016 games
+drwxr-xr-x   3 root root    33 May 29  2024 gcc
+drwxr-xr-x.  3 root root    21 Apr 29  2024 grub
+drwxr-xr-x   2 root root     6 Jul  2  2015 java
+drwxr-xr-x   2 root root     6 Jul  2  2015 java-1.5.0
+drwxr-xr-x   2 root root     6 Jul  2  2015 java-1.6.0
+drwxr-xr-x   2 root root     6 Jul  2  2015 java-1.7.0
+drwxr-xr-x   2 root root     6 Jul  2  2015 java-1.8.0
+drwxr-xr-x   2 root root     6 Jul  2  2015 java-ext
+drwxr-xr-x   3 root root   187 May 18  2024 jvm
+drwxr-xr-x   2 root root     6 Jul  2  2015 jvm-commmon
+drwxr-xr-x   3 root root   162 May 18  2024 jvm-exports
+drwxr-xr-x   4 root root   122 May 18  2024 jvm-private
+drwxr-xr-x.  6 root root    76 Apr 29  2024 kbd
+drwxr-xr-x.  2 root root    56 Apr 29  2024 kdump
+drwxr-xr-x.  3 root root    23 Jan  9  2018 kernel
+drwxr-xr-x.  2 root root    55 Apr 29  2024 locale
+drwxr-xr-x.  2 root root    55 Apr 29  2024 modprobe.d
+drwxr-xr-x.  3 root root    40 Apr 29  2024 modules
+drwxr-xr-x.  2 root root     6 Jan  9  2018 modules-load.d
+drwxr-xr-x.  4 root root    31 Apr 29  2024 NetworkManager
+drwxr-xr-x.  2 root root    50 Apr 29  2024 polkit-1
+drwxr-xr-x.  3 root root    27 Apr 29  2024 python2.7
+drwxr-xr-x.  5 root root  4096 May 18  2024 rpm
+lrwxrwxrwx.  1 root root    30 Apr 29  2024 sendmail -> /etc/alternatives/mta-sendmail
+lrwxrwxrwx.  1 root root    24 Apr 29  2024 sendmail.postfix -> ../sbin/sendmail.postfix
+dr-xr-xr-x.  2 root root     6 Mar 10  2016 sse2
+drwxr-xr-x.  2 root root    85 Apr 29  2024 sysctl.d
+drwxr-xr-x. 13 root root  4096 May  1  2024 systemd
+drwxr-xr-x.  2 root root  4096 May 11  2024 tmpfiles.d
+drwxr-xr-x. 11 root root   240 Apr 29  2024 tuned
+drwxr-xr-x.  4 root root   252 Apr 29  2024 udev
+drwxr-xr-x.  2 root root   264 Apr 29  2024 yum-plugins
+[root@gvnkansiblesrv lib]#
+[root@gvnkansiblesrv lib]# ls
+binfmt.d  dracut     games  java        java-1.7.0  jvm          jvm-private  kernel      modules         polkit-1   sendmail          sysctl.d    tuned
+cpp       firewalld  gcc    java-1.5.0  java-1.8.0  jvm-commmon  kbd          locale      modules-load.d  python2.7  sendmail.postfix  systemd     udev
+debug     firmware   grub   java-1.6.0  java-ext    jvm-exports  kdump        modprobe.d  NetworkManager  rpm        sse2              tmpfiles.d  yum-plugins
+[root@gvnkansiblesrv lib]#
+[root@gvnkansiblesrv lib]#
+[root@gvnkansiblesrv lib]#
+[root@gvnkansiblesrv lib]# mount /public /mnt^C
+[root@gvnkansiblesrv lib]# cd /mnt
+[root@gvnkansiblesrv mnt]#
+[root@gvnkansiblesrv mnt]#
+[root@gvnkansiblesrv mnt]# ls -l
+total 0
+[root@gvnkansiblesrv mnt]#
+
