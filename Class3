@@ -1,0 +1,1262 @@
+Class 3 19/05/2025
+
+Basic Commands:
+===============
+							    (servername + domainame)
+uname -a: This command will provide the details of OS type, Fully Qualified Domain name and Kernel Version
+
+uptime: This command will provide the information of server date, Life time, Login users info and load average
+
+pwd: Present working directory path
+
+ls: list of files and directories in current directory
+
+ls -l: Details list of files and directories in current directory
+
+cd: change Directory it will switch the directory as per your specifications
+
+cd ..: Switch one step back directory
+
+cd ../..: Switch back to 2 directories
+
+cd -: Switch back to previous directory
+
+cd directory: switch the specified directory
+
+mkdir directoryname ====> This will create a new directory
+
+mkdir -p directory/directory/directory/... =====> this will create progresicve directory path as specified
+
+cat filename: This will view the contet of the file 
+
+cat > filename (Ctrl +d) 1) if the file not available create and add data, 2) if the file is already available it will override the given data.
+
+cat >> filename (Ctrl +d) 1) if the file not available create and add data, 2) if the file is already available it will append the given data.
+
+cat file23 > addfile (Ctrl +d)
+
+cat file45 >> addfile (Ctrl +d)
+
+command > filename 
+
+command >> filename 
+
+===========================================================================================
+If the file is already existed and used > it will override the date and keep the new data
+
+If the file is already existed and used >> it will append the data and keep the new data along with old data
+
+Lab activity:
+==============
+1) create file1 to file10 at /tmp  directory
+# cd /tmp
+# cat > file1
+# ls -l
+# cat file1
+
+# uptime > uptime_output
+# ls -l
+# cat uptime_output
+
+# uname -a > uname_output
+# ls -l
+# cat uname_output
+
+# cat > file2
+# ls -l
+# cat file2
+
+
+
+Session Outputs:
+======================
+
+Network error: Connection timed out
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+
+Network error: Connection timed out
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.176                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Sat May 17 17:01:22 2025 from 192.168.29.79
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+ashok         checkout  file3    gvnk    hsperfdata_tomcat  kumar   systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-vPtG8S
+ashokdir1     dir3      file55   gvnk1   imran              oracle  systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-Y2aXD4
+ashok_file23  file      ganaimp  gvnkch  imran2             public  systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-TOgl4h
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 24
+-rw-rw-rw- 1 root   root     29 May 14 19:50 ashok
+drwxr-x--- 2 root   root      6 May 14 19:28 ashokdir1
+-rw-rw-r-- 1 ashok  ashok    88 May 13 19:26 ashok_file23
+-rw-rw-r-- 1 gvnk   gvnk   2489 May 13 20:10 checkout
+drwxrwxr-x 2 root   root      6 May 14 19:57 dir3
+-rw-r--r-- 2 root   root     14 May  5 19:46 file
+-rw-rw-r-- 1 root   root     74 Apr 29 21:18 file3
+lrwxrwxrwx 1 root   root     27 May  5 19:37 file55 -> /home/ashok/imran_md/file55
+drwxr-xr-x 3 root   root     18 May 29  2024 ganaimp
+drwxr-xr-x 3 root   root     18 May 29  2024 gvnk
+-rw-rw-r-- 1 gvnk   gvnk     21 May  7 19:46 gvnk1
+drwxr-xr-x 4 root   root     42 May 29  2024 gvnkch
+drwxrwxr-x 3 tomcat tomcat   36 May 10 19:27 hsperfdata_tomcat
+-rw-r--r-- 1 root   root      0 May 14 19:53 imran
+-rw-rw-r-- 1 root   root      0 May 14 19:56 imran2
+dr-xr-xr-x 3 root   root    128 May  5 20:42 kumar
+drwxr-xr-x 3 root   root     21 May  5 19:42 oracle
+drwxrwxrwx 3 root   root     31 May 13 20:32 public
+drwx------ 3 root   root     17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-vPtG8S
+drwx------ 3 root   root     17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-Y2aXD4
+drwx------ 3 root   root     17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-TOgl4h
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime
+ 19:16:54 up 18 min,  1 user,  load average: 0.03, 0.04, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# pwd
+/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd /var/tmp/
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# pwd
+/var/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+ashok  passwd  systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-KjZv1y    systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-g3009T
+file1  shadow  systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-dj9T2F
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+drwx------ 3 root root  124 May 10 20:51 ashok
+-rw-r--r-- 1 root root   89 Apr 29 21:14 file1
+-rw-r--r-- 1 root root 1428 May 10 20:51 passwd
+---------- 1 root root 1145 May 10 20:51 shadow
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-KjZv1y
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-dj9T2F
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-g3009T
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# pwd
+/var/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+drwx------ 3 root root  124 May 10 20:51 ashok
+-rw-r--r-- 1 root root   89 Apr 29 21:14 file1
+-rw-r--r-- 1 root root 1428 May 10 20:51 passwd
+---------- 1 root root 1145 May 10 20:51 shadow
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-KjZv1y
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-dj9T2F
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-g3009T
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd ashok
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 May 10 20:51 dir33
+-rw-r--r-- 1 root root 0 May 10 20:51 file22
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd /home
+[root@gvnkansiblesrv home]#
+[root@gvnkansiblesrv home]# pwd
+/home
+[root@gvnkansiblesrv home]# ls
+admin  ansiadmin  ashok  gvnk  imran  imran.old  unixuser1  unixuser2
+[root@gvnkansiblesrv home]#
+[root@gvnkansiblesrv home]# ls -l
+total 0
+drwx------ 2 admin     admin      97 May 13 19:39 admin
+drwx------ 6 ansiadmin ansiadmin 172 May 29  2024 ansiadmin
+drwx------ 6 ashok     ashok     197 May 14 20:13 ashok
+drwx------ 3 gvnk      gvnk      113 May  7 19:43 gvnk
+drwx------ 2 imran     imran      97 May 14 20:21 imran
+drwx------ 3      1490      5200 126 May  7 21:01 imran.old
+drwx------ 3 unixuser1      1200 126 May  8 19:58 unixuser1
+drwx------ 2 unixuser2      1200  76 May  7 20:39 unixuser2
+[root@gvnkansiblesrv home]#
+[root@gvnkansiblesrv home]#
+[root@gvnkansiblesrv home]#
+[root@gvnkansiblesrv home]# cd /var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd ..
+[root@gvnkansiblesrv tmp]# pwd
+/var/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+ashok  passwd  systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-KjZv1y    systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-g3009T
+file1  shadow  systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-dj9T2F
+[root@gvnkansiblesrv tmp]# cd ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd ../..
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]# pwd
+/var
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]# cd /var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd /var
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]# pwd
+/var
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]# pwd
+/var
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]#
+[root@gvnkansiblesrv var]# cd /usr/local/
+[root@gvnkansiblesrv local]# pwd
+/usr/local
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]# cd ../..
+[root@gvnkansiblesrv /]# ls -l
+total 36
+drwxrwxrwx    5 root root 4096 May 29  2024 ansible-playbook
+drwxrwxrwx    3 root root   24 May 22  2024 ansiroles
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Apr 29  2024 boot
+drwxr-xr-x   21 root root 3440 May 19 18:58 dev
+drwxr-xr-x.  88 root root 8192 May 19 18:58 etc
+drwxr-xr-x    3 root root   18 May 10 19:41 export
+drwxr-xr-x.  10 root root  125 May 13 19:52 home
+drwxr-xr-x    2 root root   19 May  5 21:06 Imran_md
+drwxr-xr-x    5 root root   50 May  1 20:49 IPL-2025
+drwxrwsrwx    4 root root   76 May 15 19:57 jupiter
+lrwxrwxrwx.   1 root root    7 Apr 29  2024 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Apr 29  2024 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+-rw-------.   1 root root    0 Apr 29  2024 nohup.out
+drwxr-xr-x.   4 root root   42 May 29  2024 opt
+drwxr-xr-x    3 root root   21 May  5 19:42 oracle
+drwxr-xr-x    2 root root    6 May  5 21:01 private
+dr-xr-xr-x  184 root root    0 May 19 18:58 proc
+drwxrwxrwt    4 root root   58 May 15 20:04 public
+dr-xr-x---.   6 root root  239 May 29  2024 root
+drwxr-xr-x   26 root root  800 May 19 18:58 run
+lrwxrwxrwx.   1 root root    8 Apr 29  2024 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 May 19 18:58 sys
+drwxrwxrwt.  19 root root 4096 May 19 18:59 tmp
+drwxr-xr-x.  13 root root  155 Apr 29  2024 usr
+drwxr-xr-x.  21 root root 4096 May 11  2024 var
+drwxrwsr-x    3 root root 4096 May  6  2024 webdata1
+drwxrwsr-x    2 root root    6 May  6  2024 webdata2
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# cd /usr/local
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]# pwd
+/usr/local
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]# cd /etc/ssh/
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]# ls -l
+total 604
+-rw-r--r--. 1 root root     581843 Sep 13  2017 moduli
+-rw-r--r--. 1 root root       2276 Sep 13  2017 ssh_config
+-rw-------. 1 root root       3907 Sep 13  2017 sshd_config
+-rw-r-----. 1 root ssh_keys    227 Apr 29  2024 ssh_host_ecdsa_key
+-rw-r--r--. 1 root root        162 Apr 29  2024 ssh_host_ecdsa_key.pub
+-rw-r-----. 1 root ssh_keys    387 Apr 29  2024 ssh_host_ed25519_key
+-rw-r--r--. 1 root root         82 Apr 29  2024 ssh_host_ed25519_key.pub
+-rw-r-----. 1 root ssh_keys   1679 Apr 29  2024 ssh_host_rsa_key
+-rw-r--r--. 1 root root        382 Apr 29  2024 ssh_host_rsa_key.pub
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]# cat ssh_host_ecdsa_key
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEINREyTkOJhbUBufjtM3PxbKNie2NY+1F2sZtz+RPP5fQoAoGCCqGSM49
+AwEHoUQDQgAEs1bEybHxOPz/JIdnmTPGZRGRqKfvAtSVU0TJyN8Lb8BTTBYyqT+a
+8X5sf1rWVwucftBflHP6Cu4NPlHYrLTskA==
+-----END EC PRIVATE KEY-----
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]# cd -
+/usr/local
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]# pwd
+/usr/local
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]#
+[root@gvnkansiblesrv local]# cd -
+/etc/ssh
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]# pwd
+/etc/ssh
+[root@gvnkansiblesrv ssh]#
+[root@gvnkansiblesrv ssh]# cd /tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-rw-rw- 1 root   root     29 May 14 19:50 ashok
+drwxr-x--- 2 root   root      6 May 14 19:28 ashokdir1
+-rw-rw-r-- 1 ashok  ashok    88 May 13 19:26 ashok_file23
+-rw-rw-r-- 1 gvnk   gvnk   2489 May 13 20:10 checkout
+drwxrwxr-x 2 root   root      6 May 14 19:57 dir3
+-rw-r--r-- 2 root   root     14 May  5 19:46 file
+-rw-rw-r-- 1 root   root     74 Apr 29 21:18 file3
+lrwxrwxrwx 1 root   root     27 May  5 19:37 file55 -> /home/ashok/imran_md/file55
+drwxr-xr-x 3 root   root     18 May 29  2024 ganaimp
+drwxr-xr-x 3 root   root     18 May 29  2024 gvnk
+drwxr-xr-x 4 root   root     42 May 29  2024 gvnkch
+drwxrwxr-x 3 tomcat tomcat   36 May 10 19:27 hsperfdata_tomcat
+-rw-r--r-- 1 root   root      0 May 14 19:53 imran
+-rw-rw-r-- 1 root   root      0 May 14 19:56 imran2
+dr-xr-xr-x 3 root   root    128 May  5 20:42 kumar
+drwxr-xr-x 3 root   root     21 May  5 19:42 oracle
+drwxrwxrwx 3 root   root     31 May 13 20:32 public
+drwx------ 3 root   root     17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-vPtG8S
+drwx------ 3 root   root     17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-Y2aXD4
+drwx------ 3 root   root     17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-TOgl4h
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# rm -rf *
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 0
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 0
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file23
+ashok is a software engineer
+he is in occation now
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 4
+-rw-r--r-- 1 root root 51 May 19 19:37 file23
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23
+ashok is a software engineer
+he is in occation now
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file23
+hi this is not a secure server
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 4
+-rw-r--r-- 1 root root 31 May 19 19:40 file23
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23
+hi this is not a secure server
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cp /etc/ssh/sshd_config .
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 8
+-rw-r--r-- 1 root root   31 May 19 19:40 file23
+-rw------- 1 root root 3907 May 19 19:42 sshd_config
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat sshd_config
+#       $OpenBSD: sshd_config,v 1.100 2016/08/15 12:32:04 naddy Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/local/bin:/usr/bin
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+# If you want to change the port on a SELinux system, you have to tell
+# SELinux about this change.
+# semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+#
+#Port 22
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Ciphers and keying
+#RekeyLimit default none
+
+# Logging
+#SyslogFacility AUTH
+SyslogFacility AUTHPRIV
+#LogLevel INFO
+
+# Authentication:
+
+#LoginGraceTime 2m
+#PermitRootLogin yes
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+#PubkeyAuthentication yes
+
+# The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
+# but this is overridden so installations will only check .ssh/authorized_keys
+AuthorizedKeysFile      .ssh/authorized_keys
+
+#AuthorizedPrincipalsFile none
+
+#AuthorizedKeysCommand none
+#AuthorizedKeysCommandUser nobody
+
+# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+#HostbasedAuthentication no
+# Change to yes if you don't trust ~/.ssh/known_hosts for
+# HostbasedAuthentication
+#IgnoreUserKnownHosts no
+# Don't read the user's ~/.rhosts and ~/.shosts files
+#IgnoreRhosts yes
+
+# To disable tunneled clear text passwords, change to no here!
+#PasswordAuthentication yes
+#PermitEmptyPasswords no
+PasswordAuthentication yes
+
+# Change to no to disable s/key passwords
+#ChallengeResponseAuthentication yes
+ChallengeResponseAuthentication no
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+#KerberosUseKuserok yes
+
+# GSSAPI options
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials no
+#GSSAPIStrictAcceptorCheck yes
+#GSSAPIKeyExchange no
+#GSSAPIEnablek5users no
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+# problems.
+UsePAM yes
+
+#AllowAgentForwarding yes
+#AllowTcpForwarding yes
+#GatewayPorts no
+X11Forwarding yes
+#X11DisplayOffset 10
+#X11UseLocalhost yes
+#PermitTTY yes
+#PrintMotd yes
+#PrintLastLog yes
+#TCPKeepAlive yes
+#UseLogin no
+#UsePrivilegeSeparation sandbox
+#PermitUserEnvironment no
+#Compression delayed
+#ClientAliveInterval 0
+#ClientAliveCountMax 3
+#ShowPatchLevel no
+#UseDNS yes
+#PidFile /var/run/sshd.pid
+#MaxStartups 10:30:100
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+
+# no default banner path
+#Banner none
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+# override default of no subsystems
+Subsystem       sftp    /usr/libexec/openssh/sftp-server
+
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#       X11Forwarding no
+#       AllowTcpForwarding no
+#       PermitTTY no
+#       ForceCommand cvs server
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > sshd_config
+admin user allowed
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 8
+-rw-r--r-- 1 root root 31 May 19 19:40 file23
+-rw------- 1 root root 19 May 19 19:43 sshd_config
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat sshd_config
+admin user allowed
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# rm sshd_config
+rm: remove regular file ‘sshd_config’? y
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 4
+-rw-r--r-- 1 root root 31 May 19 19:40 file23
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23
+hi this is not a secure server
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat >> file23
+this is cat command class
+we are testing cat >> file option
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23
+hi this is not a secure server
+this is cat command class
+we are testing cat >> file option
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat >> file45
+this file is copied from server23
+this is a main configuration file for backup
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 8
+-rw-r--r-- 1 root root 91 May 19 19:45 file23
+-rw-r--r-- 1 root root 79 May 19 19:47 file45
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file45
+this file is copied from server23
+this is a main configuration file for backup
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23 > addfile
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root 91 May 19 19:49 addfile
+-rw-r--r-- 1 root root 91 May 19 19:45 file23
+-rw-r--r-- 1 root root 79 May 19 19:47 file45
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfile
+hi this is not a secure server
+this is cat command class
+we are testing cat >> file option
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23
+hi this is not a secure server
+this is cat command class
+we are testing cat >> file option
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file45 >> addfile
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root 170 May 19 19:50 addfile
+-rw-r--r-- 1 root root  91 May 19 19:45 file23
+-rw-r--r-- 1 root root  79 May 19 19:47 file45
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfile
+hi this is not a secure server
+this is cat command class
+we are testing cat >> file option
+this file is copied from server23
+this is a main configuration file for backup
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root 170 May 19 19:50 addfile
+-rw-r--r-- 1 root root  91 May 19 19:45 file23
+-rw-r--r-- 1 root root  79 May 19 19:47 file45
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfile
+hi this is not a secure server
+this is cat command class
+we are testing cat >> file option
+this file is copied from server23
+this is a main configuration file for backup
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file23
+1
+2
+3
+4
+5
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file45
+6
+7
+8
+9
+10
+
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# catls -l
+-bash: catls: command not found
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root 170 May 19 19:50 addfile
+-rw-r--r-- 1 root root  10 May 19 19:56 file23
+-rw-r--r-- 1 root root  12 May 19 19:56 file45
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23
+1
+2
+3
+4
+5
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file45
+6
+7
+8
+9
+10
+
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file23 > addfile
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root 10 May 19 19:57 addfile
+-rw-r--r-- 1 root root 10 May 19 19:56 file23
+-rw-r--r-- 1 root root 12 May 19 19:56 file45
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfile
+1
+2
+3
+4
+5
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file45 >> addfile
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfile
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime
+ 20:00:42 up  1:02,  1 user,  load average: 0.00, 0.04, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime > uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 16
+-rw-r--r-- 1 root root 22 May 19 19:58 addfile
+-rw-r--r-- 1 root root 10 May 19 19:56 file23
+-rw-r--r-- 1 root root 12 May 19 19:56 file45
+-rw-r--r-- 1 root root 61 May 19 20:01 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:01:42 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime >> uptime_output
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:01:42 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+ 20:02:23 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a >> uptime_output
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:01:42 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+ 20:02:23 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime >> uptime_output
+[root@gvnkansiblesrv tmp]# uname -a >> uptime_output
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:01:42 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+ 20:02:23 up  1:03,  1 user,  load average: 0.00, 0.03, 0.05
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+ 20:03:16 up  1:04,  1 user,  load average: 0.00, 0.02, 0.05
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 16
+-rw-r--r-- 1 root root  22 May 19 19:58 addfile
+-rw-r--r-- 1 root root  10 May 19 19:56 file23
+-rw-r--r-- 1 root root  12 May 19 19:56 file45
+-rw-r--r-- 1 root root 413 May 19 20:03 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd /var/tmp/
+[root@gvnkansiblesrv tmp]# ls -lrt
+total 12
+-rw-r--r-- 1 root root   89 Apr 29 21:14 file1
+-rw-r--r-- 1 root root 1428 May 10 20:51 passwd
+---------- 1 root root 1145 May 10 20:51 shadow
+drwx------ 3 root root  124 May 10 20:51 ashok
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-dj9T2F
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-g3009T
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-KjZv1y
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+drwx------ 3 root root  124 May 10 20:51 ashok
+-rw-r--r-- 1 root root   89 Apr 29 21:14 file1
+-rw-r--r-- 1 root root 1428 May 10 20:51 passwd
+---------- 1 root root 1145 May 10 20:51 shadow
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-httpd.service-KjZv1y
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vgauthd.service-dj9T2F
+drwx------ 3 root root   17 May 19 18:58 systemd-private-7f39adace4764324ad827af0d9c4f422-vmtoolsd.service-g3009T
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file1
+SIUsDCHBDC
+SAIA;UHNsm KJDSNVm FJVNL
+MZjDHVS lJNFZOIVMS
+ZKVIAN LZDnPVIF
+ZX KJVSHIRUNSDLKV
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat ashok
+cat: ashok: Is a directory
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd ashok
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 May 10 20:51 dir33
+-rw-r--r-- 1 root root 0 May 10 20:51 file22
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 May 10 20:51 dir33
+-rw-r--r-- 1 root root 0 May 10 20:51 file22
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# mkdir dir55
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 May 10 20:51 dir33
+drwxr-xr-x 2 root root 6 May 19 20:10 dir55
+-rw-r--r-- 1 root root 0 May 10 20:51 file22
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd dir55
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]# ls -l
+total 0
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]# cat > file_new
+this is a file created for tesing purpose
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]# ls -l
+total 4
+-rw-r--r-- 1 root root 42 May 19 20:11 file_new
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]#
+[root@gvnkansiblesrv dir55]# cd ..
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root  6 May 10 20:51 dir33
+drwxr-xr-x 2 root root 22 May 19 20:10 dir55
+-rw-r--r-- 1 root root  0 May 10 20:51 file22
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#  oracle/product/data^C
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# mkdir oracle
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root  6 May 10 20:51 dir33
+drwxr-xr-x 2 root root 22 May 19 20:10 dir55
+-rw-r--r-- 1 root root  0 May 10 20:51 file22
+drwxr-xr-x 2 root root  6 May 19 20:12 oracle
+[root@gvnkansiblesrv ashok]# cd oracle
+[root@gvnkansiblesrv oracle]# ls -l
+total 0
+[root@gvnkansiblesrv oracle]#
+[root@gvnkansiblesrv oracle]# mkdir product
+[root@gvnkansiblesrv oracle]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 May 19 20:12 product
+[root@gvnkansiblesrv oracle]#
+[root@gvnkansiblesrv oracle]# cd product/
+[root@gvnkansiblesrv product]# ls -l
+total 0
+[root@gvnkansiblesrv product]#
+[root@gvnkansiblesrv product]#
+[root@gvnkansiblesrv product]# mkdir data
+[root@gvnkansiblesrv product]# pwd
+/var/tmp/ashok/oracle/product
+[root@gvnkansiblesrv product]#
+[root@gvnkansiblesrv product]#
+[root@gvnkansiblesrv product]#
+[root@gvnkansiblesrv product]# cd data/
+[root@gvnkansiblesrv data]# pwd
+/var/tmp/ashok/oracle/product/data
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# cat > testfile99
+this ia oracle test file
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# ls -l
+total 4
+-rw-r--r-- 1 root root 25 May 19 20:13 testfile99
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# pwd
+/var/tmp/ashok/oracle/product/data
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# ls -l
+total 4
+-rw-r--r-- 1 root root 25 May 19 20:13 testfile99
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# cd ashok
+-bash: cd: ashok: No such file or directory
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# cd ../../..
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd -
+/var/tmp/ashok/oracle/product/data
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# pwd
+/var/tmp/ashok/oracle/product/data
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# cd /var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd /var/tmp/ashok/oracle/product/data
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# pwd
+/var/tmp/ashok/oracle/product/data
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]#
+[root@gvnkansiblesrv data]# cd ../
+[root@gvnkansiblesrv product]# pwd
+/var/tmp/ashok/oracle/product
+[root@gvnkansiblesrv product]# cd /var/tmp/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# ls-l
+-bash: ls-l: command not found
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root  6 May 10 20:51 dir33
+drwxr-xr-x 2 root root 22 May 19 20:10 dir55
+-rw-r--r-- 1 root root  0 May 10 20:51 file22
+drwxr-xr-x 3 root root 21 May 19 20:12 oracle
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#  grid/apps/public/data_file^C
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# mkdir -p grid/apps/public/
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+drwxr-xr-x 2 root root  6 May 10 20:51 dir33
+drwxr-xr-x 2 root root 22 May 19 20:10 dir55
+-rw-r--r-- 1 root root  0 May 10 20:51 file22
+drwxr-xr-x 3 root root 18 May 19 20:19 grid
+drwxr-xr-x 3 root root 21 May 19 20:12 oracle
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd grid
+[root@gvnkansiblesrv grid]# ls -l
+total 0
+drwxr-xr-x 3 root root 20 May 19 20:19 apps
+[root@gvnkansiblesrv grid]# cd apps/
+[root@gvnkansiblesrv apps]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 May 19 20:19 public
+[root@gvnkansiblesrv apps]#
+[root@gvnkansiblesrv apps]#
+[root@gvnkansiblesrv apps]# cd public/
+[root@gvnkansiblesrv public]# ls -l
+total 0
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# cat > data_file
+adding data from new directory
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# ls -l
+
+total 4
+-rw-r--r-- 1 root root 31 May 19 20:20 data_file
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# pwd
+/var/tmp/ashok/grid/apps/public
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# pwd
+/var/tmp/ashok/grid/apps/public
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# pwd
+/var/tmp/ashok/grid/apps/public
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# ls -l
+total 4
+-rw-r--r-- 1 root root 31 May 19 20:20 data_file
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# mkdir ashok
+[root@gvnkansiblesrv public]# ls -l
+total 4
+drwxr-xr-x 2 root root  6 May 19 20:23 ashok
+-rw-r--r-- 1 root root 31 May 19 20:20 data_file
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]#
+[root@gvnkansiblesrv public]# cd ashok/
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# pwd
+/var/tmp/ashok/grid/apps/public/ashok
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# ls -l
+total 0
+[root@gvnkansiblesrv ashok]#
+[root@gvnkansiblesrv ashok]# cd /var/tmp/ashok/grid
+[root@gvnkansiblesrv grid]# ls -l
+total 0
+drwxr-xr-x 3 root root 20 May 19 20:19 apps
+[root@gvnkansiblesrv grid]#
+[root@gvnkansiblesrv grid]# mkdir ashok
+[root@gvnkansiblesrv grid]# ls -l
+total 0
+drwxr-xr-x 3 root root 20 May 19 20:19 apps
+drwxr-xr-x 2 root root  6 May 19 20:24 ashok
+[root@gvnkansiblesrv grid]#
+[root@gvnkansiblesrv grid]#
+[root@gvnkansiblesrv grid]# cd /
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]#
+[root@gvnkansiblesrv /]# cd /tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 16
+-rw-r--r-- 1 root root  22 May 19 19:58 addfile
+-rw-r--r-- 1 root root  10 May 19 19:56 file23
+-rw-r--r-- 1 root root  12 May 19 19:56 file45
+-rw-r--r-- 1 root root 413 May 19 20:03 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file1
+shbdhbdwdNXA;DNCOJSPI
+ADCSJLDNPKD
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root root  22 May 19 19:58 addfile
+-rw-r--r-- 1 root root  34 May 19 20:25 file1
+-rw-r--r-- 1 root root  10 May 19 19:56 file23
+-rw-r--r-- 1 root root  12 May 19 19:56 file45
+-rw-r--r-- 1 root root 413 May 19 20:03 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# rm -rf *
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file1
+adding this file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 4
+-rw-r--r-- 1 root root 18 May 19 20:26 file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat >> file2
+adding new file 2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file2 >> file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 8
+-rw-r--r-- 1 root root 36 May 19 20:27 file1
+-rw-r--r-- 1 root root 18 May 19 20:26 file2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file1
+adding this file1
+adding new file 2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file1 > addfiles
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root 36 May 19 20:28 addfiles
+-rw-r--r-- 1 root root 36 May 19 20:27 file1
+-rw-r--r-- 1 root root 18 May 19 20:26 file2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfiles
+adding this file1
+adding new file 2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime > uptime)output
+-bash: syntax error near unexpected token `)'
+[root@gvnkansiblesrv tmp]# uptime > uptime_output
+[root@gvnkansiblesrv tmp]# ls -l
+total 16
+-rw-r--r-- 1 root root 36 May 19 20:28 addfiles
+-rw-r--r-- 1 root root 36 May 19 20:27 file1
+-rw-r--r-- 1 root root 18 May 19 20:26 file2
+-rw-r--r-- 1 root root 61 May 19 20:29 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:29:44 up  1:31,  1 user,  load average: 0.01, 0.05, 0.06
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime > uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:30:14 up  1:31,  1 user,  load average: 0.00, 0.05, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime >> uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:30:14 up  1:31,  1 user,  load average: 0.00, 0.05, 0.05
+ 20:30:30 up  1:32,  1 user,  load average: 0.00, 0.05, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root root  36 May 19 20:28 addfiles
+-rw-r--r-- 1 root root  36 May 19 20:27 file1
+-rw-r--r-- 1 root root  18 May 19 20:26 file2
+-rw-r--r-- 1 root root 115 May 19 20:31 uname_output
+-rw-r--r-- 1 root root 122 May 19 20:30 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 20:30:14 up  1:31,  1 user,  load average: 0.00, 0.05, 0.05
+ 20:30:30 up  1:32,  1 user,  load average: 0.00, 0.05, 0.05
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uname_output
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
