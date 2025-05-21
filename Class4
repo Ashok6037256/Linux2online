@@ -1,0 +1,1650 @@
+Class 4 21/05/2025
+==================
+
+# date  ====> this command will show day,month, date, time, along with timezone
+
+# who ====> this command is used to see how many people are login in the same server
+
+# who am i ====> this command is used to see only your login terminal information
+
+# wall ====> this comand is used brodcast the messages to login users
+
+# touch filename ====> this command will create 0 size file without adding data.
+
+Listing files and directories:
+============================== 
+# ls	====> list the files/directories names 
+
+# ls -l  ====> long listing of the files/directories 
+
+# ls –l filename ====> to see the long listing of particular file 
+
+# ls -li ====> shows the files/directories along with inode numbers
+  
+# ls -la ====> shows the files/directories along with hidden files/directories
+
+# ls -lh ====> shows long listing of the files/directories with human readable sizes
+
+1024b ===> 1Kb
+1024kb  ====> 1Mb
+1024mb  ====> 1Gb
+1024gb  ====> 1Tb
+
+# ls –l directoryname/ ====> Show all files/directories of the specified directory
+
+# ls –ld directoryname ====> show long list of the specified directory
+
+# ls -l *.log ====> show all files whch are having .log extension
+
+l# ls -l boot* ====> show the specified chareacter matched files/directorires
+
+# ls -lt ====> shows long listing of the files/directories in sorting of time stamp (new file is in top, old file is in bottom)
+
+# ls -ltr ====> shows long listing of the files/directories in sorting of time stamp in a reverce order (new file is in bottom, old file is in top)
+
+# ls -lR ====> shows long listing of the files/directories along with sub direcotires
+
+Lab Session:
+============
+
+mkdir /tmp/ashok; cd ashok; yesterday lab...
+
+mkdir /tmp/filetest; cd filetest; yesterday lab...
+
+mkdir /tmp/dirtest; cd dirtest; yesterday lab...
+
+Session OutPut:
+===============
+
+Network error: Connection timed out
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+
+Network error: Connection timed out
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.176                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Tue May 20 20:53:29 2025
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /tmp/
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root   root    36 May 19 20:28 addfiles
+-rw-r--r-- 1 root   root    36 May 19 20:27 file1
+-rw-r--r-- 1 root   root    18 May 19 20:26 file2
+drwxr-xr-x 2 tomcat tomcat  18 May 21 19:15 hsperfdata_tomcat
+drwxrwxr-x 2 imran  imran   24 May 20 20:19 imran
+drwx------ 3 root   root    17 May 21 19:15 systemd-private-f6ac0d82fc204881ae240a2e8d140267-httpd.service-3rnZzu
+drwx------ 3 root   root    17 May 21 19:14 systemd-private-f6ac0d82fc204881ae240a2e8d140267-vgauthd.service-1JPmxC
+drwx------ 3 root   root    17 May 21 19:14 systemd-private-f6ac0d82fc204881ae240a2e8d140267-vmtoolsd.service-Gdjr69
+-rw-r--r-- 1 root   root   115 May 19 20:31 uname_output
+-rw-r--r-- 1 root   root   122 May 19 20:30 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# rm -rf *
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -
+ls: cannot access -: No such file or directory
+[root@gvnkansiblesrv tmp]# ls -l
+total 0
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 0
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file1
+adding entry from file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 4
+-rw-r--r-- 1 root root 24 May 21 19:17 file1
+[root@gvnkansiblesrv tmp]# cat file1
+adding entry from file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime > uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 8
+-rw-r--r-- 1 root root 24 May 21 19:17 file1
+-rw-r--r-- 1 root root 61 May 21 19:18 uptime_output
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 19:18:07 up 3 min,  1 user,  load average: 0.15, 0.37, 0.19
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a > uname_output
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root 115 May 21 19:18 uname_output
+-rw-r--r-- 1 root root  61 May 21 19:18 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uname_output
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 12
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root 115 May 21 19:18 uname_output
+-rw-r--r-- 1 root root  61 May 21 19:18 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file2
+adding entry from file2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 16
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 115 May 21 19:18 uname_output
+-rw-r--r-- 1 root root  61 May 21 19:18 uptime_output
+[root@gvnkansiblesrv tmp]# cat file2
+adding entry from file2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime >> uptime_output
+[root@gvnkansiblesrv tmp]# ls -l
+total 16
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 115 May 21 19:18 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uptime_output
+ 19:18:07 up 3 min,  1 user,  load average: 0.15, 0.37, 0.19
+ 19:20:05 up 5 min,  1 user,  load average: 0.02, 0.25, 0.16
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uname_output
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uname -a >> uname_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat uname_output
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+Linux gvnkansiblesrv 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file1 > addfile
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root root  24 May 21 19:21 addfile
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat addfile
+adding entry from file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat file2 >> addfile
+[root@gvnkansiblesrv tmp]# cat addfile
+adding entry from file1
+adding entry from file2
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# pwd
+/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# date
+Wed May 21 19:23:49 IST 2025
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# who
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# who
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+ashok    pts/1        2025-05-21 19:28 (192.168.29.79)
+imran    pts/2        2025-05-21 19:28 (192.168.29.79)
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# date
+Wed May 21 19:29:28 IST 2025
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# wall
+I am going to reboot the server in next couple of minutes, save ayour data and logout ASAP...
+hi
+[root@gvnkansiblesrv ~]#
+Broadcast message from root@gvnkansiblesrv (pts/0) (Wed May 21 19:31:21 2025):
+
+I am going to reboot the server in next couple of minutes, save ayour data and
+logout ASAP...
+hi
+
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# who
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+ashok    pts/1        2025-05-21 19:28 (192.168.29.79)
+imran    pts/2        2025-05-21 19:28 (192.168.29.79)
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# cd /tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 20
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]# who
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+ashok    pts/1        2025-05-21 19:28 (192.168.29.79)
+imran    pts/2        2025-05-21 19:28 (192.168.29.79)
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# who am i
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# who
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+ashok    pts/1        2025-05-21 19:28 (192.168.29.79)
+imran    pts/2        2025-05-21 19:28 (192.168.29.79)
+root     pts/3        2025-05-21 19:33 (192.168.29.79)
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# who am i
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# who
+root     tty1         2025-05-21 19:35
+root     pts/0        2025-05-21 19:16 (192.168.29.79)
+ashok    pts/1        2025-05-21 19:28 (192.168.29.79)
+imran    pts/2        2025-05-21 19:28 (192.168.29.79)
+root     pts/3        2025-05-21 19:33 (192.168.29.79)
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > file45
+sadad
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 24
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# uptime > uptime_backup
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# touch ashok
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat ashok
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# pwd
+/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+addfile  ashok  file1  file2  file45  uname_output  uptime_backup  uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# mkdir ashok
+mkdir: cannot create directory ‘ashok’: File exists
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+addfile  ashok  file1  file2  file45  uname_output  uptime_backup  uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+addfile  ashok  file1  file2  file45  uname_output  uptime_backup  uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l ashok
+-rw-r--r-- 1 root root 0 May 21 19:39 ashok
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l -rw-r--r-- 1 root root 0 May 21 19:39 ashok
+ls: invalid line width: -r--r--
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l ashok
+-rw-r--r-- 1 root root 0 May 21 19:39 ashok
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -li
+total 28
+34480874 -rw-r--r-- 1 root root  48 May 21 19:21 addfile
+34480887 -rw-r--r-- 1 root root   0 May 21 19:39 ashok
+33554901 -rw-r--r-- 1 root root  24 May 21 19:17 file1
+34480873 -rw-r--r-- 1 root root  24 May 21 19:19 file2
+34480875 -rw-r--r-- 1 root root   6 May 21 19:38 file45
+34480869 -rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+34480876 -rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+33554911 -rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -la
+total 32
+drwxrwxrwt.  7 root root  223 May 21 19:39 .
+dr-xr-xr-x. 28 root root 4096 May 15 19:51 ..
+-rw-r--r--   1 root root   48 May 21 19:21 addfile
+-rw-r--r--   1 root root    0 May 21 19:39 ashok
+-rw-r--r--   1 root root   24 May 21 19:17 file1
+-rw-r--r--   1 root root   24 May 21 19:19 file2
+-rw-r--r--   1 root root    6 May 21 19:38 file45
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .font-unix
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .ICE-unix
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .Test-unix
+-rw-r--r--   1 root root  920 May 21 19:21 uname_output
+-rw-r--r--   1 root root   63 May 21 19:38 uptime_backup
+-rw-r--r--   1 root root  122 May 21 19:20 uptime_output
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .X11-unix
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .XIM-unix
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+addfile  ashok  file1  file2  file45  uname_output  uptime_backup  uptime_output
+[root@gvnkansiblesrv tmp]# cd .font-unix
+[root@gvnkansiblesrv .font-unix]# ls -l
+total 0
+[root@gvnkansiblesrv .font-unix]#
+[root@gvnkansiblesrv .font-unix]#
+[root@gvnkansiblesrv .font-unix]# pwd
+/tmp/.font-unix
+[root@gvnkansiblesrv .font-unix]#
+[root@gvnkansiblesrv .font-unix]#
+[root@gvnkansiblesrv .font-unix]# cd ..
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd ashok
+-bash: cd: ashok: Not a directory
+[root@gvnkansiblesrv tmp]# cd .X11-unix
+[root@gvnkansiblesrv .X11-unix]#
+[root@gvnkansiblesrv .X11-unix]# ls -l
+total 0
+[root@gvnkansiblesrv .X11-unix]#
+[root@gvnkansiblesrv .X11-unix]# cd .
+[root@gvnkansiblesrv .X11-unix]#
+[root@gvnkansiblesrv .X11-unix]#
+[root@gvnkansiblesrv .X11-unix]# ls -la
+total 0
+drwxrwxrwt. 2 root root   6 Apr 29  2024 .
+drwxrwxrwt. 7 root root 223 May 21 19:39 ..
+[root@gvnkansiblesrv .X11-unix]#
+[root@gvnkansiblesrv .X11-unix]#
+[root@gvnkansiblesrv .X11-unix]# cd ..
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cat > .newfile
+this file is sample for hidden file
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -la
+total 36
+drwxrwxrwt.  7 root root  239 May 21 19:50 .
+dr-xr-xr-x. 28 root root 4096 May 15 19:51 ..
+-rw-r--r--   1 root root   48 May 21 19:21 addfile
+-rw-r--r--   1 root root    0 May 21 19:39 ashok
+-rw-r--r--   1 root root   24 May 21 19:17 file1
+-rw-r--r--   1 root root   24 May 21 19:19 file2
+-rw-r--r--   1 root root    6 May 21 19:38 file45
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .font-unix
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .ICE-unix
+-rw-r--r--   1 root root   36 May 21 19:50 .newfile
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .Test-unix
+-rw-r--r--   1 root root  920 May 21 19:21 uname_output
+-rw-r--r--   1 root root   63 May 21 19:38 uptime_backup
+-rw-r--r--   1 root root  122 May 21 19:20 uptime_output
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .X11-unix
+drwxrwxrwt.  2 root root    6 Apr 29  2024 .XIM-unix
+[root@gvnkansiblesrv tmp]# cat .newfile
+this file is sample for hidden file
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -lh
+total 28K
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd /var/lo
+-bash: cd: /var/lo: No such file or directory
+[root@gvnkansiblesrv tmp]# cd /var/log
+[root@gvnkansiblesrv log]# ls -l
+total 6824
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+drwx------. 2 root   root      23 Apr 29  2024 audit
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root    4388 May 21 19:15 cron
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root  516030 May 21 19:35 messages
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root  182661 May 21 19:52 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -lh
+total 6.7M
+drwxr-xr-x. 2 root   root  232 Apr 29  2024 anaconda
+drwx------. 2 root   root   23 Apr 29  2024 audit
+-rw-------. 1 root   root 9.7K May 21 19:15 boot.log
+-rw-------  1 root   root 9.6K May 13 20:31 boot.log-20250513
+-rw-------  1 root   root    0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root    0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root  20K May 17 17:06 boot.log-20250517
+-rw-------  1 root   root    0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root 9.5K May 19 19:47 boot.log-20250519
+-rw-------  1 root   root 9.6K May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp 3.0K May 20 20:53 btmp
+-rw-------  1 root   utmp  384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root 4.3K May 21 19:15 cron
+-rw-------  1 root   root 9.5K Apr 29 21:17 cron-20250429
+-rw-------  1 root   root 6.1K May  5 20:25 cron-20250505
+-rw-------  1 root   root 6.8K May 13 20:31 cron-20250513
+-rw-------  1 root   root 7.4K May 18 16:50 cron-20250518
+-rw-r--r--  1 root   root 130K May 21 19:14 dmesg
+-rw-r--r--  1 root   root 130K May 20 19:44 dmesg.old
+-rw-r--r--. 1 root   root  614 Apr 29  2024 firewalld
+-rw-r--r--. 1 root   root  193 Apr 29  2024 grubby_prune_debug
+drwx------  2 root   root  172 May 18 16:50 httpd
+-rw-r--r--. 1 root   root 1.5M May 21 19:35 lastlog
+-rw-------  1 root   root 2.5K May 21 19:15 maillog
+-rw-------  1 root   root 2.5K Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root  832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root  624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root  416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root 504K May 21 19:35 messages
+-rw-------  1 root   root 3.2M Apr 29 21:17 messages-20250429
+-rw-------  1 root   root 668K May  5 20:25 messages-20250505
+-rw-------  1 root   root 505K May 13 20:31 messages-20250513
+-rw-------  1 root   root 350K May 18 16:50 messages-20250518
+drwxr-xr-x. 2 root   root  263 May 18 16:50 rhsm
+-rw-------  1 root   root 9.2K May 21 19:35 secure
+-rw-------  1 root   root  95K Apr 29 20:48 secure-20250429
+-rw-------  1 root   root 4.8K May  5 19:04 secure-20250505
+-rw-------  1 root   root  25K May 13 19:53 secure-20250513
+-rw-------  1 root   root 9.9K May 18 16:43 secure-20250518
+-rw-------  1 root   root    0 May 18 16:50 spooler
+-rw-------  1 root   root    0 May 27  2024 spooler-20250429
+-rw-------  1 root   root    0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root    0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root    0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root    0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root 8.0K May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root   42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root  96K May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root 179K May 21 19:52 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp 611K May 21 19:35 wtmp
+-rw-------  1 root   root    0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root 9.9K Jul 16  2024 yum.log-20250429
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -l |tail
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root  183101 May 21 19:53 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -lh |tail
+-rw-------  1 root   root    0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root    0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root    0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root 8.0K May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root   42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root  96K May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root 179K May 21 19:53 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp 611K May 21 19:35 wtmp
+-rw-------  1 root   root    0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root 9.9K Jul 16  2024 yum.log-20250429
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# cd /tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# l -l
+-bash: l: command not found
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# mkdir dir1 dir2 dir3
+[root@gvnkansiblesrv tmp]# ls -lrt
+total 28
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+drwxr-xr-x 2 root root   6 May 21 19:58 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+addfile  ashok  dir1  dir2  dir3  file1  file2  file45  uname_output  uptime_backup  uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l dir1
+total 0
+[root@gvnkansiblesrv tmp]# ls -l ashok
+-rw-r--r-- 1 root root 0 May 21 19:39 ashok
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# touch dir1/file33
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# touch dir1/file34
+[root@gvnkansiblesrv tmp]# touch dir1/file35
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l dir1
+total 0
+-rw-r--r-- 1 root root 0 May 21 20:00 file33
+-rw-r--r-- 1 root root 0 May 21 20:00 file34
+-rw-r--r-- 1 root root 0 May 21 20:00 file35
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls
+addfile  ashok  dir1  dir2  dir3  file1  file2  file45  uname_output  uptime_backup  uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -ld dir1
+drwxr-xr-x 2 root root 48 May 21 20:00 dir1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+drwxr-xr-x 2 root root  48 May 21 20:00 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd -
+/var/log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# pwd
+/var/log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -l
+total 6828
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+drwx------. 2 root   root      23 Apr 29  2024 audit
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root  187721 May 21 20:03 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -l *.log
+-rw-------. 1 root root   9849 May 21 19:15 boot.log
+-rw-r--r--. 1 root root 188161 May 21 20:04 vmware-vmsvc.log
+-rw-------  1 root root      0 Apr 29 21:17 yum.log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -l cron*
+-rw------- 1 root root 4964 May 21 20:01 cron
+-rw------- 1 root root 9710 Apr 29 21:17 cron-20250429
+-rw------- 1 root root 6161 May  5 20:25 cron-20250505
+-rw------- 1 root root 6908 May 13 20:31 cron-20250513
+-rw------- 1 root root 7542 May 18 16:50 cron-20250518
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -l *.cnf
+ls: cannot access *.cnf: No such file or directory
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# cd /tmp/
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+drwxr-xr-x 2 root root  48 May 21 20:00 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -lt
+total 28
+drwxr-xr-x 2 root root  48 May 21 20:00 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# cd -
+/var/log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -lt
+total 6828
+-rw-r--r--. 1 root   root  189921 May 21 20:08 vmware-vmsvc.log
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+drwx------. 2 root   root      23 Apr 29  2024 audit
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# date
+Wed May 21 20:09:16 IST 2025
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -lt
+total 6828
+-rw-r--r--. 1 root   root  190801 May 21 20:10 vmware-vmsvc.log
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+drwx------. 2 root   root      23 Apr 29  2024 audit
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -ltr
+total 6828
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+drwx------. 2 root   root      23 Apr 29  2024 audit
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+drwx------  2 root   root     172 May 18 16:50 httpd
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+-rw-------  1 root   root       0 May 18 16:50 spooler
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-r--r--. 1 root   root  191021 May 21 20:11 vmware-vmsvc.log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -ltr
+total 6828
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+drwx------. 2 root   root      23 Apr 29  2024 audit
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+drwx------  2 root   root     172 May 18 16:50 httpd
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+-rw-------  1 root   root       0 May 18 16:50 spooler
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-r--r--. 1 root   root  191241 May 21 20:11 vmware-vmsvc.log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -lt
+total 6828
+-rw-r--r--. 1 root   root  191461 May 21 20:12 vmware-vmsvc.log
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+drwx------. 2 root   root      23 Apr 29  2024 audit
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# cd -
+/tmp
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+drwxr-xr-x 2 root root  48 May 21 20:00 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# -rw-r--r--. 1 root   root  191461 May 21 20:12 vmware-vmsvc.log
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-bash: -rw-r--r--.: command not found
+[root@gvnkansiblesrv tmp]# -rw-------  1 root   root    4964 May 21 20:01 cron
+-bash: -rw-------: command not found
+[root@gvnkansiblesrv tmp]# -rw-------  1 root   root  516177 May 21 20:01 messages
+-bash: -rw-------: command not found
+[root@gvnkansiblesrv tmp]# -rw-------  1 root   root    9406 May 21 19:35 secure
+-bash: -rw-------: command not found
+[root@gvnkansiblesrv tmp]# -rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-bash: -rw-r--r--.: command not found
+[root@gvnkansiblesrv tmp]# -rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-bash: -rw-rw-r--.: command not found
+[root@gvnkansiblesrv tmp]# drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+-bash: drwxrwx---: command not found
+[root@gvnkansiblesrv tmp]# -rw-------  1 root   root    2558 May 21 19:15 maillog
+-bash: -rw-------: command not found
+[root@gvnkansiblesrv tmp]# -rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-bash: -rw-r--r--.: command not found
+[root@gvnkansiblesrv tmp]# -rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-bash: -rw-------.: command not found
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -l
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+drwxr-xr-x 2 root root  48 May 21 20:00 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+[root@gvnkansiblesrv tmp]#
+[root@gvnkansiblesrv tmp]# ls -lR
+.:
+total 28
+-rw-r--r-- 1 root root  48 May 21 19:21 addfile
+-rw-r--r-- 1 root root   0 May 21 19:39 ashok
+drwxr-xr-x 2 root root  48 May 21 20:00 dir1
+drwxr-xr-x 2 root root   6 May 21 19:58 dir2
+drwxr-xr-x 2 root root   6 May 21 19:58 dir3
+-rw-r--r-- 1 root root  24 May 21 19:17 file1
+-rw-r--r-- 1 root root  24 May 21 19:19 file2
+-rw-r--r-- 1 root root   6 May 21 19:38 file45
+-rw-r--r-- 1 root root 920 May 21 19:21 uname_output
+-rw-r--r-- 1 root root  63 May 21 19:38 uptime_backup
+-rw-r--r-- 1 root root 122 May 21 19:20 uptime_output
+
+./dir1:
+total 0
+-rw-r--r-- 1 root root 0 May 21 20:00 file33
+-rw-r--r-- 1 root root 0 May 21 20:00 file34
+-rw-r--r-- 1 root root 0 May 21 20:00 file35
+
+./dir2:
+total 0
+
+./dir3:
+total 0
+[root@gvnkansiblesrv tmp]# cd -
+/var/log
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]#
+[root@gvnkansiblesrv log]# ls -lR
+.:
+total 6828
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+drwx------. 2 root   root      23 Apr 29  2024 audit
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root  193001 May 21 20:15 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+
+./anaconda:
+total 2124
+-rw-------. 1 root root   22904 Apr 29  2024 anaconda.log
+-rw-------. 1 root root    5270 Apr 29  2024 ifcfg.log
+-rw-------. 1 root root 1513841 Apr 29  2024 journal.log
+-rw-------. 1 root root       0 Apr 29  2024 ks-script-0JJIHs.log
+-rw-------. 1 root root       0 Apr 29  2024 ks-script-1cNOMU.log
+-rw-------. 1 root root       0 Apr 29  2024 ks-script-r5FxF_.log
+-rw-------. 1 root root  115081 Apr 29  2024 packaging.log
+-rw-------. 1 root root   32816 Apr 29  2024 program.log
+-rw-------. 1 root root   88996 Apr 29  2024 storage.log
+-rw-------. 1 root root  352292 Apr 29  2024 syslog
+-rw-------. 1 root root   21061 Apr 29  2024 X.log
+
+./audit:
+total 7816
+-rw-------. 1 root root 7997151 May 21 20:01 audit.log
+
+./httpd:
+total 40
+-rw-r--r-- 1 root root     0 May 28  2024 access_log
+-rw-r--r-- 1 root root   413 May 28  2024 access_log-20240528
+-rw-r--r-- 1 root root  3274 May 21 19:15 error_log
+-rw-r--r-- 1 root root 12662 Apr 29 21:17 error_log-20250429
+-rw-r--r-- 1 root root  4487 May  5 20:25 error_log-20250505
+-rw-r--r-- 1 root root  3565 May 13 20:31 error_log-20250513
+-rw-r--r-- 1 root root  2643 May 18 16:50 error_log-20250518
+
+./rhsm:
+total 60
+-rw-r--r-- 1 root root  1853 May 21 19:15 rhsmcertd.log
+-rw-r--r-- 1 root root  6926 Apr 29 20:37 rhsmcertd.log-20250429
+-rw-r--r-- 1 root root  2399 May  5 19:03 rhsmcertd.log-20250505
+-rw-r--r-- 1 root root  1954 May 13 19:18 rhsmcertd.log-20250513
+-rw-r--r-- 1 root root  1397 May 17 17:00 rhsmcertd.log-20250518
+-rw-r--r-- 1 root root  2040 May 20 20:31 rhsm.log
+-rw-r--r-- 1 root root 16820 Jul 16  2024 rhsm.log-20250429
+-rw-r--r-- 1 root root  2040 May  2 20:37 rhsm.log-20250505
+-rw-r--r-- 1 root root  2833 May 10 19:24 rhsm.log-20250513
+-rw-r--r-- 1 root root  2833 May 17 17:06 rhsm.log-20250518
+
+./tomcat:
+total 220
+-rw-r--r-- 1 tomcat tomcat  4314 May 18  2024 catalina.2024-05-18.log
+-rw-r--r-- 1 tomcat tomcat  4347 May 20  2024 catalina.2024-05-20.log
+-rw-r--r-- 1 tomcat tomcat  4340 May 21  2024 catalina.2024-05-21.log
+-rw-r--r-- 1 tomcat tomcat  3545 May 22  2024 catalina.2024-05-22.log
+-rw-r--r-- 1 tomcat tomcat 20933 May 23  2024 catalina.2024-05-23.log
+-rw-r--r-- 1 tomcat tomcat  7885 May 24  2024 catalina.2024-05-24.log
+-rw-r--r-- 1 tomcat tomcat  3545 May 25  2024 catalina.2024-05-25.log
+-rw-r--r-- 1 tomcat tomcat  3545 May 27  2024 catalina.2024-05-27.log
+-rw-r--r-- 1 tomcat tomcat  3545 May 28  2024 catalina.2024-05-28.log
+-rw-r--r-- 1 tomcat tomcat  3632 May 29  2024 catalina.2024-05-29.log
+-rw-r--r-- 1 tomcat tomcat  8628 May 30  2024 catalina.2024-05-30.log
+-rw-r--r-- 1 tomcat tomcat 13034 Jul 10  2024 catalina.2024-07-10.log
+-rw-r--r-- 1 tomcat tomcat  8628 Jul 11  2024 catalina.2024-07-11.log
+-rw-r--r-- 1 tomcat tomcat  4314 Jul 16  2024 catalina.2024-07-16.log
+-rw-r--r-- 1 tomcat tomcat  8635 Apr 29 22:30 catalina.2025-04-29.log
+-rw-r--r-- 1 tomcat tomcat  4314 Apr 30 19:21 catalina.2025-04-30.log
+-rw-r--r-- 1 tomcat tomcat  3854 May  1 20:58 catalina.2025-05-01.log
+-rw-r--r-- 1 tomcat tomcat  3519 May  2 19:48 catalina.2025-05-02.log
+-rw-r--r-- 1 tomcat tomcat  3519 May  5 19:03 catalina.2025-05-05.log
+-rw-r--r-- 1 tomcat tomcat   795 May  8 19:59 catalina.2025-05-08.log
+-rw-r--r-- 1 tomcat tomcat  3632 May  9 20:38 catalina.2025-05-09.log
+-rw-r--r-- 1 tomcat tomcat  3519 May 10 18:44 catalina.2025-05-10.log
+-rw-r--r-- 1 tomcat tomcat  3519 May 13 19:18 catalina.2025-05-13.log
+-rw-r--r-- 1 tomcat tomcat   113 May 15 20:41 catalina.2025-05-15.log
+-rw-r--r-- 1 tomcat tomcat  7833 May 17 17:00 catalina.2025-05-17.log
+-rw-r--r-- 1 tomcat tomcat   795 May 18 17:53 catalina.2025-05-18.log
+-rw-r--r-- 1 tomcat tomcat  3519 May 19 18:58 catalina.2025-05-19.log
+-rw-r--r-- 1 tomcat tomcat  3744 May 20 21:06 catalina.2025-05-20.log
+-rw-r--r-- 1 tomcat tomcat  3519 May 21 19:15 catalina.2025-05-21.log
+-rw-rw---- 1 tomcat tomcat     0 May 18 16:50 catalina.out
+-rw-rw---- 1 tomcat tomcat    48 Oct 13  2017 catalina.out-20240527.gz
+-rw-rw---- 1 tomcat tomcat    20 May 27  2024 catalina.out-20250429.gz
+-rw-rw---- 1 tomcat tomcat    20 Apr 29 21:17 catalina.out-20250505.gz
+-rw-rw---- 1 tomcat tomcat    20 May  5 20:25 catalina.out-20250513.gz
+-rw-rw---- 1 tomcat tomcat    20 May 13 20:31 catalina.out-20250518.gz
+-rw-r--r-- 1 tomcat tomcat     0 May 18  2024 host-manager.2024-05-18.log
+-rw-r--r-- 1 tomcat tomcat     0 May 20  2024 host-manager.2024-05-20.log
+-rw-r--r-- 1 tomcat tomcat     0 May 21  2024 host-manager.2024-05-21.log
+-rw-r--r-- 1 tomcat tomcat     0 May 22  2024 host-manager.2024-05-22.log
+-rw-r--r-- 1 tomcat tomcat     0 May 23  2024 host-manager.2024-05-23.log
+-rw-r--r-- 1 tomcat tomcat     0 May 24  2024 host-manager.2024-05-24.log
+-rw-r--r-- 1 tomcat tomcat     0 May 25  2024 host-manager.2024-05-25.log
+-rw-r--r-- 1 tomcat tomcat     0 May 27  2024 host-manager.2024-05-27.log
+-rw-r--r-- 1 tomcat tomcat     0 May 28  2024 host-manager.2024-05-28.log
+-rw-r--r-- 1 tomcat tomcat     0 May 29  2024 host-manager.2024-05-29.log
+-rw-r--r-- 1 tomcat tomcat     0 May 30  2024 host-manager.2024-05-30.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 10  2024 host-manager.2024-07-10.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 11  2024 host-manager.2024-07-11.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 16  2024 host-manager.2024-07-16.log
+-rw-r--r-- 1 tomcat tomcat     0 Apr 29 20:30 host-manager.2025-04-29.log
+-rw-r--r-- 1 tomcat tomcat     0 Apr 30 19:00 host-manager.2025-04-30.log
+-rw-r--r-- 1 tomcat tomcat     0 May  1 18:53 host-manager.2025-05-01.log
+-rw-r--r-- 1 tomcat tomcat     0 May  2 19:48 host-manager.2025-05-02.log
+-rw-r--r-- 1 tomcat tomcat     0 May  5 19:03 host-manager.2025-05-05.log
+-rw-r--r-- 1 tomcat tomcat     0 May  9 19:01 host-manager.2025-05-09.log
+-rw-r--r-- 1 tomcat tomcat     0 May 10 18:44 host-manager.2025-05-10.log
+-rw-r--r-- 1 tomcat tomcat     0 May 13 19:18 host-manager.2025-05-13.log
+-rw-r--r-- 1 tomcat tomcat     0 May 17 16:38 host-manager.2025-05-17.log
+-rw-r--r-- 1 tomcat tomcat     0 May 19 18:58 host-manager.2025-05-19.log
+-rw-r--r-- 1 tomcat tomcat     0 May 20 19:44 host-manager.2025-05-20.log
+-rw-r--r-- 1 tomcat tomcat     0 May 21 19:15 host-manager.2025-05-21.log
+-rw-r--r-- 1 tomcat tomcat     0 May 18  2024 localhost.2024-05-18.log
+-rw-r--r-- 1 tomcat tomcat     0 May 20  2024 localhost.2024-05-20.log
+-rw-r--r-- 1 tomcat tomcat     0 May 21  2024 localhost.2024-05-21.log
+-rw-r--r-- 1 tomcat tomcat     0 May 22  2024 localhost.2024-05-22.log
+-rw-r--r-- 1 tomcat tomcat     0 May 23  2024 localhost.2024-05-23.log
+-rw-r--r-- 1 tomcat tomcat     0 May 24  2024 localhost.2024-05-24.log
+-rw-r--r-- 1 tomcat tomcat     0 May 25  2024 localhost.2024-05-25.log
+-rw-r--r-- 1 tomcat tomcat     0 May 27  2024 localhost.2024-05-27.log
+-rw-r--r-- 1 tomcat tomcat     0 May 28  2024 localhost.2024-05-28.log
+-rw-r--r-- 1 tomcat tomcat     0 May 29  2024 localhost.2024-05-29.log
+-rw-r--r-- 1 tomcat tomcat     0 May 30  2024 localhost.2024-05-30.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 10  2024 localhost.2024-07-10.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 11  2024 localhost.2024-07-11.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 16  2024 localhost.2024-07-16.log
+-rw-r--r-- 1 tomcat tomcat     0 Apr 29 20:30 localhost.2025-04-29.log
+-rw-r--r-- 1 tomcat tomcat     0 Apr 30 19:00 localhost.2025-04-30.log
+-rw-r--r-- 1 tomcat tomcat     0 May  1 18:53 localhost.2025-05-01.log
+-rw-r--r-- 1 tomcat tomcat     0 May  2 19:48 localhost.2025-05-02.log
+-rw-r--r-- 1 tomcat tomcat     0 May  5 19:03 localhost.2025-05-05.log
+-rw-r--r-- 1 tomcat tomcat     0 May  9 19:01 localhost.2025-05-09.log
+-rw-r--r-- 1 tomcat tomcat     0 May 10 18:44 localhost.2025-05-10.log
+-rw-r--r-- 1 tomcat tomcat     0 May 13 19:18 localhost.2025-05-13.log
+-rw-r--r-- 1 tomcat tomcat     0 May 17 16:38 localhost.2025-05-17.log
+-rw-r--r-- 1 tomcat tomcat     0 May 19 18:58 localhost.2025-05-19.log
+-rw-r--r-- 1 tomcat tomcat     0 May 20 19:44 localhost.2025-05-20.log
+-rw-r--r-- 1 tomcat tomcat     0 May 21 19:15 localhost.2025-05-21.log
+-rw-r--r-- 1 tomcat tomcat     0 May 18  2024 localhost_access_log.2024-05-18.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 20  2024 localhost_access_log.2024-05-20.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 21  2024 localhost_access_log.2024-05-21.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 22  2024 localhost_access_log.2024-05-22.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 23  2024 localhost_access_log.2024-05-23.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 24  2024 localhost_access_log.2024-05-24.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 25  2024 localhost_access_log.2024-05-25.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 27  2024 localhost_access_log.2024-05-27.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 28  2024 localhost_access_log.2024-05-28.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 29  2024 localhost_access_log.2024-05-29.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 30  2024 localhost_access_log.2024-05-30.txt
+-rw-r--r-- 1 tomcat tomcat     0 Jul 10  2024 localhost_access_log.2024-07-10.txt
+-rw-r--r-- 1 tomcat tomcat     0 Jul 11  2024 localhost_access_log.2024-07-11.txt
+-rw-r--r-- 1 tomcat tomcat     0 Jul 16  2024 localhost_access_log.2024-07-16.txt
+-rw-r--r-- 1 tomcat tomcat     0 Apr 29 20:30 localhost_access_log.2025-04-29.txt
+-rw-r--r-- 1 tomcat tomcat     0 Apr 30 19:00 localhost_access_log.2025-04-30.txt
+-rw-r--r-- 1 tomcat tomcat     0 May  1 18:53 localhost_access_log.2025-05-01.txt
+-rw-r--r-- 1 tomcat tomcat     0 May  2 19:48 localhost_access_log.2025-05-02.txt
+-rw-r--r-- 1 tomcat tomcat     0 May  5 19:03 localhost_access_log.2025-05-05.txt
+-rw-r--r-- 1 tomcat tomcat     0 May  9 19:02 localhost_access_log.2025-05-09.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 10 18:44 localhost_access_log.2025-05-10.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 13 19:18 localhost_access_log.2025-05-13.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 17 16:38 localhost_access_log.2025-05-17.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 19 18:58 localhost_access_log.2025-05-19.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 20 19:44 localhost_access_log.2025-05-20.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 21 19:15 localhost_access_log.2025-05-21.txt
+-rw-r--r-- 1 tomcat tomcat     0 May 18  2024 manager.2024-05-18.log
+-rw-r--r-- 1 tomcat tomcat     0 May 20  2024 manager.2024-05-20.log
+-rw-r--r-- 1 tomcat tomcat     0 May 21  2024 manager.2024-05-21.log
+-rw-r--r-- 1 tomcat tomcat     0 May 22  2024 manager.2024-05-22.log
+-rw-r--r-- 1 tomcat tomcat     0 May 23  2024 manager.2024-05-23.log
+-rw-r--r-- 1 tomcat tomcat     0 May 24  2024 manager.2024-05-24.log
+-rw-r--r-- 1 tomcat tomcat     0 May 25  2024 manager.2024-05-25.log
+-rw-r--r-- 1 tomcat tomcat     0 May 27  2024 manager.2024-05-27.log
+-rw-r--r-- 1 tomcat tomcat     0 May 28  2024 manager.2024-05-28.log
+-rw-r--r-- 1 tomcat tomcat     0 May 29  2024 manager.2024-05-29.log
+-rw-r--r-- 1 tomcat tomcat     0 May 30  2024 manager.2024-05-30.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 10  2024 manager.2024-07-10.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 11  2024 manager.2024-07-11.log
+-rw-r--r-- 1 tomcat tomcat     0 Jul 16  2024 manager.2024-07-16.log
+-rw-r--r-- 1 tomcat tomcat     0 Apr 29 20:30 manager.2025-04-29.log
+-rw-r--r-- 1 tomcat tomcat     0 Apr 30 19:00 manager.2025-04-30.log
+-rw-r--r-- 1 tomcat tomcat     0 May  1 18:53 manager.2025-05-01.log
+-rw-r--r-- 1 tomcat tomcat     0 May  2 19:48 manager.2025-05-02.log
+-rw-r--r-- 1 tomcat tomcat     0 May  5 19:03 manager.2025-05-05.log
+-rw-r--r-- 1 tomcat tomcat     0 May  9 19:01 manager.2025-05-09.log
+-rw-r--r-- 1 tomcat tomcat     0 May 10 18:44 manager.2025-05-10.log
+-rw-r--r-- 1 tomcat tomcat     0 May 13 19:18 manager.2025-05-13.log
+-rw-r--r-- 1 tomcat tomcat     0 May 17 16:38 manager.2025-05-17.log
+-rw-r--r-- 1 tomcat tomcat     0 May 19 18:58 manager.2025-05-19.log
+-rw-r--r-- 1 tomcat tomcat     0 May 20 19:44 manager.2025-05-20.log
+-rw-r--r-- 1 tomcat tomcat     0 May 21 19:15 manager.2025-05-21.log
+
+./tuned:
+total 120
+-rw-r--r--  1 root root 19046 May 21 19:15 tuned.log
+-rw-r--r--. 1 root root 99904 May  1 18:53 tuned.log.1
+[root@gvnkansiblesrv log]# ls -l
+total 6828
+drwxr-xr-x. 2 root   root     232 Apr 29  2024 anaconda
+drwx------. 2 root   root      23 Apr 29  2024 audit
+-rw-------. 1 root   root    9849 May 21 19:15 boot.log
+-rw-------  1 root   root    9748 May 13 20:31 boot.log-20250513
+-rw-------  1 root   root       0 May 14 19:27 boot.log-20250514
+-rw-------  1 root   root       0 May 15 17:50 boot.log-20250515
+-rw-------  1 root   root   19470 May 17 17:06 boot.log-20250517
+-rw-------  1 root   root       0 May 18 16:50 boot.log-20250518
+-rw-------  1 root   root    9713 May 19 19:47 boot.log-20250519
+-rw-------  1 root   root    9799 May 20 20:31 boot.log-20250520
+-rw-------  1 root   utmp    3072 May 20 20:53 btmp
+-rw-------  1 root   utmp     384 May  1 18:54 btmp-20250501
+-rw-------  1 root   root    4964 May 21 20:01 cron
+-rw-------  1 root   root    9710 Apr 29 21:17 cron-20250429
+-rw-------  1 root   root    6161 May  5 20:25 cron-20250505
+-rw-------  1 root   root    6908 May 13 20:31 cron-20250513
+-rw-------  1 root   root    7542 May 18 16:50 cron-20250518
+-rw-r--r--  1 root   root  132831 May 21 19:14 dmesg
+-rw-r--r--  1 root   root  132781 May 20 19:44 dmesg.old
+-rw-r--r--. 1 root   root     614 Apr 29  2024 firewalld
+-rw-r--r--. 1 root   root     193 Apr 29  2024 grubby_prune_debug
+drwx------  2 root   root     172 May 18 16:50 httpd
+-rw-r--r--. 1 root   root 1549060 May 21 19:35 lastlog
+-rw-------  1 root   root    2558 May 21 19:15 maillog
+-rw-------  1 root   root    2496 Apr 29 20:37 maillog-20250429
+-rw-------  1 root   root     832 May  5 19:03 maillog-20250505
+-rw-------  1 root   root     624 May 13 19:18 maillog-20250513
+-rw-------  1 root   root     416 May 17 17:00 maillog-20250518
+-rw-------  1 root   root  516177 May 21 20:01 messages
+-rw-------  1 root   root 3321491 Apr 29 21:17 messages-20250429
+-rw-------  1 root   root  683510 May  5 20:25 messages-20250505
+-rw-------  1 root   root  517119 May 13 20:31 messages-20250513
+-rw-------  1 root   root  358216 May 18 16:50 messages-20250518
+drwxr-xr-x. 2 root   root     263 May 18 16:50 rhsm
+-rw-------  1 root   root    9406 May 21 19:35 secure
+-rw-------  1 root   root   97106 Apr 29 20:48 secure-20250429
+-rw-------  1 root   root    4899 May  5 19:04 secure-20250505
+-rw-------  1 root   root   25589 May 13 19:53 secure-20250513
+-rw-------  1 root   root   10104 May 18 16:43 secure-20250518
+-rw-------  1 root   root       0 May 18 16:50 spooler
+-rw-------  1 root   root       0 May 27  2024 spooler-20250429
+-rw-------  1 root   root       0 Apr 29 21:17 spooler-20250505
+-rw-------  1 root   root       0 May  5 20:25 spooler-20250513
+-rw-------  1 root   root       0 May 13 20:31 spooler-20250518
+-rw-------. 1 root   root       0 Apr 29  2024 tallylog
+drwxrwx---  2 tomcat root    8192 May 21 19:15 tomcat
+drwxr-xr-x. 2 root   root      42 May  1 18:53 tuned
+-rw-r--r--. 1 root   root   98194 May 21 19:15 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root   root  193221 May 21 20:16 vmware-vmsvc.log
+-rw-rw-r--. 1 root   utmp  624768 May 21 19:35 wtmp
+-rw-------  1 root   root       0 Apr 29 21:17 yum.log
+-rw-------. 1 root   root   10104 Jul 16  2024 yum.log-20250429
+[root@gvnkansiblesrv log]#
