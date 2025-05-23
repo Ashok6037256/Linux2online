@@ -1,0 +1,40 @@
+Class 5 23/05/2025
+
+head filename ====> This command will show top 10 lines of the file
+head -n filename ====> This command will show specifed lines of the file from the top (-n number)
+tail filename ====> This command will show bottom 10 lines of the file
+tail -n filename ====> This command will show specifed lines of the file from the bottom (-n number)
+
+more filename ====> Large sized file we can page wise (Spacebar), Line wise (Enter), quit with "q"
+less filename ====> Large sized file we can page wise (Spacebar), Line wise (Enter), need to hit "q" to cameout
+
+find / -name filename ====> this command search in searchpath and show the named file path
+
+cp source destination ======> this command copy the specified file from source to destination
+cp -p source destination ===> this command copy the specified file from source to destination along with timestamp
+cp -r source destination ====> this command copy the specified directory from source to destination
+cp -rp source destination =====> ths command copy the specified directory from source to destination with same timestamp
+
+mv source destination ====> This command will cut the source and paste in destination
+mv oldname newname ====> This command will rename the old name to new name
+
+Lab Session:
+============
+IPL-2025
+1) League
+	SRH ===captain, players
+	RCB ===captain, players
+	CSK ===captain, players
+	PBKS ===captain, players
+	KKR ===captain, players
+	MI ===captain, players
+	RR ===captain, players
+	DC ===captain, players
+2) Semifinal (without time stamp)
+	CSK ===captain, players
+	PBKS ===captain, players
+	KKR ===captain, players
+	MI ===captain, players
+3) Final (with time stamp)
+	PBKS ===captain, players
+	KKR ===captain, players
