@@ -1,0 +1,1406 @@
+Class 6 26/05/2025
+
+grep searchword filename =====> 
+grep -i searchword filename   =====> this command is used search a word from the file and provide the output with search word lines
+grep -C 3 searchword filename  =====> this command is used search a word from the file and provide the output with search word lines along with before and after specified lines
+grep -B 3 searchword filename  =====> this command is used search a word from the file and provide the output with search word lines along with before specified lines
+grep -A 3 searchword filename  =====> this command is used search a word from the file and provide the output with search word lines along with after specified lines
+grep -v searchword filename  =====> this command is used search a word from the file and provide the output without search word lines
+
+Removing commands:
+==================
+rmdir directoryname ====> to remove directory, but it should be empty
+rm filename ======> this will remove the file with prompting confirmation
+rm -f filename  ====> this command remove the file with out asking confirmation
+
+rm -rf directory =====> This command removed the specified directory even though it's having files and directories
+rm -rf * ======> this command will remove all the files and directories in current directory
+
+
+Lab Session:
+============
+rmdir directoryname ====> to remove directory, but it should be empty
+rm filename ======> this will remove the file with prompting confirmation
+rm -f filename  ====> this command remove the file with out asking confirmation
+
+Recreate IPL-2025
+
+Session OUtputs:
+================
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Fri May 23 19:34:56 2025 from 192.168.29.79
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 4
+-rw-------. 1 root root 1491 May 22 20:48 anaconda-ks.cfg
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls
+bin  boot  dev  etc  home  IPL-2025  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@c111xyz /]#
+[root@c111xyz /]# rm -rf IPL-2025/
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l
+total 16
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 May 26 18:57 dev
+drwxr-xr-x.  76 root root 8192 May 22 21:15 etc
+drwxr-xr-x.   2 root root   47 May 23 20:17 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 169 root root    0 May 26 18:57 proc
+dr-xr-x---.   2 root root  135 May 23 20:57 root
+drwxr-xr-x.  24 root root  700 May 26 18:57 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 May 26 18:57 sys
+drwxrwxrwt.   9 root root  267 May 26 19:08 tmp
+drwxr-xr-x.  13 root root  155 May 22 20:19 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# pwd
+/
+[root@c111xyz /]# mkdir IPL-2025
+[root@c111xyz /]# ls -l
+total 16
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 May 26 18:57 dev
+drwxr-xr-x.  76 root root 8192 May 22 21:15 etc
+drwxr-xr-x.   2 root root   47 May 23 20:17 home
+drwxr-xr-x.   2 root root    6 May 26 19:53 IPL-2025
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 169 root root    0 May 26 18:57 proc
+dr-xr-x---.   2 root root  135 May 23 20:57 root
+drwxr-xr-x.  24 root root  700 May 26 18:57 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 May 26 18:57 sys
+drwxrwxrwt.   9 root root  267 May 26 19:08 tmp
+drwxr-xr-x.  13 root root  155 May 22 20:19 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd IPL-2025
+[root@c111xyz IPL-2025]# ls -l
+total 0
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# mkdir Leagues SemiFinal Final
+[root@c111xyz IPL-2025]# ls -l
+total 0
+drwxr-xr-x. 2 root root 6 May 26 19:53 Final
+drwxr-xr-x. 2 root root 6 May 26 19:53 Leagues
+drwxr-xr-x. 2 root root 6 May 26 19:53 SemiFinal
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# cd Leagues
+[root@c111xyz Leagues]# ls -l
+total 0
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]# mkdir RR CSK SRH LSG MI DC PBKS RCB
+[root@c111xyz Leagues]# ls -l
+total 0
+drwxr-xr-x. 2 root root 6 May 26 19:54 CSK
+drwxr-xr-x. 2 root root 6 May 26 19:54 DC
+drwxr-xr-x. 2 root root 6 May 26 19:54 LSG
+drwxr-xr-x. 2 root root 6 May 26 19:54 MI
+drwxr-xr-x. 2 root root 6 May 26 19:54 PBKS
+drwxr-xr-x. 2 root root 6 May 26 19:54 RCB
+drwxr-xr-x. 2 root root 6 May 26 19:54 RR
+drwxr-xr-x. 2 root root 6 May 26 19:54 SRH
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]# cd CSK
+[root@c111xyz CSK]# ls -l
+total 0
+[root@c111xyz CSK]#
+[root@c111xyz CSK]#
+[root@c111xyz CSK]# cat > captain
+dhoni
+[root@c111xyz CSK]#
+[root@c111xyz CSK]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz CSK]#
+[root@c111xyz CSK]# ls -l
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:55 captain
+-rw-r--r--. 1 root root 10 May 26 19:55 players
+[root@c111xyz CSK]#
+[root@c111xyz CSK]# cd ../DC
+[root@c111xyz DC]# pwd
+/IPL-2025/Leagues/DC
+[root@c111xyz DC]# ls -l
+total 0
+[root@c111xyz DC]#
+[root@c111xyz DC]# cat > captain
+axar
+[root@c111xyz DC]#
+[root@c111xyz DC]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz DC]#
+[root@c111xyz DC]# ls -l
+total 8
+-rw-r--r--. 1 root root  5 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:56 players
+[root@c111xyz DC]# cd ../LSG
+[root@c111xyz LSG]# ls -l
+total 0
+[root@c111xyz LSG]# pwd
+/IPL-2025/Leagues/LSG
+[root@c111xyz LSG]#
+[root@c111xyz LSG]# cat > captain
+panth
+[root@c111xyz LSG]#
+[root@c111xyz LSG]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz LSG]#
+[root@c111xyz LSG]# ls -l
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+[root@c111xyz LSG]# cd ../MI
+[root@c111xyz MI]# ls -l
+total 0
+[root@c111xyz MI]#
+[root@c111xyz MI]# cat > captain
+hardik
+[root@c111xyz MI]#
+[root@c111xyz MI]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz MI]#
+[root@c111xyz MI]# ls -l
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:57 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+[root@c111xyz MI]# cd ../PBKS
+[root@c111xyz PBKS]# ls -l
+total 0
+[root@c111xyz PBKS]#
+[root@c111xyz PBKS]# cat > captail
+sreyas
+[root@c111xyz PBKS]#
+[root@c111xyz PBKS]# ls -l
+total 4
+-rw-r--r--. 1 root root 7 May 26 19:58 captail
+[root@c111xyz PBKS]#
+[root@c111xyz PBKS]# mv captail captain
+[root@c111xyz PBKS]# ls -l
+total 4
+-rw-r--r--. 1 root root 7 May 26 19:58 captain
+[root@c111xyz PBKS]#
+[root@c111xyz PBKS]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz PBKS]#
+[root@c111xyz PBKS]# ls -l
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:58 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+[root@c111xyz PBKS]# cd ../RCB
+[root@c111xyz RCB]# ls -l
+total 0
+[root@c111xyz RCB]# cat > captain
+kohli
+[root@c111xyz RCB]#
+[root@c111xyz RCB]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz RCB]#
+[root@c111xyz RCB]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz RCB]# ls -l
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:59 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+[root@c111xyz RCB]#
+[root@c111xyz RCB]# cd ../SRH/
+[root@c111xyz SRH]# ls -l
+total 0
+[root@c111xyz SRH]#
+[root@c111xyz SRH]# cat > captain
+ishanth
+[root@c111xyz SRH]#
+[root@c111xyz SRH]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz SRH]#
+[root@c111xyz SRH]# ls -l
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:00 captain
+-rw-r--r--. 1 root root 10 May 26 20:00 players
+[root@c111xyz SRH]# cd ../RR
+[root@c111xyz RR]# ls -l
+total 0
+[root@c111xyz RR]# cat > captain
+sanju
+[root@c111xyz RR]#
+[root@c111xyz RR]# cat > players
+1
+2
+3
+4
+5
+[root@c111xyz RR]#
+[root@c111xyz RR]#
+[root@c111xyz RR]# ls -l
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:01 captain
+-rw-r--r--. 1 root root 10 May 26 20:01 players
+[root@c111xyz RR]#
+[root@c111xyz RR]# cd ..
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 19:55 CSK
+drwxr-xr-x. 2 root root 36 May 26 19:56 DC
+drwxr-xr-x. 2 root root 36 May 26 19:57 LSG
+drwxr-xr-x. 2 root root 36 May 26 19:57 MI
+drwxr-xr-x. 2 root root 36 May 26 19:59 PBKS
+drwxr-xr-x. 2 root root 36 May 26 19:59 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:01 RR
+drwxr-xr-x. 2 root root 36 May 26 20:00 SRH
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]# ls -l *
+CSK:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:55 captain
+-rw-r--r--. 1 root root 10 May 26 19:55 players
+
+DC:
+total 8
+-rw-r--r--. 1 root root  5 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:56 players
+
+LSG:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+
+MI:
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:57 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+
+PBKS:
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:58 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+RCB:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:59 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+RR:
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:01 captain
+-rw-r--r--. 1 root root 10 May 26 20:01 players
+
+SRH:
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:00 captain
+-rw-r--r--. 1 root root 10 May 26 20:00 players
+[root@c111xyz Leagues]# ls -lR
+.:
+total 0
+drwxr-xr-x. 2 root root 36 May 26 19:55 CSK
+drwxr-xr-x. 2 root root 36 May 26 19:56 DC
+drwxr-xr-x. 2 root root 36 May 26 19:57 LSG
+drwxr-xr-x. 2 root root 36 May 26 19:57 MI
+drwxr-xr-x. 2 root root 36 May 26 19:59 PBKS
+drwxr-xr-x. 2 root root 36 May 26 19:59 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:01 RR
+drwxr-xr-x. 2 root root 36 May 26 20:00 SRH
+
+./CSK:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:55 captain
+-rw-r--r--. 1 root root 10 May 26 19:55 players
+
+./DC:
+total 8
+-rw-r--r--. 1 root root  5 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:56 players
+
+./LSG:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+
+./MI:
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:57 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+
+./PBKS:
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:58 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+./RCB:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:59 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+./RR:
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:01 captain
+-rw-r--r--. 1 root root 10 May 26 20:01 players
+
+./SRH:
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:00 captain
+-rw-r--r--. 1 root root 10 May 26 20:00 players
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]#
+[root@c111xyz Leagues]# cd ../SemiFinal/
+[root@c111xyz SemiFinal]# ls -l
+total 0
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]# cp /IPL-2025/Leagues/SRH /IPL-2025/SemiFinal
+cp: omitting directory ‘/IPL-2025/Leagues/SRH’
+[root@c111xyz SemiFinal]# cp -r /IPL-2025/Leagues/SRH /IPL-2025/SemiFinal
+[root@c111xyz SemiFinal]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:04 SRH
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]# ls -lR
+.:
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:04 SRH
+
+./SRH:
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:04 captain
+-rw-r--r--. 1 root root 10 May 26 20:04 players
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]# cp -r /IPL-2025/Leagues/RR /IPL-2025/SemiFinal/
+[root@c111xyz SemiFinal]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:04 RR
+drwxr-xr-x. 2 root root 36 May 26 20:04 SRH
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]# cp -r /IPL-2025/Leagues/LSG /IPL-2025/SemiFinal/
+[root@c111xyz SemiFinal]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:05 LSG
+drwxr-xr-x. 2 root root 36 May 26 20:04 RR
+drwxr-xr-x. 2 root root 36 May 26 20:04 SRH
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]# cp -r /IPL-2025/Leagues/RCB/ /IPL-2025/SemiFinal/
+[root@c111xyz SemiFinal]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:05 LSG
+drwxr-xr-x. 2 root root 36 May 26 20:05 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:04 RR
+drwxr-xr-x. 2 root root 36 May 26 20:04 SRH
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]#
+[root@c111xyz SemiFinal]# cd ../Final/
+[root@c111xyz Final]# ls -l
+total 0
+[root@c111xyz Final]#
+[root@c111xyz Final]#
+[root@c111xyz Final]# cp -rp /IPL-2025/Leagues/SRH /IPL-2025/Final/
+[root@c111xyz Final]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:00 SRH
+[root@c111xyz Final]#
+[root@c111xyz Final]#
+[root@c111xyz Final]# cp -rp /IPL-2025/Leagues/RCB /IPL-2025/Final/
+[root@c111xyz Final]# ls -l
+total 0
+drwxr-xr-x. 2 root root 36 May 26 19:59 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:00 SRH
+[root@c111xyz Final]#
+[root@c111xyz Final]#
+[root@c111xyz Final]# cd /IPL-2025/
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# ls -lR
+.:
+total 0
+drwxr-xr-x.  4 root root 28 May 26 20:07 Final
+drwxr-xr-x. 10 root root 92 May 26 19:54 Leagues
+drwxr-xr-x.  6 root root 49 May 26 20:05 SemiFinal
+
+./Final:
+total 0
+drwxr-xr-x. 2 root root 36 May 26 19:59 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:00 SRH
+
+./Final/RCB:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:59 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+./Final/SRH:
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:00 captain
+-rw-r--r--. 1 root root 10 May 26 20:00 players
+
+./Leagues:
+total 0
+drwxr-xr-x. 2 root root 36 May 26 19:55 CSK
+drwxr-xr-x. 2 root root 36 May 26 19:56 DC
+drwxr-xr-x. 2 root root 36 May 26 19:57 LSG
+drwxr-xr-x. 2 root root 36 May 26 19:57 MI
+drwxr-xr-x. 2 root root 36 May 26 19:59 PBKS
+drwxr-xr-x. 2 root root 36 May 26 19:59 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:01 RR
+drwxr-xr-x. 2 root root 36 May 26 20:00 SRH
+
+./Leagues/CSK:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:55 captain
+-rw-r--r--. 1 root root 10 May 26 19:55 players
+
+./Leagues/DC:
+total 8
+-rw-r--r--. 1 root root  5 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:56 players
+
+./Leagues/LSG:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:56 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+
+./Leagues/MI:
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:57 captain
+-rw-r--r--. 1 root root 10 May 26 19:57 players
+
+./Leagues/PBKS:
+total 8
+-rw-r--r--. 1 root root  7 May 26 19:58 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+./Leagues/RCB:
+total 8
+-rw-r--r--. 1 root root  6 May 26 19:59 captain
+-rw-r--r--. 1 root root 10 May 26 19:59 players
+
+./Leagues/RR:
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:01 captain
+-rw-r--r--. 1 root root 10 May 26 20:01 players
+
+./Leagues/SRH:
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:00 captain
+-rw-r--r--. 1 root root 10 May 26 20:00 players
+
+./SemiFinal:
+total 0
+drwxr-xr-x. 2 root root 36 May 26 20:05 LSG
+drwxr-xr-x. 2 root root 36 May 26 20:05 RCB
+drwxr-xr-x. 2 root root 36 May 26 20:04 RR
+drwxr-xr-x. 2 root root 36 May 26 20:04 SRH
+
+./SemiFinal/LSG:
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:05 captain
+-rw-r--r--. 1 root root 10 May 26 20:05 players
+
+./SemiFinal/RCB:
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:05 captain
+-rw-r--r--. 1 root root 10 May 26 20:05 players
+
+./SemiFinal/RR:
+total 8
+-rw-r--r--. 1 root root  6 May 26 20:04 captain
+-rw-r--r--. 1 root root 10 May 26 20:04 players
+
+./SemiFinal/SRH:
+total 8
+-rw-r--r--. 1 root root  8 May 26 20:04 captain
+-rw-r--r--. 1 root root 10 May 26 20:04 players
+[root@c111xyz IPL-2025]# ls -l
+total 0
+drwxr-xr-x.  4 root root 28 May 26 20:07 Final
+drwxr-xr-x. 10 root root 92 May 26 19:54 Leagues
+drwxr-xr-x.  6 root root 49 May 26 20:05 SemiFinal
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# pwd
+/IPL-2025
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# find / -name Final
+/IPL-2025/Final
+[root@c111xyz /]# cp /etc/ssh/sshd_config /tmp
+[root@c111xyz /]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 4
+-rw-------. 1 root root 3907 May 26 20:15 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat sshd_config
+#       $OpenBSD: sshd_config,v 1.100 2016/08/15 12:32:04 naddy Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/local/bin:/usr/bin
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+# If you want to change the port on a SELinux system, you have to tell
+# SELinux about this change.
+# semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+#
+#Port 22
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Ciphers and keying
+#RekeyLimit default none
+
+# Logging
+#SyslogFacility AUTH
+SyslogFacility AUTHPRIV
+#LogLevel INFO
+
+# Authentication:
+
+#LoginGraceTime 2m
+#PermitRootLogin yes
+#StrictModes yes
+#MaxAuthTries 6
+#MaxSessions 10
+
+#PubkeyAuthentication yes
+
+# The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
+# but this is overridden so installations will only check .ssh/authorized_keys
+AuthorizedKeysFile      .ssh/authorized_keys
+
+#AuthorizedPrincipalsFile none
+
+#AuthorizedKeysCommand none
+#AuthorizedKeysCommandUser nobody
+
+# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+#HostbasedAuthentication no
+# Change to yes if you don't trust ~/.ssh/known_hosts for
+# HostbasedAuthentication
+#IgnoreUserKnownHosts no
+# Don't read the user's ~/.rhosts and ~/.shosts files
+#IgnoreRhosts yes
+
+# To disable tunneled clear text passwords, change to no here!
+#PasswordAuthentication yes
+#PermitEmptyPasswords no
+PasswordAuthentication yes
+
+# Change to no to disable s/key passwords
+#ChallengeResponseAuthentication yes
+ChallengeResponseAuthentication no
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+#KerberosUseKuserok yes
+
+# GSSAPI options
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials no
+#GSSAPIStrictAcceptorCheck yes
+#GSSAPIKeyExchange no
+#GSSAPIEnablek5users no
+
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# the setting of "PermitRootLogin without-password".
+# If you just want the PAM account and session checks to run without
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+# problems.
+UsePAM yes
+
+#AllowAgentForwarding yes
+#AllowTcpForwarding yes
+#GatewayPorts no
+X11Forwarding yes
+#X11DisplayOffset 10
+#X11UseLocalhost yes
+#PermitTTY yes
+#PrintMotd yes
+#PrintLastLog yes
+#TCPKeepAlive yes
+#UseLogin no
+#UsePrivilegeSeparation sandbox
+#PermitUserEnvironment no
+#Compression delayed
+#ClientAliveInterval 0
+#ClientAliveCountMax 3
+#ShowPatchLevel no
+#UseDNS yes
+#PidFile /var/run/sshd.pid
+#MaxStartups 10:30:100
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+
+# no default banner path
+#Banner none
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+# override default of no subsystems
+Subsystem       sftp    /usr/libexec/openssh/sftp-server
+
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#       X11Forwarding no
+#       AllowTcpForwarding no
+#       PermitTTY no
+#       ForceCommand cvs server
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep UsePAM sshd_config
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+UsePAM yes
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep UsePAM sshd_config
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+UsePAM yes
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i UsePAM sshd_config
+usepam
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+UsePAM yes
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i usepam sshd_config
+usepam
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+UsePAM yes
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i USEPAM sshd_config
+usepam
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+UsePAM yes
+[root@c111xyz tmp]# grep USEPAM sshd_config
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep usepam sshd_config
+usepam
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep UsePAM sshd_config
+# WARNING: 'UsePAM no' is not supported in Red Hat Enterprise Linux and may cause several
+UsePAM yes
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat > main.conf
+adding entry from root user
+ROOT is the admin account
+Root directory is owned by root
+this file is not owned any other users
+nobody has the option to read write the content except root
+^C
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat main.conf
+adding entry from root user
+ROOT is the admin account
+Root directory is owned by root
+this file is not owned any other users
+nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  185 May 26 20:24 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat main.conf
+adding entry from root user
+ROOT is the admin account
+Root directory is owned by root
+this file is not owned any other users
+nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep root main.conf
+adding entry from root user
+Root directory is owned by root
+nobody has the option to read write the content except root
+[root@c111xyz tmp]# grep -i root main.conf
+adding entry from root user
+ROOT is the admin account
+Root directory is owned by root
+nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i owned main.conf
+Root directory is owned by root
+this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i users main.conf
+this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i users main.conf
+this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# vi main.conf
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat main.conf
+1) adding entry from root user
+2) ROOT is the admin account
+3) Root directory is owned by root
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i users main.conf
+4) this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -A 1 users main.conf
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -B 1 users main.conf
+3) Root directory is owned by root
+4) this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -B 3 users main.conf
+1) adding entry from root user
+2) ROOT is the admin account
+3) Root directory is owned by root
+4) this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -A 1 users main.conf
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -A 3 users main.conf
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -C 1 users main.conf
+3) Root directory is owned by root
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -C 3 users main.conf
+1) adding entry from root user
+2) ROOT is the admin account
+3) Root directory is owned by root
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -B 3 usepam sshd_config
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+usepam
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -A 3 usepam sshd_config
+usepam
+
+HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_dsa_key
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -C 3 usepam sshd_config
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+usepam
+
+HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_dsa_key
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat main.conf
+1) adding entry from root user
+2) ROOT is the admin account
+3) Root directory is owned by root
+4) this file is not owned any other users
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -i root main.conf
+1) adding entry from root user
+2) ROOT is the admin account
+3) Root directory is owned by root
+5) nobody has the option to read write the content except root
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -v root main.conf
+2) ROOT is the admin account
+4) this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# grep -iv root main.conf
+4) this file is not owned any other users
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /etc/
+[root@c111xyz etc]# ls
+adjtime            dhcp                     gshadow        localtime                 passwd-         resolv.conf    sudoers
+aliases            DIR_COLORS               gshadow-       login.defs                pkcs11          rhsm           sudoers.d
+aliases.db         DIR_COLORS.256color      gss            logrotate.conf            pki             rpc            sudo-ldap.conf
+alternatives       DIR_COLORS.lightbgcolor  host.conf      logrotate.d               plymouth        rpm            sysconfig
+anacrontab         dracut.conf              hostname       lvm                       pm              rsyslog.conf   sysctl.conf
+asound.conf        dracut.conf.d            hosts          machine-id                polkit-1        rsyslog.d      sysctl.d
+audisp             e2fsck.conf              hosts.allow    magic                     popt.d          rwtab          systemd
+audit              environment              hosts.deny     makedumpfile.conf.sample  postfix         rwtab.d        system-release
+bash_completion.d  ethertypes               init.d         man_db.conf               ppp             sasl2          system-release-cpe
+bashrc             exports                  inittab        mke2fs.conf               prelink.conf.d  securetty      terminfo
+binfmt.d           favicon.png              inputrc        modprobe.d                printcap        security       tmpfiles.d
+chkconfig.d        filesystems              iproute2       modules-load.d            profile         selinux        tuned
+cron.d             firewalld                issue          motd                      profile.d       services       udev
+cron.daily         fstab                    issue.net      mtab                      protocols       sestatus.conf  vconsole.conf
+cron.deny          fuse.conf                kdump.conf     my.cnf                    python          shadow         virc
+cron.hourly        gcrypt                   kernel         my.cnf.d                  rc0.d           shadow-        vmware-tools
+cron.monthly       GeoIP.conf               krb5.conf      NetworkManager            rc1.d           shells         wpa_supplicant
+crontab            GeoIP.conf.default       krb5.conf.d    networks                  rc2.d           skel           X11
+cron.weekly        gnupg                    ld.so.cache    nsswitch.conf             rc3.d           ssh            xdg
+crypttab           GREP_COLORS              ld.so.conf     nsswitch.conf.bak         rc4.d           ssl            xinetd.d
+csh.cshrc          groff                    ld.so.conf.d   openldap                  rc5.d           statetab       yum
+csh.login          group                    libaudit.conf  opt                       rc6.d           statetab.d     yum.conf
+dbus-1             group-                   libnl          os-release                rc.d            subgid         yum.repos.d
+default            grub2.cfg                libuser.conf   pam.d                     rc.local        subuid
+depmod.d           grub.d                   locale.conf    passwd                    redhat-release  sudo.conf
+[root@c111xyz etc]# cd ssh/
+[root@c111xyz ssh]# ls pl
+ls: cannot access pl: No such file or directory
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz ssh]# ls -l
+total 604
+-rw-r--r--. 1 root root     581843 Sep 13  2017 moduli
+-rw-r--r--. 1 root root       2276 Sep 13  2017 ssh_config
+-rw-------. 1 root root       3907 Sep 13  2017 sshd_config
+-rw-r-----. 1 root ssh_keys    227 May 22 21:15 ssh_host_ecdsa_key
+-rw-r--r--. 1 root root        162 May 22 21:15 ssh_host_ecdsa_key.pub
+-rw-r-----. 1 root ssh_keys    387 May 22 21:15 ssh_host_ed25519_key
+-rw-r--r--. 1 root root         82 May 22 21:15 ssh_host_ed25519_key.pub
+-rw-r-----. 1 root ssh_keys   1675 May 22 21:15 ssh_host_rsa_key
+-rw-r--r--. 1 root root        382 May 22 21:15 ssh_host_rsa_key.pub
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]# grep -i Authentication sshd_config
+# Authentication:
+#PubkeyAuthentication yes
+#HostbasedAuthentication no
+# HostbasedAuthentication
+#PasswordAuthentication yes
+PasswordAuthentication yes
+#ChallengeResponseAuthentication yes
+ChallengeResponseAuthentication no
+#KerberosAuthentication no
+GSSAPIAuthentication yes
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication and
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication via ChallengeResponseAuthentication may bypass
+# PAM authentication, then enable this but set PasswordAuthentication
+# and ChallengeResponseAuthentication to 'no'.
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]#
+[root@c111xyz ssh]# grep -i PasswordAuthentication sshd_config
+#PasswordAuthentication yes
+PasswordAuthentication yes
+# PasswordAuthentication.  Depending on your PAM configuration,
+# PAM authentication, then enable this but set PasswordAuthentication
+[root@c111xyz ssh]#
+[root@c111xyz ssh]# cd /tmp/
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls
+bin  boot  dev  etc  home  IPL-2025  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd IPL-2025/
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# pwd
+/IPL-2025
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# cd /tmp/
+[root@c111xyz tmp]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# pwd
+/tmp
+[root@c111xyz tmp]# cd /boot/
+[root@c111xyz boot]# ls
+config-3.10.0-693.17.1.el7.x86_64                        initrd-plymouth.img
+efi                                                      symvers-3.10.0-693.17.1.el7.x86_64.gz
+grub2                                                    System.map-3.10.0-693.17.1.el7.x86_64
+initramfs-0-rescue-5726c39698294b9d98f97293c17b90b3.img  vmlinuz-0-rescue-5726c39698294b9d98f97293c17b90b3
+initramfs-3.10.0-693.17.1.el7.x86_64.img                 vmlinuz-3.10.0-693.17.1.el7.x86_64
+initramfs-3.10.0-693.17.1.el7.x86_64kdump.img
+[root@c111xyz boot]#
+[root@c111xyz boot]#
+[root@c111xyz boot]#
+[root@c111xyz boot]# cd /etc
+[root@c111xyz etc]# ls
+adjtime            dhcp                     gshadow        localtime                 passwd-         resolv.conf    sudoers
+aliases            DIR_COLORS               gshadow-       login.defs                pkcs11          rhsm           sudoers.d
+aliases.db         DIR_COLORS.256color      gss            logrotate.conf            pki             rpc            sudo-ldap.conf
+alternatives       DIR_COLORS.lightbgcolor  host.conf      logrotate.d               plymouth        rpm            sysconfig
+anacrontab         dracut.conf              hostname       lvm                       pm              rsyslog.conf   sysctl.conf
+asound.conf        dracut.conf.d            hosts          machine-id                polkit-1        rsyslog.d      sysctl.d
+audisp             e2fsck.conf              hosts.allow    magic                     popt.d          rwtab          systemd
+audit              environment              hosts.deny     makedumpfile.conf.sample  postfix         rwtab.d        system-release
+bash_completion.d  ethertypes               init.d         man_db.conf               ppp             sasl2          system-release-cpe
+bashrc             exports                  inittab        mke2fs.conf               prelink.conf.d  securetty      terminfo
+binfmt.d           favicon.png              inputrc        modprobe.d                printcap        security       tmpfiles.d
+chkconfig.d        filesystems              iproute2       modules-load.d            profile         selinux        tuned
+cron.d             firewalld                issue          motd                      profile.d       services       udev
+cron.daily         fstab                    issue.net      mtab                      protocols       sestatus.conf  vconsole.conf
+cron.deny          fuse.conf                kdump.conf     my.cnf                    python          shadow         virc
+cron.hourly        gcrypt                   kernel         my.cnf.d                  rc0.d           shadow-        vmware-tools
+cron.monthly       GeoIP.conf               krb5.conf      NetworkManager            rc1.d           shells         wpa_supplicant
+crontab            GeoIP.conf.default       krb5.conf.d    networks                  rc2.d           skel           X11
+cron.weekly        gnupg                    ld.so.cache    nsswitch.conf             rc3.d           ssh            xdg
+crypttab           GREP_COLORS              ld.so.conf     nsswitch.conf.bak         rc4.d           ssl            xinetd.d
+csh.cshrc          groff                    ld.so.conf.d   openldap                  rc5.d           statetab       yum
+csh.login          group                    libaudit.conf  opt                       rc6.d           statetab.d     yum.conf
+dbus-1             group-                   libnl          os-release                rc.d            subgid         yum.repos.d
+default            grub2.cfg                libuser.conf   pam.d                     rc.local        subuid
+depmod.d           grub.d                   locale.conf    passwd                    redhat-release  sudo.conf
+[root@c111xyz etc]# cd /home/
+[root@c111xyz home]# ls pl
+ls: cannot access pl: No such file or directory
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# pwd
+/home
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 May 26 18:57 dev
+drwxr-xr-x.  76 root root 8192 May 22 21:15 etc
+drwxr-xr-x.   2 root root   47 May 23 20:17 home
+drwxr-xr-x.   5 root root   51 May 26 19:53 IPL-2025
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 173 root root    0 May 26 18:57 proc
+dr-xr-x---.   2 root root  135 May 23 20:57 root
+drwxr-xr-x.  24 root root  700 May 26 18:57 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 May 26 18:57 sys
+drwxrwxrwt.   9 root root 4096 May 26 20:27 tmp
+drwxr-xr-x.  13 root root  155 May 22 20:19 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# mkdir ashok
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd ashok/
+[root@c111xyz ashok]# ls -l
+total 0
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# touch file1
+[root@c111xyz ashok]# touch file2
+[root@c111xyz ashok]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# ls -l
+total 0
+-rw-r--r--. 1 root root 0 May 26 20:41 file1
+-rw-r--r--. 1 root root 0 May 26 20:41 file2
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cd ..
+[root@c111xyz tmp]# ls -l
+total 8
+drwxr-xr-x. 2 root root   32 May 26 20:41 ashok
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rmdir ashok/
+rmdir: failed to remove ‘ashok/’: Directory not empty
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd ashok/
+[root@c111xyz ashok]# ls pl
+ls: cannot access pl: No such file or directory
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# ls -l
+total 0
+-rw-r--r--. 1 root root 0 May 26 20:41 file1
+-rw-r--r--. 1 root root 0 May 26 20:41 file2
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# rm file1
+rm: remove regular empty file ‘file1’? yes
+[root@c111xyz ashok]# ls -l
+total 0
+-rw-r--r--. 1 root root 0 May 26 20:41 file2
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# rm -f file2
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# ls -l
+total 0
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cd ..
+[root@c111xyz tmp]# ls -l
+total 8
+drwxr-xr-x. 2 root root    6 May 26 20:43 ashok
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rmdir ashok
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# mkdir ashok
+[root@c111xyz tmp]# touch ashok/file1
+[root@c111xyz tmp]# touch ashok/file2
+[root@c111xyz tmp]# touch ashok/file3
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l ashok/
+total 0
+-rw-r--r--. 1 root root 0 May 26 20:44 file1
+-rw-r--r--. 1 root root 0 May 26 20:44 file2
+-rw-r--r--. 1 root root 0 May 26 20:44 file3
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rmdir ashok/
+rmdir: failed to remove ‘ashok/’: Directory not empty
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rm -rf ashok
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -lR
+.:
+total 8
+-rw-r--r--. 1 root root  200 May 26 20:27 main.conf
+-rw-------. 1 root root 3914 May 26 20:19 sshd_config
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs
+drwx------. 3 root root   17 May 26 18:57 systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi
+-rw-------. 1 root root    0 May 22 20:19 yum.log
+
+./systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs:
+total 0
+drwxrwxrwt. 2 root root 6 May 26 18:57 tmp
+
+./systemd-private-fd5dc567e7a4434cb2698ecbde159407-vgauthd.service-DwZ6rs/tmp:
+total 0
+
+./systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi:
+total 0
+drwxrwxrwt. 3 root root 25 May 26 18:57 tmp
+
+./systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi/tmp:
+total 0
+drwx------. 2 root root 6 May 26 18:57 vmware-root
+
+./systemd-private-fd5dc567e7a4434cb2698ecbde159407-vmtoolsd.service-ofEtIi/tmp/vmware-root:
+total 0
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rm -rf *
+[root@c111xyz tmp]# ls -l
+total 0
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# pwd
+/tmp
+[root@c111xyz tmp]# pwd
+/tmp
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /IPL-2025/
+[root@c111xyz IPL-2025]# ls -l
+total 0
+drwxr-xr-x.  4 root root 28 May 26 20:07 Final
+drwxr-xr-x. 10 root root 92 May 26 19:54 Leagues
+drwxr-xr-x.  6 root root 49 May 26 20:05 SemiFinal
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# pwd
+/IPL-2025
+[root@c111xyz IPL-2025]# rm -rf *
+[root@c111xyz IPL-2025]# ls -l
+total 0
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]#
+[root@c111xyz IPL-2025]# cd ..
+[root@c111xyz /]#
+[root@c111xyz /]# rmdir IPL-2025
+[root@c111xyz /]# ls -l
+total 16
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 May 26 18:57 dev
+drwxr-xr-x.  76 root root 8192 May 22 21:15 etc
+drwxr-xr-x.   2 root root   47 May 23 20:17 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 173 root root    0 May 26 18:57 proc
+dr-xr-x---.   2 root root  135 May 23 20:57 root
+drwxr-xr-x.  24 root root  700 May 26 18:57 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 May 26 18:57 sys
+drwxrwxrwt.   7 root root   93 May 26 20:47 tmp
+drwxr-xr-x.  13 root root  155 May 22 20:19 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+
+
+
