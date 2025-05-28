@@ -1,0 +1,649 @@
+Class 7 28/05/2025
+
+Types of Files: 
+===============
+- Normal file
+d Directory 
+l Link file (shortcut) 
+b Block device file (Harddisk, Floppy disk) 
+c Character device file (Keyboard, Mouse)	 
+ 
+There are two types of Links:-
+============================== 
+SoftLink:  
+========= 
+1 Can be created across the file system
+2 Inode no. of source and link file is different 
+3 if original file is deleted, link is broken and dat anot able to accesable 
+4 Can be created with below command
+	# ln -s sourcepath destinationpath
+5 We can identify by hitting "ls -l filename/Directory" ===> lrwxrwxrwx
+6 Soft link can be configured files and directories
+7 SHORTCUT FILE 
+
+Hardlink:
+=========
+2 Can be created within the file system
+3 Inode no. of both file is same
+4 If original file is deleted then also link will contain data and accessable
+5 Can be created with below command
+	# ln sourcepath destinationpath
+6 We can identify by hitting "ls -l filename"
+7 Hardlink can be configured files only
+8 BACKUP FILE
+
+Editor is used to modify the existing files: nano, emac, gedit, vi/vim editor
+
+Vim Editor/Vi Editor
+====================
+1 Command Mode 
+2 Insert Mode
+3 Extended Mode 
+
+Note: When you open the vim/vi editor, it will be in the command mode by default. 
+ 
+Command Mode: Simple and most of the direct modification will complete in this mode.
+============= 
+gg ===> To go to the beginning of the page 
+G ===> To go to end of the page 
+w ===> To move the cursor forward, word by word 
+b ===> To move the cursor backward, word by word 
+nw ===> To move the cursor forward to n words (5W) 
+nb ===> To move the cursor backward to n words (5B) 
+yy ===> To copy a line 
+nyy ===> To copy n lines (5yy or 4yy) 
+dd ====> Delete a line
+ndd ====> Delete a number of lines
+p ===> To paste line below the cursor position 
+P ===> To paste line above the cursor position 
+r ===> replace a character
+R ====> Replace entire line
+cw ===> To change the word letter
+dw ===> To delete the word letter by letter (like Backspace) 
+x ===> To delete the world letter by letter (like DEL Key) 
+/ ===> To search a word in the file 
+
+Insert Mode: If need to add huge data then this mode should be used
+============ 
+i ===> To begin insert mode at the cursor position 
+I ===> To insert at the beginning of line 
+a ===> To append to the next word’s letter 
+A ===> To Append at the end of the line 
+o ===> To insert  a new line below the cursor position 
+O ===> To insert a new line above the cursor position
+
+Extended Mode: Extended Mode is used for save and quit or save without quit using “Esc” Key with “:” 
+==============
+ 
+Esc+:w ====> To Save the changes 
+Esc+:q! ====> To quit forcefully (Without saving) 
+Esc+:wq ===> To save and quit 
+Esc+:w! ===> To save forcefully 
+Esc+:wq! ===> To save and quit forcefully 
+Esc+:x ====> To save and quit 
+Esc+:set nu=> To set the line numbers to the file 
+Esc+:set nonu ===> To Remove the set line numbers
+
+Lab Tasks:
+==========
+1) Create a directory /Public ===> Commonpeople ===> software-engineers, daily-labuor, trasport-workers (Files)
+                      /Private ====> Ploiticians ===> member-of-parlament, member-of-grampachayet, memeber-of-mucipal
+				     Celebrities   ====> stars, cricketers, businesspleople
+
+   		      /Personal_md/
+
+		      ln -s /Public/Commonpeople/software-engineers /Personal_md/
+
+		      ln -s /Private/Ploiticians/member-of-parlament /Personal_md/
+
+2) Create a directory /tmp/ashok ===> oracle/grid/product/12.12.23 ===> oradata121,oradata122,oradata123 (Files)
+							 /13.13.89 ===> oradata131,oradata132,oradata133
+							 /14.14.28 ===> oradata141,oradata142,oradata143
+                      /tmp/ashok
+
+		      ln /tmp/ashok/oracle/grid/product/12.12.23/oradata121 /tmp/ashok
+
+Vi Edit File: cp /etc/ssh/sshd_config /tmp
+
+# ls -l /tmp/sshd_config
+# cd /tmp
+# vi sshd_config
+
+Session Outputs:
+================
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Mon May 26 20:19:16 2025 from 192.168.29.79
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /dev/
+[root@c111xyz dev]# ls -l
+total 0
+crw-rw----. 1 root video    10, 175 May 28 19:43 agpgart
+crw-------. 1 root root     10, 235 May 28 19:43 autofs
+drwxr-xr-x. 2 root root         160 May 28 19:43 block
+drwxr-xr-x. 2 root root          80 May 28 19:43 bsg
+crw-------. 1 root root     10, 234 May 28 19:43 btrfs-control
+drwxr-xr-x. 3 root root          60 May 28 19:43 bus
+lrwxrwxrwx. 1 root root           3 May 28 19:43 cdrom -> sr0
+drwxr-xr-x. 2 root root        3060 May 28 19:43 char
+crw-------. 1 root root      5,   1 May 28 19:43 console
+lrwxrwxrwx. 1 root root          11 May 28 19:43 core -> /proc/kcore
+drwxr-xr-x. 3 root root          80 May 28 19:43 cpu
+crw-------. 1 root root     10,  61 May 28 19:43 cpu_dma_latency
+crw-------. 1 root root     10,  62 May 28 19:43 crash
+drwxr-xr-x. 6 root root         120 May 28 19:43 disk
+brw-rw----. 1 root disk    253,   0 May 28 19:43 dm-0
+brw-rw----. 1 root disk    253,   1 May 28 19:43 dm-1
+crw-rw----. 1 root audio    14,   9 May 28 19:43 dmmidi
+drwxr-xr-x. 2 root root          80 May 28 19:43 dri
+crw-rw----. 1 root video    29,   0 May 28 19:43 fb0
+lrwxrwxrwx. 1 root root          13 May 28 19:43 fd -> /proc/self/fd
+crw-rw-rw-. 1 root root      1,   7 May 28 19:43 full
+crw-rw-rw-. 1 root root     10, 229 May 28 19:43 fuse
+crw-------. 1 root root    248,   0 May 28 19:43 hidraw0
+crw-------. 1 root root     10, 228 May 28 19:43 hpet
+drwxr-xr-x. 2 root root           0 May 28 19:43 hugepages
+crw-------. 1 root root     10, 183 May 28 19:43 hwrng
+lrwxrwxrwx. 1 root root          25 May 28 19:43 initctl -> /run/systemd/initctl/fifo
+drwxr-xr-x. 4 root root         300 May 28 19:43 input
+crw-r--r--. 1 root root      1,  11 May 28 19:43 kmsg
+srw-rw-rw-. 1 root root           0 May 28 19:43 log
+crw-rw----. 1 root disk     10, 237 May 28 19:43 loop-control
+drwxr-xr-x. 2 root root         100 May 28 19:43 mapper
+crw-------. 1 root root     10, 227 May 28 19:43 mcelog
+crw-r-----. 1 root kmem      1,   1 May 28 19:43 mem
+crw-rw----. 1 root audio    14,   2 May 28 19:43 midi
+drwxrwxrwt. 2 root root          40 May 28 19:43 mqueue
+drwxr-xr-x. 2 root root          60 May 28 19:43 net
+crw-------. 1 root root     10,  60 May 28 19:43 network_latency
+crw-------. 1 root root     10,  59 May 28 19:43 network_throughput
+crw-rw-rw-. 1 root root      1,   3 May 28 19:43 null
+crw-------. 1 root root     10, 144 May 28 19:43 nvram
+crw-------. 1 root root      1,  12 May 28 19:43 oldmem
+crw-r-----. 1 root kmem      1,   4 May 28 19:43 port
+crw-------. 1 root root    108,   0 May 28 19:43 ppp
+crw-rw-rw-. 1 root tty       5,   2 May 28 19:50 ptmx
+drwxr-xr-x. 2 root root           0 May 28 19:43 pts
+crw-rw-rw-. 1 root root      1,   8 May 28 19:43 random
+drwxr-xr-x. 2 root root          60 May 28 19:43 raw
+crw-rw-r--. 1 root root     10,  57 May 28 19:43 rfkill
+drwxr-xr-x. 2 root root          80 May 28 19:43 rhel
+lrwxrwxrwx. 1 root root           4 May 28 19:43 rtc -> rtc0
+crw-------. 1 root root    253,   0 May 28 19:43 rtc0
+brw-rw----. 1 root disk      8,   0 May 28 19:43 sda
+brw-rw----. 1 root disk      8,   1 May 28 19:43 sda1
+brw-rw----. 1 root disk      8,   2 May 28 19:43 sda2
+crw-rw----. 1 root disk     21,   0 May 28 19:43 sg0
+crw-rw----. 1 root cdrom    21,   1 May 28 19:43 sg1
+drwxrwxrwt. 2 root root          40 May 28 19:43 shm
+crw-------. 1 root root     10, 231 May 28 19:43 snapshot
+drwxr-xr-x. 3 root root         200 May 28 19:43 snd
+brw-rw----. 1 root cdrom    11,   0 May 28 19:43 sr0
+lrwxrwxrwx. 1 root root          15 May 28 19:43 stderr -> /proc/self/fd/2
+lrwxrwxrwx. 1 root root          15 May 28 19:43 stdin -> /proc/self/fd/0
+lrwxrwxrwx. 1 root root          15 May 28 19:43 stdout -> /proc/self/fd/1
+crw-rw-rw-. 1 root tty       5,   0 May 28 19:43 tty
+crw--w----. 1 root tty       4,   0 May 28 19:43 tty0
+crw--w----. 1 root tty       4,   1 May 28 19:43 tty1
+crw--w----. 1 root tty       4,  10 May 28 19:43 tty10
+crw--w----. 1 root tty       4,  11 May 28 19:43 tty11
+crw--w----. 1 root tty       4,  12 May 28 19:43 tty12
+crw--w----. 1 root tty       4,  13 May 28 19:43 tty13
+crw--w----. 1 root tty       4,  14 May 28 19:43 tty14
+crw--w----. 1 root tty       4,  15 May 28 19:43 tty15
+crw--w----. 1 root tty       4,  16 May 28 19:43 tty16
+crw--w----. 1 root tty       4,  17 May 28 19:43 tty17
+crw--w----. 1 root tty       4,  18 May 28 19:43 tty18
+crw--w----. 1 root tty       4,  19 May 28 19:43 tty19
+crw--w----. 1 root tty       4,   2 May 28 19:43 tty2
+crw--w----. 1 root tty       4,  20 May 28 19:43 tty20
+crw--w----. 1 root tty       4,  21 May 28 19:43 tty21
+crw--w----. 1 root tty       4,  22 May 28 19:43 tty22
+crw--w----. 1 root tty       4,  23 May 28 19:43 tty23
+crw--w----. 1 root tty       4,  24 May 28 19:43 tty24
+crw--w----. 1 root tty       4,  25 May 28 19:43 tty25
+crw--w----. 1 root tty       4,  26 May 28 19:43 tty26
+crw--w----. 1 root tty       4,  27 May 28 19:43 tty27
+crw--w----. 1 root tty       4,  28 May 28 19:43 tty28
+crw--w----. 1 root tty       4,  29 May 28 19:43 tty29
+crw--w----. 1 root tty       4,   3 May 28 19:43 tty3
+crw--w----. 1 root tty       4,  30 May 28 19:43 tty30
+crw--w----. 1 root tty       4,  31 May 28 19:43 tty31
+crw--w----. 1 root tty       4,  32 May 28 19:43 tty32
+crw--w----. 1 root tty       4,  33 May 28 19:43 tty33
+crw--w----. 1 root tty       4,  34 May 28 19:43 tty34
+crw--w----. 1 root tty       4,  35 May 28 19:43 tty35
+crw--w----. 1 root tty       4,  36 May 28 19:43 tty36
+crw--w----. 1 root tty       4,  37 May 28 19:43 tty37
+crw--w----. 1 root tty       4,  38 May 28 19:43 tty38
+crw--w----. 1 root tty       4,  39 May 28 19:43 tty39
+crw--w----. 1 root tty       4,   4 May 28 19:43 tty4
+crw--w----. 1 root tty       4,  40 May 28 19:43 tty40
+crw--w----. 1 root tty       4,  41 May 28 19:43 tty41
+crw--w----. 1 root tty       4,  42 May 28 19:43 tty42
+crw--w----. 1 root tty       4,  43 May 28 19:43 tty43
+crw--w----. 1 root tty       4,  44 May 28 19:43 tty44
+crw--w----. 1 root tty       4,  45 May 28 19:43 tty45
+crw--w----. 1 root tty       4,  46 May 28 19:43 tty46
+crw--w----. 1 root tty       4,  47 May 28 19:43 tty47
+crw--w----. 1 root tty       4,  48 May 28 19:43 tty48
+crw--w----. 1 root tty       4,  49 May 28 19:43 tty49
+crw--w----. 1 root tty       4,   5 May 28 19:43 tty5
+crw--w----. 1 root tty       4,  50 May 28 19:43 tty50
+crw--w----. 1 root tty       4,  51 May 28 19:43 tty51
+crw--w----. 1 root tty       4,  52 May 28 19:43 tty52
+crw--w----. 1 root tty       4,  53 May 28 19:43 tty53
+crw--w----. 1 root tty       4,  54 May 28 19:43 tty54
+crw--w----. 1 root tty       4,  55 May 28 19:43 tty55
+crw--w----. 1 root tty       4,  56 May 28 19:43 tty56
+crw--w----. 1 root tty       4,  57 May 28 19:43 tty57
+crw--w----. 1 root tty       4,  58 May 28 19:43 tty58
+crw--w----. 1 root tty       4,  59 May 28 19:43 tty59
+crw--w----. 1 root tty       4,   6 May 28 19:43 tty6
+crw--w----. 1 root tty       4,  60 May 28 19:43 tty60
+crw--w----. 1 root tty       4,  61 May 28 19:43 tty61
+crw--w----. 1 root tty       4,  62 May 28 19:43 tty62
+crw--w----. 1 root tty       4,  63 May 28 19:43 tty63
+crw--w----. 1 root tty       4,   7 May 28 19:43 tty7
+crw--w----. 1 root tty       4,   8 May 28 19:43 tty8
+crw--w----. 1 root tty       4,   9 May 28 19:43 tty9
+crw-rw----. 1 root dialout   4,  64 May 28 19:43 ttyS0
+crw-rw----. 1 root dialout   4,  65 May 28 19:43 ttyS1
+crw-rw----. 1 root dialout   4,  66 May 28 19:43 ttyS2
+crw-rw----. 1 root dialout   4,  67 May 28 19:43 ttyS3
+crw-------. 1 root root     10, 239 May 28 19:43 uhid
+crw-------. 1 root root     10, 223 May 28 19:43 uinput
+crw-rw-rw-. 1 root root      1,   9 May 28 19:43 urandom
+crw-------. 1 root root    249,   0 May 28 19:43 usbmon0
+crw-------. 1 root root    249,   1 May 28 19:43 usbmon1
+crw-------. 1 root root    249,   2 May 28 19:43 usbmon2
+crw-rw----. 1 root tty       7,   0 May 28 19:43 vcs
+crw-rw----. 1 root tty       7,   1 May 28 19:43 vcs1
+crw-rw----. 1 root tty       7,   2 May 28 19:43 vcs2
+crw-rw----. 1 root tty       7,   3 May 28 19:43 vcs3
+crw-rw----. 1 root tty       7,   4 May 28 19:43 vcs4
+crw-rw----. 1 root tty       7,   5 May 28 19:43 vcs5
+crw-rw----. 1 root tty       7,   6 May 28 19:43 vcs6
+crw-rw----. 1 root tty       7, 128 May 28 19:43 vcsa
+crw-rw----. 1 root tty       7, 129 May 28 19:43 vcsa1
+crw-rw----. 1 root tty       7, 130 May 28 19:43 vcsa2
+crw-rw----. 1 root tty       7, 131 May 28 19:43 vcsa3
+crw-rw----. 1 root tty       7, 132 May 28 19:43 vcsa4
+crw-rw----. 1 root tty       7, 133 May 28 19:43 vcsa5
+crw-rw----. 1 root tty       7, 134 May 28 19:43 vcsa6
+drwxr-xr-x. 2 root root          60 May 28 19:43 vfio
+crw-------. 1 root root     10,  63 May 28 19:43 vga_arbiter
+crw-------. 1 root root     10, 137 May 28 19:43 vhci
+crw-------. 1 root root     10, 238 May 28 19:43 vhost-net
+crw-------. 1 root root     10,  58 May 28 19:43 vmci
+crw-------. 1 root root     10,  56 May 28 19:43 vsock
+crw-rw-rw-. 1 root root      1,   5 May 28 19:43 zero
+[root@c111xyz dev]# cd /tmp/
+[root@c111xyz tmp]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz tmp]# ls -l
+total 0
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /etc/
+[root@c111xyz etc]# ls -l
+total 1028
+-rw-r--r--.  1 root root     16 May 22 20:44 adjtime
+-rw-r--r--.  1 root root   1518 Jun  7  2013 aliases
+-rw-r--r--.  1 root root  12288 May 22 21:15 aliases.db
+drwxr-xr-x.  2 root root    236 May 22 20:29 alternatives
+-rw-------.  1 root root    541 Mar 29  2017 anacrontab
+-rw-r--r--.  1 root root     55 Mar  1  2017 asound.conf
+drwxr-x---.  3 root root     43 May 22 20:29 audisp
+drwxr-x---.  3 root root     83 May 22 21:15 audit
+drwxr-xr-x.  2 root root    148 May 22 20:29 bash_completion.d
+-rw-r--r--.  1 root root   2853 May  4  2016 bashrc
+drwxr-xr-x.  2 root root      6 Jan  9  2018 binfmt.d
+drwxr-xr-x.  2 root root      6 Jun  6  2017 chkconfig.d
+drwxr-xr-x.  2 root root     21 May 22 20:28 cron.d
+drwxr-xr-x.  2 root root     55 May 22 20:29 cron.daily
+-rw-------.  1 root root      0 Mar 29  2017 cron.deny
+drwxr-xr-x.  2 root root     22 May 22 20:28 cron.hourly
+drwxr-xr-x.  2 root root      6 Dec 28  2013 cron.monthly
+-rw-r--r--.  1 root root    451 Dec 28  2013 crontab
+drwxr-xr-x.  2 root root      6 Dec 28  2013 cron.weekly
+-rw-------.  1 root root      0 May 22 20:19 crypttab
+-rw-r--r--.  1 root root   1620 May  4  2016 csh.cshrc
+-rw-r--r--.  1 root root    841 Jun  7  2013 csh.login
+drwxr-xr-x.  4 root root     78 May 22 20:27 dbus-1
+drwxr-xr-x.  2 root root     44 May 22 20:44 default
+drwxr-xr-x.  2 root root     23 May 22 20:27 depmod.d
+drwxr-x---.  4 root root     53 May 22 20:28 dhcp
+-rw-r--r--.  1 root root   5090 Jun 30  2016 DIR_COLORS
+-rw-r--r--.  1 root root   5725 Jun 30  2016 DIR_COLORS.256color
+-rw-r--r--.  1 root root   4669 Jun 30  2016 DIR_COLORS.lightbgcolor
+-rw-r--r--.  1 root root   1285 Dec 18  2017 dracut.conf
+drwxr-xr-x.  2 root root      6 Dec 18  2017 dracut.conf.d
+-rw-r--r--.  1 root root    112 Mar 16  2017 e2fsck.conf
+-rw-r--r--.  1 root root      0 May  4  2016 environment
+-rw-r--r--.  1 root root   1317 Jun 30  2016 ethertypes
+-rw-r--r--.  1 root root      0 Jun  7  2013 exports
+lrwxrwxrwx.  1 root root     56 May 22 20:26 favicon.png -> /usr/share/icons/hicolor/16x16/apps/fedora-logo-icon.png
+-rw-r--r--.  1 root root     70 May  4  2016 filesystems
+drwxr-x---.  7 root root    133 May 22 20:28 firewalld
+-rw-r--r--.  1 root root    465 May 22 20:19 fstab
+-rw-r--r--.  1 root root     38 May  2  2017 fuse.conf
+drwxr-xr-x.  2 root root      6 Feb 28  2017 gcrypt
+-rw-r--r--.  1 root root    842 Jun 29  2016 GeoIP.conf
+-rw-r--r--.  1 root root    858 Jun 29  2016 GeoIP.conf.default
+drwxr-xr-x.  2 root root      6 Mar 24  2016 gnupg
+-rw-r--r--.  1 root root     94 Mar 24  2017 GREP_COLORS
+drwxr-xr-x.  4 root root     40 May 22 20:20 groff
+-rw-r--r--.  1 root root    435 May 22 20:29 group
+-rw-r--r--.  1 root root    424 May 22 20:29 group-
+lrwxrwxrwx.  1 root root     22 May 22 20:28 grub2.cfg -> ../boot/grub2/grub.cfg
+drwx------.  2 root root    182 May 22 20:33 grub.d
+----------.  1 root root    345 May 22 20:29 gshadow
+----------.  1 root root    336 May 22 20:29 gshadow-
+drwxr-xr-x.  3 root root     20 May 22 20:21 gss
+-rw-r--r--.  1 root root      9 Jun  7  2013 host.conf
+-rw-r--r--.  1 root root      8 May 22 20:45 hostname
+-rw-r--r--.  1 root root    158 Jun  7  2013 hosts
+-rw-r--r--.  1 root root    370 Jun  7  2013 hosts.allow
+-rw-r--r--.  1 root root    460 Jun  7  2013 hosts.deny
+lrwxrwxrwx.  1 root root     11 May 22 20:20 init.d -> rc.d/init.d
+-rw-r--r--.  1 root root    511 Nov  3  2017 inittab
+-rw-r--r--.  1 root root    942 Jun  7  2013 inputrc
+drwxr-xr-x.  2 root root    140 May 22 20:20 iproute2
+-rw-r--r--.  1 root root     23 Jun 29  2017 issue
+-rw-r--r--.  1 root root     22 Jun 29  2017 issue.net
+-rw-r--r--.  1 root root   7265 May 22 20:28 kdump.conf
+drwxr-xr-x.  3 root root     24 May 22 20:29 kernel
+-rw-r--r--.  1 root root    590 Apr 29  2017 krb5.conf
+drwxr-xr-x.  2 root root      6 Apr 29  2017 krb5.conf.d
+-rw-r--r--.  1 root root  20227 May 22 20:30 ld.so.cache
+-rw-r--r--.  1 root root     28 Feb 28  2013 ld.so.conf
+drwxr-xr-x.  2 root root     79 May 22 20:29 ld.so.conf.d
+-rw-r-----.  1 root root    191 Apr 19  2017 libaudit.conf
+drwxr-xr-x.  2 root root     35 May 22 20:20 libnl
+-rw-r--r--.  1 root root   2391 Oct 13  2013 libuser.conf
+-rw-r--r--.  1 root root     19 May 22 20:44 locale.conf
+lrwxrwxrwx.  1 root root     34 May 22 20:44 localtime -> ../usr/share/zoneinfo/Asia/Kolkata
+-rw-r--r--.  1 root root   2028 Jun 28  2016 login.defs
+-rw-r--r--.  1 root root    662 Jul 31  2013 logrotate.conf
+drwxr-xr-x.  2 root root    111 May 22 20:29 logrotate.d
+drwxr-xr-x.  6 root root    100 May 22 20:28 lvm
+-r--r--r--.  1 root root     33 May 22 20:27 machine-id
+-rw-r--r--.  1 root root    111 Jun 27  2016 magic
+-rw-r--r--.  1 root root   5122 Sep 26  2017 makedumpfile.conf.sample
+-rw-r--r--.  1 root root   5171 Mar 17  2014 man_db.conf
+-rw-r--r--.  1 root root    936 Mar 16  2017 mke2fs.conf
+drwxr-xr-x.  2 root root     24 May 22 20:28 modprobe.d
+drwxr-xr-x.  2 root root      6 Jan  9  2018 modules-load.d
+-rw-r--r--.  1 root root      0 Jun  7  2013 motd
+lrwxrwxrwx.  1 root root     17 May 22 20:19 mtab -> /proc/self/mounts
+-rw-r--r--.  1 root root    570 Jun  8  2017 my.cnf
+drwxr-xr-x.  2 root root     31 May 22 20:27 my.cnf.d
+drwxr-xr-x.  7 root root    134 Dec 13  2017 NetworkManager
+-rw-r--r--.  1 root root     58 Nov  3  2017 networks
+-rw-r--r--.  1 root root   1746 May 22 20:27 nsswitch.conf
+-rw-r--r--.  1 root root   1735 Nov 23  2017 nsswitch.conf.bak
+drwxr-xr-x.  3 root root     36 May 22 20:26 openldap
+drwxr-xr-x.  2 root root      6 Mar 10  2016 opt
+-rw-r--r--.  1 root root    532 Jun 29  2017 os-release
+drwxr-xr-x.  2 root root   4096 May 22 20:44 pam.d
+-rw-r--r--.  1 root root    798 May 22 20:45 passwd
+-rw-r--r--.  1 root root    798 May 22 20:45 passwd-
+drwxr-xr-x.  3 root root     21 May 22 20:20 pkcs11
+drwxr-xr-x. 14 root root    189 May 23 20:10 pki
+drwxr-xr-x.  2 root root     28 May 22 20:28 plymouth
+drwxr-xr-x.  5 root root     52 May 22 20:19 pm
+drwxr-xr-x.  5 root root     72 May 22 20:27 polkit-1
+drwxr-xr-x.  2 root root      6 Jan 27  2014 popt.d
+drwxr-xr-x.  2 root root    154 May 22 20:29 postfix
+drwxr-xr-x.  3 root root    123 May 22 20:27 ppp
+drwxr-xr-x.  2 root root     78 May 22 20:28 prelink.conf.d
+-rw-r--r--.  1 root root    233 Jun  7  2013 printcap
+-rw-r--r--.  1 root root   1795 May  4  2016 profile
+drwxr-xr-x.  2 root root    218 May 22 20:27 profile.d
+-rw-r--r--.  1 root root   6545 Jun  7  2013 protocols
+drwxr-xr-x.  2 root root     35 May 22 20:21 python
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc0.d -> rc.d/rc0.d
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc1.d -> rc.d/rc1.d
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc2.d -> rc.d/rc2.d
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc3.d -> rc.d/rc3.d
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc4.d -> rc.d/rc4.d
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc5.d -> rc.d/rc5.d
+lrwxrwxrwx.  1 root root     10 May 22 20:20 rc6.d -> rc.d/rc6.d
+drwxr-xr-x. 10 root root    127 May 22 20:27 rc.d
+lrwxrwxrwx.  1 root root     13 May 22 20:27 rc.local -> rc.d/rc.local
+-rw-r--r--.  1 root root     52 Jun 29  2017 redhat-release
+-rw-r--r--.  1 root root     30 May 22 20:19 resolv.conf
+drwxr-xr-x.  5 root root     86 May 22 20:28 rhsm
+-rw-r--r--.  1 root root   1634 Dec 25  2012 rpc
+drwxr-xr-x.  2 root root     47 May 22 20:28 rpm
+-rw-r--r--.  1 root root   3232 May 10  2017 rsyslog.conf
+drwxr-xr-x.  2 root root     25 May 10  2017 rsyslog.d
+-rw-r--r--.  1 root root    966 Nov  3  2017 rwtab
+drwxr-xr-x.  2 root root     23 Nov  3  2017 rwtab.d
+drwxr-xr-x.  2 root root     24 May 22 20:29 sasl2
+-rw-------.  1 root root    221 May  4  2016 securetty
+drwxr-xr-x.  6 root root   4096 May 22 20:25 security
+drwxr-xr-x.  5 root root     81 May 22 20:27 selinux
+-rw-r--r--.  1 root root 670293 Jun  7  2013 services
+-rw-r--r--.  1 root root    216 May 26  2017 sestatus.conf
+----------.  1 root root    563 May 22 20:45 shadow
+----------.  1 root root    568 May 22 20:45 shadow-
+-rw-r--r--.  1 root root     76 Jun  7  2013 shells
+drwxr-xr-x.  2 root root     62 May 22 20:19 skel
+drwxr-xr-x.  2 root root    225 May 22 21:15 ssh
+drwxr-xr-x.  2 root root     19 May 22 20:21 ssl
+-rw-r--r--.  1 root root    212 Nov  3  2017 statetab
+drwxr-xr-x.  2 root root      6 Nov  3  2017 statetab.d
+-rw-r--r--.  1 root root      0 May  4  2016 subgid
+-rw-r--r--.  1 root root      0 May  4  2016 subuid
+-rw-r-----.  1 root root   1786 Aug 18  2017 sudo.conf
+-r--r-----.  1 root root   3938 Aug 18  2017 sudoers
+drwxr-x---.  2 root root      6 Aug 18  2017 sudoers.d
+-rw-r-----.  1 root root   3181 Aug 18  2017 sudo-ldap.conf
+drwxr-xr-x.  7 root root   4096 May 22 20:48 sysconfig
+-rw-r--r--.  1 root root    449 Nov  3  2017 sysctl.conf
+drwxr-xr-x.  2 root root     28 May 22 20:27 sysctl.d
+drwxr-xr-x.  4 root root    151 May 22 20:27 systemd
+lrwxrwxrwx.  1 root root     14 May 22 20:19 system-release -> redhat-release
+-rw-r--r--.  1 root root     45 Jun 29  2017 system-release-cpe
+drwxr-xr-x.  2 root root      6 Aug 15  2017 terminfo
+drwxr-xr-x.  2 root root      6 Jan  9  2018 tmpfiles.d
+drwxr-xr-x.  2 root root     70 May 22 20:28 tuned
+drwxr-xr-x.  3 root root     54 May 22 21:15 udev
+-rw-r--r--.  1 root root     37 May 22 20:44 vconsole.conf
+-rw-r--r--.  1 root root   1982 Jan 20  2017 virc
+drwxr-xr-x.  5 root root    231 May 22 20:28 vmware-tools
+drwxr-xr-x.  2 root root     33 May 22 20:28 wpa_supplicant
+drwxr-xr-x.  5 root root     57 May 22 20:27 X11
+drwxr-xr-x.  4 root root     38 May 22 20:27 xdg
+drwxr-xr-x.  2 root root      6 Mar 10  2016 xinetd.d
+drwxr-xr-x.  6 root root    100 May 22 20:27 yum
+-rw-r--r--.  1 root root    813 Mar 27  2017 yum.conf
+drwxr-xr-x.  2 root root      6 Mar 27  2017 yum.repos.d
+[root@c111xyz etc]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 0
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat > ashok
+This is a new file created by root user
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 4
+-rw-r--r--. 1 root root 40 May 28 19:54 ashok
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /home
+[root@c111xyz home]#
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+[root@c111xyz home]#
+[root@c111xyz home]# ln -s /tmp/ashok /home/testfile
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root root   10 May 28 19:55 testfile -> /tmp/ashok
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# cat testfile
+This is a new file created by root user
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# cat >> testfile
+Hi This file entry added from home directory
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root root   10 May 28 19:55 testfile -> /tmp/ashok
+[root@c111xyz home]#
+[root@c111xyz home]# cat testfile
+This is a new file created by root user
+Hi This file entry added from home directory
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 4
+-rw-r--r--. 1 root root 85 May 28 19:55 ashok
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]# cat ashok
+This is a new file created by root user
+Hi This file entry added from home directory
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -li
+total 4
+16777288 -rw-r--r--. 1 root root 85 May 28 19:55 ashok
+     353 drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+     354 drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]# ls -li /home/
+total 8
+17030936 -rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+17199205 -rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+     357 lrwxrwxrwx. 1 root root   10 May 28 19:55 testfile -> /tmp/ashok
+[root@c111xyz tmp]# ls -l
+total 4
+-rw-r--r--. 1 root root 85 May 28 19:55 ashok
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rm -f ashok
+[root@c111xyz tmp]# ls -l
+total 0
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vgauthd.service-VxD3ld
+drwx------. 3 root root 17 May 28 19:43 systemd-private-3a531e9244b4423e90d4601842157ba7-vmtoolsd.service-7O6XMZ
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l /home/
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root root   10 May 28 19:55 testfile -> /tmp/ashok
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat /home/testfile
+cat: /home/testfile: No such file or directory
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /usr/local/share/
+[root@c111xyz share]# ls
+applications  info  man
+[root@c111xyz share]#
+[root@c111xyz share]#
+[root@c111xyz share]# ls -l
+total 0
+drwxr-xr-x.  2 root root   6 Mar 10  2016 applications
+drwxr-xr-x.  2 root root   6 Mar 10  2016 info
+drwxr-xr-x. 21 root root 243 May 22 20:19 man
+[root@c111xyz share]#
+[root@c111xyz share]#
+[root@c111xyz share]# mkdir tomcat
+[root@c111xyz share]# cd tomcat/
+[root@c111xyz tomcat]# ls -
+ls: cannot access -: No such file or directory
+[root@c111xyz tomcat]#
+[root@c111xyz tomcat]# cat > install.sh
+this script is used to start the tomcat service
+[root@c111xyz tomcat]#
+[root@c111xyz tomcat]#
+[root@c111xyz tomcat]# mv install.sh start.sh
+[root@c111xyz tomcat]# ls -l
+total 4
+-rw-r--r--. 1 root root 48 May 28 20:02 start.sh
+[root@c111xyz tomcat]#
+[root@c111xyz tomcat]# pwd
+/usr/local/share/tomcat
+[root@c111xyz tomcat]#
+[root@c111xyz tomcat]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 4
+-rw-------. 1 root root 1491 May 22 20:48 anaconda-ks.cfg
+[root@c111xyz ~]#
+[root@c111xyz ~]# ln -s /usr/local/share/tomcat/start.sh start.sh
+[root@c111xyz ~]# ls -l
+total 4
+-rw-------. 1 root root 1491 May 22 20:48 anaconda-ks.cfg
+lrwxrwxrwx. 1 root root   32 May 28 20:03 start.sh -> /usr/local/share/tomcat/start.sh
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# bash start.sh
+start.sh: line 1: this: command not found
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cat /tmp/ashok
+this script is used to start the tomcat service
+adding entry from usr directory
+adding entry after remiving one link
+this script is used to start the tomcat service
+adding entry from usr directory
+adding entry from usr directory
+adding entry after remiving one link
+this script is used to start the tomcat service
+adding entry from usr directory
+adding entry after remiving one link
+this script is used to start the tomcat service
+adding entry from usr directory
+adding entry after remiving one link
+[root@c111xyz ~]#
+[root@c111xyz ~]#
