@@ -1,0 +1,582 @@
+Class 8 30/05/2025
+
+USER AND GROUP ADMINISTRATION 
+=============================
+In Linux/Unix user is one who uses the system. There can be at least one or more than one users in Linux at a time. Users on a system is identified by a username and a userid.
+
+Some Important Points related to Users:
+=======================================
+Users and groups are used to control access to files and resources 
+Users login to the system by supplying their username and password 
+Every file on the system is owned by a user and associated with a group 
+Every process has an owner and group affiliation, and can only access the resources its owner or group can access. 
+Every user of the system is assigned a unique user ID number ( the UID) 
+Users name and UID are stored in /etc/passwd  
+User’s password is stored in /etc/shadow in encrypted form. 
+Users are assigned a home directory and a program that is run when they login (Usually a shell) 
+Users cannot read, write or execute each other’s files without permission. 
+
+In Linux there are three types of users:
+========================================
+1. Super user or root user: Super user or the root user is the most powerful user. He is the administrator user.  
+ 
+2. System user: System users are the users created by the softwares or applications. For example if we install 
+Apache it will create a user tomcat, any baground processes will run with this user autometically. These kinds of users are known as system users. 
+ 
+3. Normal user: Normal users are the users created by root user. They are normal users like Rahul, Musab etc. 
+Only the root user has the permission to create or remove a user. 
+
+4. Remote user: As per the infrastructure setup the users can be launched from different server and able to login clinet servers
+
+Configuration files for user administration:
+============================================
+cat /etc/passwd ===> username, uid, gid, comment & shell
+cat /etc/shadow ====> username, encrypted passowrd....
+cat /etc/group ====> gid, groupname....
+
+Creating a user:
+================
+The syntax for creating a user in Linux is 
+	* useradd  -u userid -g primarygroupid -d homedirectorypath -c comment -s shell username
+	* passwd username
+
+	# grep -i admins /etc/group
+	# grep -i 1200 /etc/group
+	# groupadd -g 1200 admins
+	# grep -i admins /etc/group
+
+	# grep -i 1235 /etc/passwd
+	# grep -i unixuser1 /etc/passwd
+	# useradd -u 1235 -g 1200 -d /home/unixuser1 -c "unixuser1@google.com;EMID-20645" -s /bin/bash unixuser1
+	# grep -i 1235 /etc/passwd
+
+	# grep -i unixuser1 /etc/shadow
+	# passwd unixuser1
+	# grep -i unixuser1 /etc/shadow
+
+	Once you login session run "id" command to know which user you loged in
+	$ id
+	$ pwd
+	$ touch file1
+	$ mkdir dir1
+	$ ls -l
+	$ cd /tmp
+	$ touch oraclefile1
+	$ mkdir oracledir1
+	
+
+Lab Practice:
+=============
+group = 1400 dba, 1200 admins
+user = unixadmin1, unixadmin2, unixadmin3, unixadmin4, unixadmin5 (1400 dba)
+user = tempadmin1, tempadmin2, tempadmin3, tempadmin4, tempadmin5 (1200 admins)
+
+1) switch the user
+2) cross check the user login with id, pwd commands
+2) create one directory and one file in your home directory
+3) create one directory and one file in your /tmp directory
+4) cross check whether they are created with your username and group.
+
+Class Session Output:
+=====================
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Wed May 28 20:04:38 2025 from 192.168.29.79
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root root  500 May 28 20:56 ashok
+-rw-------. 1 root root 3907 May 28 20:58 sshd_config
+drwx------. 3 root root   17 May 30 20:12 systemd-private-ff21b13b2eeb4fa7933620926e0b9556-systemd-hostnamed.service-H0XyhK
+drwx------. 3 root root   17 May 30 20:12 systemd-private-ff21b13b2eeb4fa7933620926e0b9556-vgauthd.service-iaU5A1
+drwx------. 3 root root   17 May 30 20:12 systemd-private-ff21b13b2eeb4fa7933620926e0b9556-vmtoolsd.service-1gYTAk
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# top
+top - 20:14:09 up 2 min,  1 user,  load average: 0.29, 0.25, 0.11
+Tasks: 188 total,   3 running, 185 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1865964 total,  1535260 free,   142720 used,   187984 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  1536536 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+    20 root      20   0       0      0      0 S  0.3  0.0   0:00.41 kworker/0:1
+     1 root      20   0  128120   6768   4004 S  0.0  0.4   0:02.83 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+     3 root      20   0       0      0      0 S  0.0  0.0   0:00.14 ksoftirqd/0
+     4 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     6 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kworker/u256:0
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+     9 root      20   0       0      0      0 R  0.0  0.0   0:00.89 rcu_sched
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    25 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kswapd0
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root      39  19       0      0      0 S  0.0  0.0   0:00.00 khugepaged
+    28 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    36 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    37 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kworker/u256:1
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    39 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    40 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kworker/0:2
+    41 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    60 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    92 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kauditd
+   126 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kworker/0:3
+   274 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l /proc/
+Display all 246 possibilities? (y or n)
+[root@c111xyz tmp]# ls -l /proc/
+total 0
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 10
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1086
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1089
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1099
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1129
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 12
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 126
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 13
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1324
+dr-xr-xr-x.  9 postfix postfix               0 May 30 20:13 1327
+dr-xr-xr-x.  9 postfix postfix               0 May 30 20:13 1328
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1379
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1383
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1387
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 1388
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 14
+dr-xr-xr-x.  9 root    root                  0 May 30 20:14 1415
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 15
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 16
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 17
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 18
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 19
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 2
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 20
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 25
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 26
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 27
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 274
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 275
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 276
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 28
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 282
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 283
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 286
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 287
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 289
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 290
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 291
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 292
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 295
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 296
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 3
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 324
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 325
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 326
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 327
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 328
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 329
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 330
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 331
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 332
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 333
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 334
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 335
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 336
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 337
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 338
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 339
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 340
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 341
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 342
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 343
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 344
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 345
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 346
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 347
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 348
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 349
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 350
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 351
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 352
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 353
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 354
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 355
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 356
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 357
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 358
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 359
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 36
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 360
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 361
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 362
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 363
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 364
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 365
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 366
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 367
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 368
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 369
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 37
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 370
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 371
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 372
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 373
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 374
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 375
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 376
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 377
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 378
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 379
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 38
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 380
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 381
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 382
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 383
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 384
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 385
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 386
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 387
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 388
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 389
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 39
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 390
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 391
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 392
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 393
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 394
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 395
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 396
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 397
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 398
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 399
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 4
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 40
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 400
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 401
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 402
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 403
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 404
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 405
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 406
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 407
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 408
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 409
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 41
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 410
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 454
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 455
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 464
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 465
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 480
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 481
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 482
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 483
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 484
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 485
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 486
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 487
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 488
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 489
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 490
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 5
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 545
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 559
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 580
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 586
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 6
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 60
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 609
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 622
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 624
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 625
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 626
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 627
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 648
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 649
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 650
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 651
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 652
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 653
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 654
+dr-xr-xr-x.  9 root    root                  0 May 30 20:13 655
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 7
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 723
+dr-xr-xr-x.  9 dbus    dbus                  0 May 30 20:12 746
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 748
+dr-xr-xr-x.  9 polkitd polkitd               0 May 30 20:12 749
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 754
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 755
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 756
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 761
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 766
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 780
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 794
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 8
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 9
+dr-xr-xr-x.  9 root    root                  0 May 30 20:12 92
+dr-xr-xr-x.  2 root    root                  0 May 30 20:14 acpi
+dr-xr-xr-x.  5 root    root                  0 May 30 20:14 asound
+-r--r--r--.  1 root    root                  0 May 30 20:14 buddyinfo
+dr-xr-xr-x.  4 root    root                  0 May 30 20:14 bus
+-r--r--r--.  1 root    root                  0 May 30 20:14 cgroups
+-r--r--r--.  1 root    root                  0 May 30 20:14 cmdline
+-r--r--r--.  1 root    root                  0 May 30 20:14 consoles
+-r--r--r--.  1 root    root                  0 May 30 20:14 cpuinfo
+-r--r--r--.  1 root    root                  0 May 30 20:14 crypto
+-r--r--r--.  1 root    root                  0 May 30 20:14 devices
+-r--r--r--.  1 root    root                  0 May 30 20:14 diskstats
+-r--r--r--.  1 root    root                  0 May 30 20:14 dma
+dr-xr-xr-x.  2 root    root                  0 May 30 20:14 driver
+-r--r--r--.  1 root    root                  0 May 30 20:14 execdomains
+-r--r--r--.  1 root    root                  0 May 30 20:14 fb
+-r--r--r--.  1 root    root                  0 May 30 20:14 filesystems
+dr-xr-xr-x.  4 root    root                  0 May 30 20:14 fs
+-r--r--r--.  1 root    root                  0 May 30 20:14 interrupts
+-r--r--r--.  1 root    root                  0 May 30 20:14 iomem
+-r--r--r--.  1 root    root                  0 May 30 20:14 ioports
+dr-xr-xr-x. 57 root    root                  0 May 30 20:14 irq
+-r--r--r--.  1 root    root                  0 May 30 20:14 kallsyms
+-r--------.  1 root    root    140737486266368 May 30 20:14 kcore
+-r--r--r--.  1 root    root                  0 May 30 20:14 keys
+-r--r--r--.  1 root    root                  0 May 30 20:14 key-users
+-r--------.  1 root    root                  0 May 30 20:14 kmsg
+-r--------.  1 root    root                  0 May 30 20:14 kpagecount
+-r--------.  1 root    root                  0 May 30 20:14 kpageflags
+-r--r--r--.  1 root    root                  0 May 30 20:14 loadavg
+-r--r--r--.  1 root    root                  0 May 30 20:14 locks
+-r--r--r--.  1 root    root                  0 May 30 20:14 mdstat
+-r--r--r--.  1 root    root                  0 May 30 20:14 meminfo
+-r--r--r--.  1 root    root                  0 May 30 20:14 misc
+-r--r--r--.  1 root    root                  0 May 30 20:14 modules
+lrwxrwxrwx.  1 root    root                 11 May 30 20:14 mounts -> self/mounts
+dr-xr-xr-x.  3 root    root                  0 May 30 20:14 mpt
+-rw-r--r--.  1 root    root                  0 May 30 20:14 mtrr
+lrwxrwxrwx.  1 root    root                  8 May 30 20:14 net -> self/net
+-r--r--r--.  1 root    root                  0 May 30 20:14 pagetypeinfo
+-r--r--r--.  1 root    root                  0 May 30 20:14 partitions
+-r--r--r--.  1 root    root                  0 May 30 20:14 sched_debug
+-r--r--r--.  1 root    root                  0 May 30 20:14 schedstat
+dr-xr-xr-x.  4 root    root                  0 May 30 20:14 scsi
+lrwxrwxrwx.  1 root    root                  0 May 30 20:12 self -> 1415
+-r--------.  1 root    root                  0 May 30 20:14 slabinfo
+-r--r--r--.  1 root    root                  0 May 30 20:14 softirqs
+-r--r--r--.  1 root    root                  0 May 30 20:14 stat
+-r--r--r--.  1 root    root                  0 May 30 20:12 swaps
+dr-xr-xr-x.  1 root    root                  0 May 30 20:12 sys
+--w-------.  1 root    root                  0 May 30 20:14 sysrq-trigger
+dr-xr-xr-x.  2 root    root                  0 May 30 20:14 sysvipc
+-r--r--r--.  1 root    root                  0 May 30 20:14 timer_list
+-rw-r--r--.  1 root    root                  0 May 30 20:14 timer_stats
+dr-xr-xr-x.  4 root    root                  0 May 30 20:14 tty
+-r--r--r--.  1 root    root                  0 May 30 20:14 uptime
+-r--r--r--.  1 root    root                  0 May 30 20:14 version
+-r--------.  1 root    root                  0 May 30 20:14 vmallocinfo
+-r--r--r--.  1 root    root                  0 May 30 20:14 vmstat
+-r--r--r--.  1 root    root                  0 May 30 20:14 zoneinfo
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# uptime
+ 20:14:31 up 2 min,  1 user,  load average: 0.21, 0.24, 0.11
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# tail /etc/passwd
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# id -a sshd
+uid=74(sshd) gid=74(sshd) groups=74(sshd)
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls
+ashok        systemd-private-ff21b13b2eeb4fa7933620926e0b9556-vgauthd.service-iaU5A1
+sshd_config  systemd-private-ff21b13b2eeb4fa7933620926e0b9556-vmtoolsd.service-1gYTAk
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# mkdir ashok
+mkdir: cannot create directory ‘ashok’: File exists
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# wc -l /etc/passwd
+18 /etc/passwd
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# tail /etc/shadow
+mail:*:16925:0:99999:7:::
+operator:*:16925:0:99999:7:::
+games:*:16925:0:99999:7:::
+ftp:*:16925:0:99999:7:::
+nobody:*:16925:0:99999:7:::
+systemd-network:!!:20230::::::
+dbus:!!:20230::::::
+polkitd:!!:20230::::::
+postfix:!!:20230::::::
+sshd:!!:20230::::::
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# head /etc/shadow
+root:$6$/9R9I5ZTeZ2khUve$NPUWm8DOEruhvmAxd4a9c3yt4Tg/y9OU/cyvuhY95WVBy96sJTfCt2nTYIZVISv12Gv/CZJqkXRc5NBUPPp.j0::0:99999:7:::
+bin:*:16925:0:99999:7:::
+daemon:*:16925:0:99999:7:::
+adm:*:16925:0:99999:7:::
+lp:*:16925:0:99999:7:::
+sync:*:16925:0:99999:7:::
+shutdown:*:16925:0:99999:7:::
+halt:*:16925:0:99999:7:::
+mail:*:16925:0:99999:7:::
+operator:*:16925:0:99999:7:::
+[root@c111xyz tmp]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l /home/
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root root   10 May 28 19:55 testfile -> /tmp/ashok
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   17G  949M   17G   6% /
+devtmpfs               901M     0  901M   0% /dev
+tmpfs                  912M     0  912M   0% /dev/shm
+tmpfs                  912M  8.7M  903M   1% /run
+tmpfs                  912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1             1014M  143M  872M  15% /boot
+tmpfs                  183M     0  183M   0% /run/user/0
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i 1200 /etc/group
+[root@c111xyz /]# grep -i admins /etc/group
+[root@c111xyz /]#
+[root@c111xyz /]# groupadd -g 1200 admins
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i admins /etc/group
+admins:x:1200:
+[root@c111xyz /]#
+[root@c111xyz /]# cd /home
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root root  836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root root 3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root root   10 May 28 19:55 testfile -> /tmp/ashok
+[root@c111xyz home]#
+[root@c111xyz home]# du s-h *
+du: cannot access ‘s-h’: No such file or directory
+4       ks-script-4cvBsB
+4       sshd_conf
+0       testfile
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# grep -i 1235 /etc/passwd
+[root@c111xyz home]# grep -i unixuser1 /etc/passwd
+[root@c111xyz home]#
+[root@c111xyz home]# useradd -u 1235 -g 1200 -d /home/unixuser1 -c "unixuser1@google.com;EMID:20645" -s /bin/bash unixuser1
+useradd: invalid comment 'unixuser1@google.com;EMID:20645'
+[root@c111xyz home]# useradd -u 1235 -g 1200 -d /home/unixuser1 -c "unixuser1@google.com;EMID-20645" -s /bin/bash unixuser1
+[root@c111xyz home]#
+[root@c111xyz home]# grep -i unixuser1 /etc/passwd
+unixuser1:x:1235:1200:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+[root@c111xyz home]#
+[root@c111xyz home]# grep -i 1235 /etc/passwd
+unixuser1:x:1235:1200:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# grep -i unixuser1 /etc/shadow
+unixuser1:!!:20238:0:99999:7:::
+[root@c111xyz home]#
+[root@c111xyz home]# grep -i root /etc/shadow
+root:$6$/9R9I5ZTeZ2khUve$NPUWm8DOEruhvmAxd4a9c3yt4Tg/y9OU/cyvuhY95WVBy96sJTfCt2nTYIZVISv12Gv/CZJqkXRc5NBUPPp.j0::0:99999:7:::
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# passwd unixuser1
+Changing password for user unixuser1.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# grep -i unixuser1 /etc/shadow
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:0:99999:7:::
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root      root    836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root      root   3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root      root     10 May 28 19:55 testfile -> /tmp/ashok
+drwx------. 2 unixuser1 admins   62 May 30 20:45 unixuser1
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]#
+[root@c111xyz home]# pwd
+/home
+[root@c111xyz home]#
+[root@c111xyz home]# ls -l
+total 8
+-rwx------. 1 root      root    836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root      root   3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root      root     10 May 28 19:55 testfile -> /tmp/ashok
+drwx------. 3 unixuser1 admins   91 May 30 20:52 unixuser1
+[root@c111xyz home]#
+[root@c111xyz home]#
