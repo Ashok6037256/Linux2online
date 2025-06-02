@@ -1,0 +1,737 @@
+Class 9 02/06/2025
+
+There are two important files a user administrator should be aware of.  
+ 
+1. "/etc/passwd" 
+2. "/etc/shadow" 
+3. "/etc/group"
+
+Each of the above mentioned files have specific formats. 
+ 
+/etc/passwd 
+
+unixuser1:x:1235:1200:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+
+The fields are
+=============== 
+root	====> username 
+x	====> link to password file i.e. /etc/shadow 
+0 	====> UID (user id) 
+0 	====> GID (group id) 
+root	====> comment (brief information about the user) 
+/root	====> home directory of the user 
+/bin/bash ====> shell info 
+
+/etc/shadow 
+ 
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:0:90:7:5:6:
+
+
+The fields are
+=============== 
+unixuser1 ====> User name
+$6$LVDq ====> Encrypted password 
+20207	====> Days since that password was last changed  (Jan 06, 1970)
+0 	====> Days after which password must be changed (minimum password age)
+99999	====> Days before password is to expire that user is warned. (maximum password age)
+7	====> Days after the password is expires that the user is disabled. (warning days)
+5	====> Password expires days
+3	====> Password inactive days
+:	====> reserved field
+
+/etc/group
+
+root:x:0:
+
+The fields are
+===============
+root	====> Groupname
+x	====> Olden days password used field
+0	====> Gid
+::	====> Secondarygroup tagged usernames
+
+Changing of the password parameters can be done by two ways. 
+============================================================
+1) *chage  <username>
+	
+# chage -l root
+Last password change                                    : Apr 29, 2025
+Password expires                                        : never
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 99999
+Number of days of warning before password expires       : 7
+
+# chage username  ======> This command will allow you to change expirydays, warningdays, minimum passwordage and maximum passwordage at a time.
+
+2) *passwd <options> <value>
+
+# passwd -x maxdays username  ======> Maximum number of days between password change
+# passwd -S username	=====> Show the password current status
+# passwd -l username	=====> Lock the password for specifed user
+# passwd -u username	=====> Unlock the password for the user
+# passwd -n mindays username	======> Minimum number of days between password change
+# passwd -w warningdays username ======> Change the expiry date of the passwd for the specified user
+
+Lab Session:
+============
+
+unixuser 1....10   ======> Need to chnage any of the aboe password parameter
+unixadmin 1....10  ======> Need to chnage any of the aboe password parameter
+
+Session Outputs:
+================
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Fri May 30 20:12:39 2025 from 192.168.29.79
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 4
+-rw-------. 1 root root 1491 May 22 20:48 anaconda-ks.cfg
+lrwxrwxrwx. 1 root root   32 May 28 20:03 start.sh -> /usr/local/share/tomcat/start.sh
+[root@c111xyz ~]#
+[root@c111xyz ~]# rm -rf *
+[root@c111xyz ~]# ls -l
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun  2 19:40 dev
+drwxr-xr-x.  76 root root 8192 May 30 20:49 etc
+drwxr-xr-x.   3 root root   80 May 30 20:45 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 201 root root    0 Jun  2 19:39 proc
+dr-xr-x---.   2 root root  112 Jun  2 19:42 root
+drwxr-xr-x.  24 root root  700 Jun  2 19:40 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun  2 19:40 sys
+drwxrwxrwt.  10 root root 4096 Jun  2 19:40 tmp
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# pwd
+/
+[root@c111xyz /]#
+[root@c111xyz /]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root      root    500 May 28 20:56 ashok
+-rw-------. 1 root      root   3907 May 28 20:58 sshd_config
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vgauthd.service-0OwK1t
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vmtoolsd.service-Kot1qi
+drwxr-xr-x. 2 unixuser1 admins    6 May 30 20:55 unixuser1-backup
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /var/log/
+[root@c111xyz log]# ls -l
+total 1296
+drwxr-xr-x. 2 root root    232 May 22 20:48 anaconda
+drwx------. 2 root root     23 May 22 21:15 audit
+-rw-------. 1 root root   8708 Jun  2 19:40 boot.log
+-rw-------. 1 root root  27167 May 26 19:08 boot.log-20250526
+-rw-------. 1 root root   8798 May 28 20:48 boot.log-20250528
+-rw-------. 1 root root   8938 May 30 21:24 boot.log-20250530
+-rw-------. 1 root utmp      0 May 22 20:27 btmp
+-rw-------. 1 root root   5406 Jun  2 19:40 cron
+-rw-------. 1 root root   2867 May 26 19:08 cron-20250526
+-rw-r--r--. 1 root root 129154 Jun  2 19:40 dmesg
+-rw-r--r--. 1 root root 129284 May 30 20:12 dmesg.old
+-rw-r--r--. 1 root root   3684 Jun  2 19:40 firewalld
+-rw-r--r--. 1 root root    193 May 22 20:25 grubby_prune_debug
+-rw-r--r--. 1 root root 360912 Jun  2 19:41 lastlog
+-rw-------. 1 root root    582 Jun  2 19:40 maillog
+-rw-------. 1 root root    582 May 26 18:57 maillog-20250526
+-rw-------. 1 root root 440070 Jun  2 19:41 messages
+-rw-------. 1 root root 439522 May 26 19:08 messages-20250526
+drwxr-xr-x. 2 root root     73 May 26 19:08 rhsm
+-rw-------. 1 root root   5220 Jun  2 19:41 secure
+-rw-------. 1 root root   3213 May 26 18:57 secure-20250526
+-rw-------. 1 root root      0 May 26 19:08 spooler
+-rw-------. 1 root root      0 May 22 20:29 spooler-20250526
+-rw-------. 1 root root      0 May 22 20:25 tallylog
+drwxr-xr-x. 2 root root     23 May 22 21:15 tuned
+-rw-r--r--. 1 root root   9133 Jun  2 19:40 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root root  19500 Jun  2 19:40 vmware-vmsvc.log
+-rw-rw-r--. 1 root utmp  18048 Jun  2 19:41 wtmp
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]# tuch yum.log
+-bash: tuch: command not found
+[root@c111xyz log]# touch yum.log
+[root@c111xyz log]# ls -l
+total 1296
+drwxr-xr-x. 2 root root    232 May 22 20:48 anaconda
+drwx------. 2 root root     23 May 22 21:15 audit
+-rw-------. 1 root root   8708 Jun  2 19:40 boot.log
+-rw-------. 1 root root  27167 May 26 19:08 boot.log-20250526
+-rw-------. 1 root root   8798 May 28 20:48 boot.log-20250528
+-rw-------. 1 root root   8938 May 30 21:24 boot.log-20250530
+-rw-------. 1 root utmp      0 May 22 20:27 btmp
+-rw-------. 1 root root   5406 Jun  2 19:40 cron
+-rw-------. 1 root root   2867 May 26 19:08 cron-20250526
+-rw-r--r--. 1 root root 129154 Jun  2 19:40 dmesg
+-rw-r--r--. 1 root root 129284 May 30 20:12 dmesg.old
+-rw-r--r--. 1 root root   3684 Jun  2 19:40 firewalld
+-rw-r--r--. 1 root root    193 May 22 20:25 grubby_prune_debug
+-rw-r--r--. 1 root root 360912 Jun  2 19:41 lastlog
+-rw-------. 1 root root    582 Jun  2 19:40 maillog
+-rw-------. 1 root root    582 May 26 18:57 maillog-20250526
+-rw-------. 1 root root 440070 Jun  2 19:41 messages
+-rw-------. 1 root root 439522 May 26 19:08 messages-20250526
+drwxr-xr-x. 2 root root     73 May 26 19:08 rhsm
+-rw-------. 1 root root   5220 Jun  2 19:41 secure
+-rw-------. 1 root root   3213 May 26 18:57 secure-20250526
+-rw-------. 1 root root      0 May 26 19:08 spooler
+-rw-------. 1 root root      0 May 22 20:29 spooler-20250526
+-rw-------. 1 root root      0 May 22 20:25 tallylog
+drwxr-xr-x. 2 root root     23 May 22 21:15 tuned
+-rw-r--r--. 1 root root   9133 Jun  2 19:40 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root root  19500 Jun  2 19:40 vmware-vmsvc.log
+-rw-rw-r--. 1 root utmp  18048 Jun  2 19:41 wtmp
+-rw-r--r--. 1 root root      0 Jun  2 19:45 yum.log
+[root@c111xyz log]# ls -lrt
+total 1296
+-rw-------. 1 root root      0 May 22 20:25 tallylog
+-rw-r--r--. 1 root root    193 May 22 20:25 grubby_prune_debug
+-rw-------. 1 root utmp      0 May 22 20:27 btmp
+-rw-------. 1 root root      0 May 22 20:29 spooler-20250526
+drwxr-xr-x. 2 root root    232 May 22 20:48 anaconda
+drwx------. 2 root root     23 May 22 21:15 audit
+drwxr-xr-x. 2 root root     23 May 22 21:15 tuned
+-rw-------. 1 root root   3213 May 26 18:57 secure-20250526
+-rw-------. 1 root root    582 May 26 18:57 maillog-20250526
+-rw-------. 1 root root   2867 May 26 19:08 cron-20250526
+-rw-------. 1 root root  27167 May 26 19:08 boot.log-20250526
+drwxr-xr-x. 2 root root     73 May 26 19:08 rhsm
+-rw-------. 1 root root      0 May 26 19:08 spooler
+-rw-------. 1 root root 439522 May 26 19:08 messages-20250526
+-rw-------. 1 root root   8798 May 28 20:48 boot.log-20250528
+-rw-r--r--. 1 root root 129284 May 30 20:12 dmesg.old
+-rw-------. 1 root root   8938 May 30 21:24 boot.log-20250530
+-rw-------. 1 root root   8708 Jun  2 19:40 boot.log
+-rw-r--r--. 1 root root 129154 Jun  2 19:40 dmesg
+-rw-r--r--. 1 root root   9133 Jun  2 19:40 vmware-vgauthsvc.log.0
+-rw-------. 1 root root   5406 Jun  2 19:40 cron
+-rw-r--r--. 1 root root  19500 Jun  2 19:40 vmware-vmsvc.log
+-rw-r--r--. 1 root root   3684 Jun  2 19:40 firewalld
+-rw-------. 1 root root    582 Jun  2 19:40 maillog
+-rw-rw-r--. 1 root utmp  18048 Jun  2 19:41 wtmp
+-rw-r--r--. 1 root root 360912 Jun  2 19:41 lastlog
+-rw-------. 1 root root   5220 Jun  2 19:41 secure
+-rw-------. 1 root root 440070 Jun  2 19:41 messages
+-rw-r--r--. 1 root root      0 Jun  2 19:45 yum.log
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]#  cd /var/spool/mail/
+[root@c111xyz mail]# ls -l
+total 0
+-rw-rw----. 1 unixuser1 mail 0 May 30 20:45 unixuser1
+[root@c111xyz mail]#
+[root@c111xyz mail]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# mkdir -p /tomcat/apache/grede/
+[root@c111xyz /]# cd /tomcat/apache/grede/
+[root@c111xyz grede]# pwd
+/tomcat/apache/grede
+[root@c111xyz grede]#
+[root@c111xyz grede]#
+[root@c111xyz grede]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# pwd
+/
+[root@c111xyz /]#
+[root@c111xyz /]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]# mkdir ashok
+[root@c111xyz ~]# mkdir ashok/dir1
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd ashok/
+[root@c111xyz ashok]# ls -l
+total 0
+drwxr-xr-x. 2 root root 6 Jun  2 19:48 dir1
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# pwd
+/root/ashok
+[root@c111xyz ashok]# ln -s /root/ashok/dir1 /tmp
+[root@c111xyz ashok]# ls -l /tmp/
+total 8
+-rw-r--r--. 1 root      root    500 May 28 20:56 ashok
+lrwxrwxrwx. 1 root      root     16 Jun  2 19:49 dir1 -> /root/ashok/dir1
+-rw-------. 1 root      root   3907 May 28 20:58 sshd_config
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vgauthd.service-0OwK1t
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vmtoolsd.service-Kot1qi
+drwxr-xr-x. 2 unixuser1 admins    6 May 30 20:55 unixuser1-backup
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# ls
+dir1
+[root@c111xyz ashok]# pwd
+/root/ashok
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cd /tm
+-bash: cd: /tm: No such file or directory
+[root@c111xyz ashok]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 8
+-rw-r--r--. 1 root      root    500 May 28 20:56 ashok
+lrwxrwxrwx. 1 root      root     16 Jun  2 19:49 dir1 -> /root/ashok/dir1
+-rw-------. 1 root      root   3907 May 28 20:58 sshd_config
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vgauthd.service-0OwK1t
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vmtoolsd.service-Kot1qi
+drwxr-xr-x. 2 unixuser1 admins    6 May 30 20:55 unixuser1-backup
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]# pwd
+/
+[root@c111xyz /]#
+[root@c111xyz /]# cd /root
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - ashok
+su: user ashok does not exist
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/passwd
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+unixuser1:x:1235:1200:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - unixuser1
+Last login: Fri May 30 20:50:16 IST 2025 from 192.168.29.79 on pts/1
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$ pwd
+/home/unixuser1
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# pwd
+/
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun  2 19:40 dev
+drwxr-xr-x.  76 root root 8192 May 30 20:49 etc
+drwxr-xr-x.   3 root root   80 May 30 20:45 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 169 root root    0 Jun  2 19:39 proc
+dr-xr-x---.   3 root root  125 Jun  2 19:48 root
+drwxr-xr-x.  24 root root  700 Jun  2 19:40 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun  2 19:40 sys
+drwxrwxrwt.  10 root root 4096 Jun  2 19:49 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i unixuser1 /etc/shadow
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:0:99999:7:::
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+unixuser1:x:1235:1200:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l /etc/shadow
+----------. 1 root root 691 May 30 20:49 /etc/shadow
+[root@c111xyz /]# ls -l /etc/passwd
+-rw-r--r--. 1 root root 878 May 30 20:45 /etc/passwd
+[root@c111xyz /]# ls -l /tmp/
+total 8
+-rw-r--r--. 1 root      root    500 May 28 20:56 ashok
+lrwxrwxrwx. 1 root      root     16 Jun  2 19:49 dir1 -> /root/ashok/dir1
+-rw-------. 1 root      root   3907 May 28 20:58 sshd_config
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vgauthd.service-0OwK1t
+drwx------. 3 root      root     17 Jun  2 19:40 systemd-private-6619fc63f9264e6d873d98379bb716cc-vmtoolsd.service-Kot1qi
+drwxr-xr-x. 2 unixuser1 admins    6 May 30 20:55 unixuser1-backup
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i admins /etc/group
+admins:x:1200:
+[root@c111xyz /]#
+[root@c111xyz /]# useradd ashok
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# id ashok
+uid=1236(ashok) gid=1236(ashok) groups=1236(ashok)
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -G admins ashok
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# id ashok
+uid=1236(ashok) gid=1236(ashok) groups=1236(ashok),1200(admins)
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i admins /etc/group
+admins:x:1200:ashok
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i ashok /etc/passwd
+ashok:x:1236:1236::/home/ashok:/bin/bash
+[root@c111xyz /]#
+[root@c111xyz /]# passwd ashok
+Changing password for user ashok.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i ashok /etc/passwd
+ashok:x:1236:1236::/home/ashok:/bin/bash
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l /etc/skel/
+total 0
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -s /bin/sh ashok
+[root@c111xyz /]# usermod -s /bin/ksh ashok
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l /bin/k
+kbdinfo         kbd_mode        kbdrate         kdumpctl        kernel-install  kill            kmod
+[root@c111xyz /]# grep -i ashok /etc/passwd
+ashok:x:1236:1236::/home/ashok:/bin/ksh
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -s /bin/nologin ashok
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i ashok /etc/passwd
+ashok:x:1236:1236::/home/ashok:/bin/nologin
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -s /bin/bash ashok
+[root@c111xyz /]#
+[root@c111xyz /]# su - unixuser1
+Last login: Mon Jun  2 19:50:34 IST 2025 on pts/0
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$ pwd
+/home/unixuser1
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$
+[unixuser1@c111xyz ~]$ logout
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i unixuser1 /etc/shadow
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:0:99999:7:::
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cha
+chacl   chage   chattr
+[root@c111xyz /]# chage -l unixuser1
+Last password change                                    : May 30, 2025
+Password expires                                        : never
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 99999
+Number of days of warning before password expires       : 7
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# date
+Mon Jun  2 20:35:31 IST 2025
+[root@c111xyz /]#
+[root@c111xyz /]# chage unixuser1
+Changing the aging information for unixuser1
+Enter the new value, or press ENTER for the default
+
+        Minimum Password Age [0]: 1
+        Maximum Password Age [99999]: 90
+        Last Password Change (YYYY-MM-DD) [2025-05-30]:
+        Password Expiration Warning [7]: 5
+        Password Inactive [-1]:
+        Account Expiration Date (YYYY-MM-DD) [-1]:
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# chage -l unixuser1
+Last password change                                    : May 30, 2025
+Password expires                                        : Aug 28, 2025
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 1
+Maximum number of days between password change          : 90
+Number of days of warning before password expires       : 5
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i unixuser1 /etc/shadow
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:1:90:5:::
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# chage unixuser1
+Changing the aging information for unixuser1
+Enter the new value, or press ENTER for the default
+
+        Minimum Password Age [1]: 0
+        Maximum Password Age [90]: 99999
+        Last Password Change (YYYY-MM-DD) [2025-05-30]:
+        Password Expiration Warning [5]: 7
+        Password Inactive [-1]:
+        Account Expiration Date (YYYY-MM-DD) [-1]:
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i unixuser1 /etc/shadow
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:0:99999:7:::
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# grep -i unixuser1 /etc/shadow
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:20238:0:99999:7:::
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuseer1
+passwd: Unknown user name 'unixuseer1'.
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 2025-05-30 0 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -e 5 unixuser1
+passwd: Only one user name may be specified.
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 2025-05-30 0 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -e5 unixuser1
+passwd: bad argument -e5: unknown option
+[root@c111xyz /]# passwd -e 5 unixuser1
+passwd: Only one user name may be specified.
+[root@c111xyz /]# id unixuser1
+uid=1235(unixuser1) gid=1200(admins) groups=1200(admins)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -e 5 ashok
+passwd: Only one user name may be specified.
+[root@c111xyz /]#
+[root@c111xyz /]# man passwd
+[root@c111xyz /]# man passwd
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -E 5 unixuser1
+passwd: bad argument -E: unknown option
+[root@c111xyz /]# passwd --expire 5 unixuser1
+passwd: Only one user name may be specified.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -l unixuser1
+Locking password for user unixuser1.
+passwd: Success
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -U unixuser1
+passwd: bad argument -U: unknown option
+[root@c111xyz /]# passwd -u unixuser1
+Unlocking password for user unixuser1.
+passwd: Success
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -e 2 unixuser1
+passwd: Only one user name may be specified.
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -e unixuser1
+Expiring password for user unixuser1.
+passwd: Success
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 1970-01-01 0 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 1970-01-01 0 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -n 1 unixuser1
+Adjusting aging data for user unixuser1.
+passwd: Success
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 1970-01-01 1 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -x 90 unixuser1
+Adjusting aging data for user unixuser1.
+passwd: Success
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 1970-01-01 1 90 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -w 5 unixuser1
+Adjusting aging data for user unixuser1.
+passwd: Success
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 1970-01-01 1 90 5 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -l unixuser1
+Locking password for user unixuser1.
+passwd: Success
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 LK 1970-01-01 1 90 5 -1 (Password locked.)
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -u unixuser1
+Unlocking password for user unixuser1.
+passwd: Success
+[root@c111xyz /]#
+[root@c111xyz /]# passwd -S unixuser1
+unixuser1 PS 1970-01-01 1 90 5 -1 (Password set, SHA512 crypt.)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# tail /etc/shadow
+games:*:16925:0:99999:7:::
+ftp:*:16925:0:99999:7:::
+nobody:*:16925:0:99999:7:::
+systemd-network:!!:20230::::::
+dbus:!!:20230::::::
+polkitd:!!:20230::::::
+postfix:!!:20230::::::
+sshd:!!:20230::::::
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:0:1:90:5:::
+ashok:$6$GpsryBVF$XPPQUpr/kCHAysO6zicE/5OKyTOLuRcv/ANCWTxOngwHZDBWmcNrZCvwwfCf1NbCRdXsYlawZSGuln69upLCZ0:20241:0:99999:7:::
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# pwd
+/
+[root@c111xyz /]# su - ashok
+Last login: Mon Jun  2 20:32:29 IST 2025 from 192.168.29.79 on pts/2
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ pwd
+/home/ashok
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ cd /
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$ pwd
+/
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$ mkdir ashok
+mkdir: cannot create directory ‘ashok’: Permission denied
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$ logout
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l /home
+total 8
+drwx------. 3 ashok     ashok   122 Jun  2 20:27 ashok
+-rwx------. 1 root      root    836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root      root   3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root      root     10 May 28 19:55 testfile -> /tmp/ashok
+drwx------. 3 unixuser1 admins  112 May 31 19:10 unixuser1
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
