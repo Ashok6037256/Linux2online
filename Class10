@@ -1,0 +1,1038 @@
+Class 10 04/06/2025
+
+User attributes modification:
+=============================
+
+* usermod <option> <arguments> <username> 
+
+[root@c111xyz ~]# grep -i ashok /etc/passwd
+ashok:x:1490:1200:ashok@google.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+
+# id username 				======> To check users tagged primary and secondar groups
+# usermod -g newGID username 		======> This command is used for modify user primary group
+# usermod -G oldGId,NewGID... username 	======> This command is used for modify user secondarygroups
+# usermod -d NewHomeDirectory username 	======> This command is used for modify user homedirectory
+	# mkdir NewHomeDirectory
+	# chown ownername:groupname username
+	# chmod 700 NewHomeDirectory
+	# cp -pr oldhomedirectory/* NewHomeDirectory/
+# usermod -c NewComment username	======> This command is used for modify user comment field
+# usermod -l NewUsername currentusername =====> This command is used for modify username
+	# usermod -c "newUserinformation" username
+	# usermod -d NewuserHomeDirectory username
+	# mv oldusernamehomedirectory newusernamehomedirectory
+# usermod -u NewUID username 		======> This command is used for modify user UID
+# usermod -s newshell username 		======> This command is used for modify user shell
+
+# usermod -L username 			======> This command is used for lock the account
+# usermod -U username 			======> This command is used for unlock the account
+
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:565:5200:admin@yahoo.com:/export/home/admin:/bin/sh
+[root@c111xyz ~]#
+
+# userdel username  			=====> This command is used to remove the user without home directory
+# userdel -r username 			=====> This command is used to remove the user along home directory
+
+Group attributes modification:
+==============================
+
+* groupmod <option> <arguments> <groupname> 
+
+# groupmod -n NewGroupname Oldgroupname ======> This command is used for modify groupname
+# groupmod -g NewGID groupname 		======> This command is used for modify groupID
+
+Adding single or multiple users to the group: 
+=============================================
+
+* gpasswd < option> <arguments> <group name> 
+
+# gpasswd -M username,username,username groupname =======> This command is used to tag a new secondary group to all users at once
+# gpasswd -a username groupname 	======> This command is used to tag a new secondary group to specified user 
+# gpasswd -d username groupname 	======> This command is used to remove secondary group to specified user
+
+# groupdel groupname 			======> This command is used to remove the group
+
+Remote Account Setup Used Softwares:
+====================================
+1) NIS (Naming Information Service) Unix
+2) LDAP (Lightweight Directory Access Protocol) Windows
+3) AD (Active Directory) Windows
+4) RBAC (Role-Based Access Control) Windows
+
+Lab Session:
+============
+
+group = 2800 group1 3400 group2
+user = temproot1, temproot2, temproot3, temproot4, temproot5 (2800 group1)
+user = user1, user2, user3, user4, user5 (3400 group2
+
+group = 1400 dba, 1200 admins
+user = unixadmin1, unixadmin2, unixadmin3, unixadmin4, unixadmin5 (1400 dba)
+user = tempadmin1, tempadmin2, tempadmin3, tempadmin4, tempadmin5 (1200 admins)
+
+Session Logs:
+=============
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Mon Jun  2 19:41:53 2025 from 192.168.29.79
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id ashok
+uid=1236(ashok) gid=1236(ashok) groups=1236(ashok),1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/passwd
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/group
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /home//
+total 8
+-rwx------. 1 root      root    836 May 22 20:48 ks-script-4cvBsB
+-rw-------. 1 root      root   3907 May 23 19:42 sshd_conf
+lrwxrwxrwx. 1 root      root     10 May 28 19:55 testfile -> /tmp/ashok
+drwx------. 3 unixuser1 admins  112 May 31 19:10 unixuser1
+[root@c111xyz ~]#
+[root@c111xyz ~]# rm -rf /home/ks-script-4cvBsB
+[root@c111xyz ~]# rm -rf /home/sshd_conf
+[root@c111xyz ~]# rm -rf /home/testfile
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /home//
+total 0
+drwx------. 3 unixuser1 admins 112 May 31 19:10 unixuser1
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# useradd -u 1490 -g 1200 -d /home/ashok -c "ashok@gmail.com" -s /bin/bash ashok
+[root@c111xyz ~]# id ashok
+uid=1490(ashok) gid=1200(admins) groups=1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/passwd
+ashok:x:1490:1200:ashok@gmail.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/shadow
+ashok:!!:20243:0:99999:7:::
+[root@c111xyz ~]#
+[root@c111xyz ~]# passwd ashok
+Changing password for user ashok.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - ashok
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ cat > file1
+adding new file with cat
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ ls -l
+total 4
+-rw-r--r--. 1 ashok admins 25 Jun  4 18:40 file1
+[ashok@c111xyz ~]$ mkdir dir1
+[ashok@c111xyz ~]$ ls -l
+total 4
+drwxr-xr-x. 2 ashok admins  6 Jun  4 18:40 dir1
+-rw-r--r--. 1 ashok admins 25 Jun  4 18:40 file1
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ touch file2
+[ashok@c111xyz ~]$ ls -l
+total 4
+drwxr-xr-x. 2 ashok admins  6 Jun  4 18:40 dir1
+-rw-r--r--. 1 ashok admins 25 Jun  4 18:40 file1
+-rw-r--r--. 1 ashok admins  0 Jun  4 18:41 file2
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/passwd
+ashok:x:1490:1200:ashok@gmail.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# id ashok
+uid=1490(ashok) gid=1200(admins) groups=1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/group
+ssh_keys:x:999:
+input:x:998:
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+admins:x:1200:
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -g 74 ashok
+[root@c111xyz ~]#
+[root@c111xyz ~]# id ashok
+uid=1490(ashok) gid=74(sshd) groups=74(sshd)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - ashok
+Last login: Wed Jun  4 18:40:24 IST 2025 on pts/0
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ ls -lrt
+total 4
+-rw-r--r--. 1 ashok sshd 25 Jun  4 18:40 file1
+drwxr-xr-x. 2 ashok sshd  6 Jun  4 18:40 dir1
+-rw-r--r--. 1 ashok sshd  0 Jun  4 18:41 file2
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/passwd
+ashok:x:1490:74:ashok@gmail.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -c "ashok@yahoo.com" ashok
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i ashok /etc/passwd
+ashok:x:1490:74:ashok@yahoo.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -l admin ashok
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:1490:74:ashok@yahoo.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -c "admin@yahoo.com" admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:1490:74:admin@yahoo.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /home/
+total 0
+drwx------. 3 admin     sshd   121 Jun  4 18:41 ashok
+drwx------. 3 unixuser1 admins 112 May 31 19:10 unixuser1
+[root@c111xyz ~]#
+[root@c111xyz ~]# mv /home/ashok /home/admin
+[root@c111xyz ~]# ls -l /home/
+total 0
+drwx------. 3 admin     sshd   121 Jun  4 18:41 admin
+drwx------. 3 unixuser1 admins 112 May 31 19:10 unixuser1
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:1490:74:admin@yahoo.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -d /home/admin admin
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:1490:74:admin@yahoo.com:/home/admin:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - admin
+Last login: Wed Jun  4 18:43:52 IST 2025 on pts/0
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$ pwd
+/home/admin
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$ ls -l
+total 4
+drwxr-xr-x. 2 admin sshd  6 Jun  4 18:40 dir1
+-rw-r--r--. 1 admin sshd 25 Jun  4 18:40 file1
+-rw-r--r--. 1 admin sshd  0 Jun  4 18:41 file2
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -d /home/ashok admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:1490:74:admin@yahoo.com:/home/ashok:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - admin
+Last login: Wed Jun  4 18:49:29 IST 2025 on pts/0
+su: warning: cannot change directory to /home/ashok: No such file or directory
+-bash-4.2$
+-bash-4.2$
+-bash-4.2$ pwd
+/root
+-bash-4.2$ mkdir ashok
+mkdir: cannot create directory ‘ashok’: Permission denied
+-bash-4.2$ ls -l
+ls: cannot open directory .: Permission denied
+-bash-4.2$
+-bash-4.2$ ls -l
+ls: cannot open directory .: Permission denied
+-bash-4.2$
+-bash-4.2$ cd /
+-bash-4.2$ ls -l
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun  4 18:31 dev
+drwxr-xr-x.  76 root root 8192 Jun  4 18:51 etc
+drwxr-xr-x.   4 root root   36 Jun  4 18:48 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 172 root root    0 Jun  4 18:30 proc
+dr-xr-x---.   3 root root  125 Jun  2 19:48 root
+drwxr-xr-x.  24 root root  700 Jun  4 18:31 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun  4 18:30 sys
+drwxrwxrwt.  10 root root 4096 Jun  4 18:31 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+-bash-4.2$
+-bash-4.2$
+-bash-4.2$ cd /tmp
+-bash-4.2$ ls -l
+total 8
+-rw-r--r--. 1 root      root    500 May 28 20:56 ashok
+lrwxrwxrwx. 1 root      root     16 Jun  2 19:49 dir1 -> /root/ashok/dir1
+-rw-------. 1 root      root   3907 May 28 20:58 sshd_config
+drwx------. 3 root      root     17 Jun  4 18:31 systemd-private-94b9cfc30a5b49adab176837f30d434f-vgauthd.service-NpBWdO
+drwx------. 3 root      root     17 Jun  4 18:31 systemd-private-94b9cfc30a5b49adab176837f30d434f-vmtoolsd.service-2Hu3oC
+drwxr-xr-x. 2 unixuser1 admins    6 May 30 20:55 unixuser1-backup
+-bash-4.2$
+-bash-4.2$
+-bash-4.2$ mkdir admin
+-bash-4.2$ ls -l
+total 8
+drwxr-xr-x. 2 admin     sshd      6 Jun  4 18:51 admin
+-rw-r--r--. 1 root      root    500 May 28 20:56 ashok
+lrwxrwxrwx. 1 root      root     16 Jun  2 19:49 dir1 -> /root/ashok/dir1
+-rw-------. 1 root      root   3907 May 28 20:58 sshd_config
+drwx------. 3 root      root     17 Jun  4 18:31 systemd-private-94b9cfc30a5b49adab176837f30d434f-vgauthd.service-NpBWdO
+drwx------. 3 root      root     17 Jun  4 18:31 systemd-private-94b9cfc30a5b49adab176837f30d434f-vmtoolsd.service-2Hu3oC
+drwxr-xr-x. 2 unixuser1 admins    6 May 30 20:55 unixuser1-backup
+-bash-4.2$
+-bash-4.2$
+-bash-4.2$ pwd
+/tmp
+-bash-4.2$
+-bash-4.2$ cd
+-bash: cd: /home/ashok: No such file or directory
+-bash-4.2$
+-bash-4.2$
+-bash-4.2$ pwd
+/tmp
+-bash-4.2$
+-bash-4.2$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -d /home/admin admin
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=1490(admin) gid=74(sshd) groups=74(sshd)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i 2490 /etc/passwd
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -u 2490 admin
+[root@c111xyz ~]# grep -i 2490 /etc/passwd
+admin:x:2490:74:admin@yahoo.com:/home/admin:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd)
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G admins admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# tai /etc/group
+-bash: tai: command not found
+[root@c111xyz ~]# tail /etc/group
+ssh_keys:x:999:
+input:x:998:
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+admins:x:1200:admin
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G dbus admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),81(dbus)
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G dbus,admins admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),81(dbus),1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G ssh_keys admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),999(ssh_keys)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),999(ssh_keys)
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G dbus,admins,ssh_keys admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),999(ssh_keys),81(dbus),1200(admins)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:2490:74:admin@yahoo.com:/home/admin:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -s /bin/sh admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:2490:74:admin@yahoo.com:/home/admin:/bin/sh
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - admin
+Last login: Wed Jun  4 18:51:15 IST 2025 on pts/0
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ echo $0
+-sh
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ bash
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$ exit
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ bash
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$ echo $0
+bash
+[admin@c111xyz ~]$
+[admin@c111xyz ~]$ exit
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:2490:74:admin@yahoo.com:/home/admin:/bin/sh
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h /home
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   17G  950M   17G   6% /
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# mkdir /export/app/home
+mkdir: cannot create directory ‘/export/app/home’: No such file or directory
+[root@c111xyz ~]# mkdir -p /export/app/home
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:2490:74:admin@yahoo.com:/home/admin:/bin/sh
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -d /export/app/home/admin admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/passwd
+admin:x:2490:74:admin@yahoo.com:/export/app/home/admin:/bin/sh
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - admin
+Last login: Wed Jun  4 19:06:18 IST 2025 on pts/0
+su: warning: cannot change directory to /export/app/home/admin: No such file or directory
+-sh-4.2$
+-sh-4.2$ pwd
+/root
+-sh-4.2$
+-sh-4.2$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /export/app/home/
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /home
+total 0
+drwx------. 3 admin     sshd   121 Jun  4 18:41 admin
+drwx------. 3 unixuser1 admins 112 May 31 19:10 unixuser1
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# mkdir /export/app/home/admin
+[root@c111xyz ~]# ls -l /export/app/home/
+total 0
+drwxr-xr-x. 2 root root 6 Jun  4 19:12 admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# chown admin:sshd /export/app/home/admin
+[root@c111xyz ~]# ls -l /export/app/home/
+total 0
+drwxr-xr-x. 2 admin sshd 6 Jun  4 19:12 admin
+[root@c111xyz ~]# chmod 700 /export/app/home/admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /export/app/home/
+total 0
+drwx------. 2 admin sshd 6 Jun  4 19:12 admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# cp -r /home/admin/* /export/app/home/admin/
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - admin
+Last login: Wed Jun  4 19:11:17 IST 2025 on pts/0
+-sh-4.2$
+-sh-4.2$ pwd
+/export/app/home/admin
+-sh-4.2$
+-sh-4.2$ ls -l
+total 4
+drwxr-xr-x. 2 root root  6 Jun  4 19:15 dir1
+-rw-r--r--. 1 root root 25 Jun  4 19:15 file1
+-rw-r--r--. 1 root root  0 Jun  4 19:15 file2
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ date
+Wed Jun  4 19:15:13 IST 2025
+-sh-4.2$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# rm -rf /export/app/home/admin/*
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /export/app/home/admin/
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cp -pr /home/admin/* /export/app/home/admin/
+[root@c111xyz ~]#
+[root@c111xyz ~]# su - admin
+Last login: Wed Jun  4 19:15:06 IST 2025 on pts/0
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ pwd
+/export/app/home/admin
+-sh-4.2$
+-sh-4.2$ ls -l
+total 4
+drwxr-xr-x. 2 admin sshd  6 Jun  4 18:40 dir1
+-rw-r--r--. 1 admin sshd 25 Jun  4 18:40 file1
+-rw-r--r--. 1 admin sshd  0 Jun  4 18:41 file2
+-sh-4.2$
+-sh-4.2$
+-sh-4.2$ date
+Wed Jun  4 19:16:21 IST 2025
+-sh-4.2$ logout
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# passwd -l admin
+Locking password for user admin.
+passwd: Success
+[root@c111xyz ~]#
+[root@c111xyz ~]# passwd -S admin
+admin LK 2025-06-04 0 99999 7 -1 (Password locked.)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# passwd -u admin
+Unlocking password for user admin.
+passwd: Success
+[root@c111xyz ~]#
+[root@c111xyz ~]# passwd -S admin
+admin PS 2025-06-04 0 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -L admin
+[root@c111xyz ~]# passwd -S admin
+admin LK 2025-06-04 0 99999 7 -1 (Password locked.)
+[root@c111xyz ~]# usermod -U admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# passwd -S admin
+admin PS 2025-06-04 0 99999 7 -1 (Password set, SHA512 crypt.)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/group
+ssh_keys:x:999:admin
+input:x:998:
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+admins:x:1200:admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# groupmod -n administrator admins
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/group
+ssh_keys:x:999:admin
+input:x:998:
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+administrator:x:1200:admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# id admin
+uid=2490(admin) gid=74(sshd) groups=74(sshd),999(ssh_keys),81(dbus),1200(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i admin /etc/group
+ssh_keys:x:999:admin
+dbus:x:81:admin
+administrator:x:1200:admin
+[root@c111xyz ~]#
+[root@c111xyz ~]# groupmod -g 2450 administrator
+[root@c111xyz ~]# grep -i admin /etc/group
+ssh_keys:x:999:admin
+dbus:x:81:admin
+administrator:x:2450:admin
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i user /etc/passwd
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+unixuser1:x:1235:2450:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+user1:x:2491:2491::/home/user1:/bin/bash
+user2:x:2492:2492::/home/user2:/bin/bash
+user3:x:2493:2493::/home/user3:/bin/bash
+user4:x:2494:2494::/home/user4:/bin/bash
+user5:x:2495:2495::/home/user5:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1)
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G administrator user1
+[root@c111xyz ~]# usermod -G administrator user2
+[root@c111xyz ~]# usermod -G administrator user3
+[root@c111xyz ~]# usermod -G administrator user4
+[root@c111xyz ~]# usermod -G administrator user5
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i administ /etc/group
+administrator:x:2450:admin,user1,user2,user3,user4,user5
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G sshd user1
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),74(sshd)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G administrator,sshd user1
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),74(sshd),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# gpasswd -M user1,user2,user3,user4,user5 postfix
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i postfix /etc/group
+mail:x:12:postfix
+postfix:x:89:user1,user2,user3,user4,user5
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user5
+uid=2495(user5) gid=2495(user5) groups=2495(user5),89(postfix),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user3
+uid=2493(user3) gid=2493(user3) groups=2493(user3),89(postfix),2450(administrator)
+[root@c111xyz ~]# id user2
+uid=2492(user2) gid=2492(user2) groups=2492(user2),89(postfix),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# gpasswd -a user1 sshd
+Adding user user1 to group sshd
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),89(postfix),74(sshd),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -G postfix,administrator user1
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),89(postfix),2450(administrator)
+[root@c111xyz ~]# usermod -G postfix,administrator,sshd user1
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),89(postfix),74(sshd),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# gpasswd -d user1 sshd
+Removing user user1 from group sshd
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user1
+uid=2491(user1) gid=2491(user1) groups=2491(user1),89(postfix),2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /etc/home
+ls: cannot access /etc/home: No such file or directory
+[root@c111xyz ~]# ls -l /home/
+total 0
+drwx------. 3 admin     sshd  121 Jun  4 18:41 admin
+drwx------. 3 unixuser1  1200 112 May 31 19:10 unixuser1
+drwx------. 2 user1     user1  62 Jun  4 19:27 user1
+drwx------. 2 user2     user2  62 Jun  4 19:27 user2
+drwx------. 2 user3     user3  62 Jun  4 19:27 user3
+drwx------. 2 user4     user4  62 Jun  4 19:27 user4
+drwx------. 2 user5     user5  62 Jun  4 19:27 user5
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i user5 /etc/passwd
+user5:x:2495:2495::/home/user5:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# userdel user5
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i user5 /etc/passwd
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i user5 /etc/shadow
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i user5 /etc/group
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/group
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:user1,user2,user3,user4
+sshd:x:74:
+administrator:x:2450:admin,user2,user3,user4,user1
+user1:x:2491:
+user2:x:2492:
+user3:x:2493:
+user4:x:2494:
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /home/
+total 0
+drwx------. 3 admin     sshd  121 Jun  4 18:41 admin
+drwx------. 3 unixuser1  1200 112 May 31 19:10 unixuser1
+drwx------. 2 user1     user1  62 Jun  4 19:27 user1
+drwx------. 2 user2     user2  62 Jun  4 19:27 user2
+drwx------. 2 user3     user3  62 Jun  4 19:27 user3
+drwx------. 2 user4     user4  62 Jun  4 19:27 user4
+drwx------. 2      2495  2495  62 Jun  4 19:27 user5
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# userdel -r user1
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep -i user1 /etc/passwd
+unixuser1:x:1235:2450:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# grep user1 /etc/passwd
+unixuser1:x:1235:2450:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/passwd
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+unixuser1:x:1235:2450:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+admin:x:2490:74:admin@yahoo.com:/export/app/home/admin:/bin/sh
+user2:x:2492:2492::/home/user2:/bin/bash
+user3:x:2493:2493::/home/user3:/bin/bash
+user4:x:2494:2494::/home/user4:/bin/bash
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/shadow
+systemd-network:!!:20230::::::
+dbus:!!:20230::::::
+polkitd:!!:20230::::::
+postfix:!!:20230::::::
+sshd:!!:20230::::::
+unixuser1:$6$9yZsw2at$EqQlf6dWnHHYbatejRaMTIftQlyzNQPLxlntw6Xqp4/zW8gjIfzNjML75C3vNlLgdXbb/pB9EGXnTtUVojyki1:0:1:90:5:::
+admin:$6$dGCPqTfP$AwXlRUnxNi22TWS5DJdNiMUYmKG8o9l8ka9cAFVnqV/n35dQb5BO0PzfkFrnT84Mp7aVH4ST1f/jkn5FJ8byf1:20243:0:99999:7:::
+user2:!!:20243:0:99999:7:::
+user3:!!:20243:0:99999:7:::
+user4:!!:20243:0:99999:7:::
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/group
+systemd-network:x:192:
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:user2,user3,user4
+sshd:x:74:
+administrator:x:2450:admin,user2,user3,user4
+user2:x:2492:
+user3:x:2493:
+user4:x:2494:
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /home/
+total 0
+drwx------. 3 admin     sshd  121 Jun  4 18:41 admin
+drwx------. 3 unixuser1  1200 112 May 31 19:10 unixuser1
+drwx------. 2 user2     user2  62 Jun  4 19:27 user2
+drwx------. 2 user3     user3  62 Jun  4 19:27 user3
+drwx------. 2 user4     user4  62 Jun  4 19:27 user4
+drwx------. 2      2495  2495  62 Jun  4 19:27 user5
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# groupdel administrator
+groupdel: cannot remove the primary group of user 'unixuser1'
+[root@c111xyz ~]#
+[root@c111xyz ~]# id unixuser1
+uid=1235(unixuser1) gid=2450(administrator) groups=2450(administrator)
+[root@c111xyz ~]#
+[root@c111xyz ~]# usermod -g postfix unixuser1
+[root@c111xyz ~]# id unixuser1
+uid=1235(unixuser1) gid=89(postfix) groups=89(postfix)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# groupdel administrator
+[root@c111xyz ~]#
+[root@c111xyz ~]# tail /etc/group
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:user2,user3,user4
+sshd:x:74:
+user2:x:2492:
+user3:x:2493:
+user4:x:2494:
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user2
+uid=2492(user2) gid=2492(user2) groups=2492(user2),89(postfix)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id user3
+uid=2493(user3) gid=2493(user3) groups=2493(user3),89(postfix)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@c111xyz ~]#
+[root@c111xyz ~]# id ashok
+id: ashok: no such user
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+drwxr-xr-x. 3 root root 18 Jun  2 19:48 ashok
+[root@c111xyz ~]# ls l
+ls: cannot access l: No such file or directory
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# uname -a
+Linux c111xyz 3.10.0-693.17.1.el7.x86_64 #1 SMP Sun Jan 14 10:36:03 EST 2018 x86_64 x86_64 x86_64 GNU/Linux
+[root@c111xyz ~]#
+[root@c111xyz ~]# uptime
+ 20:00:19 up  1:29,  2 users,  load average: 0.08, 0.03, 0.05
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# id ashok
+id: ashok: no such user
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+drwxr-xr-x. 3 root root 18 Jun  2 19:48 ashok
+[root@c111xyz ~]#
+[root@c111xyz ~]# rmdir ashok
+rmdir: failed to remove ‘ashok’: Directory not empty
+[root@c111xyz ~]#
+[root@c111xyz ~]# rm -rf ashok
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# mkdir /IPL-2025
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun  4 18:31 dev
+drwxr-xr-x.  76 root root 8192 Jun  4 19:46 etc
+drwxr-xr-x.   3 root root   17 Jun  4 19:10 export
+drwxr-xr-x.   8 root root   88 Jun  4 19:42 home
+drwxr-xr-x.   2 root root    6 Jun  4 20:03 IPL-2025
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 170 root root    0 Jun  4 18:30 proc
+dr-xr-x---.   2 root root  112 Jun  4 20:02 root
+drwxr-xr-x.  24 root root  700 Jun  4 18:31 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun  4 18:30 sys
+drwxrwxrwt.  11 root root 4096 Jun  4 19:35 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l /
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun  4 18:31 dev
+drwxr-xr-x.  76 root root 8192 Jun  4 19:46 etc
+drwxr-xr-x.   3 root root   17 Jun  4 19:10 export
+drwxr-xr-x.   8 root root   88 Jun  4 19:42 home
+drwxr-xr-x.   2 root root    6 Jun  4 20:03 IPL-2025
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 170 root root    0 Jun  4 18:30 proc
+dr-xr-x---.   2 root root  112 Jun  4 20:02 root
+drwxr-xr-x.  24 root root  700 Jun  4 18:31 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun  4 18:30 sys
+drwxrwxrwt.  11 root root 4096 Jun  4 19:35 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# rmdir /IPL-2025
+[root@c111xyz ~]#
+[root@c111xyz ~]# mkdir IPL-2025
+[root@c111xyz ~]# ls pl
+ls: cannot access pl: No such file or directory
+[root@c111xyz ~]# ls -l
+total 0
+drwxr-xr-x. 2 root root 6 Jun  4 20:05 IPL-2025
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pwd
+/root
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls -l
+total 0
+drwxr-xr-x. 2 root root 6 Jun  4 20:05 IPL-2025
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+
