@@ -1,0 +1,42 @@
+Class 11 06/06/2025
+
+1) User creation with below details:
+====================================
+
+groups: linux 2220, solaris 3330, aix 4440
+
+Users: liadmin1, liadmin2, liadmin3 (2220)
+	soadmin1, soadmin2, soadmin3 (3330)
+	aiadmin1, aiadmin2, aiadmin3 (4440)
+
+Each user after creating login into putty session and create one file and directory
+
+2) Modify all users attributes like as below:
+=============================================
+
+groups: linux 2220	====> production 1570
+	solaris 3330	====> development 4570
+	aix 4440	====> test 7570
+
+Users: liadmin1		====> produser1(1570)(4570,7570)
+	liadmin2	====> produser2(1570)(4570,7570)
+	liadmin3	====> produser3(1570)(4570,7570)
+	soadmin1	====> devuser1(4570)(1570,7570)
+	soadmin2	====> devuser2(4570)(1570,7570)
+	soadmin3	====> devuser3(4570)(1570,7570)
+	aiadmin1	====> testuser1(7570)(1570,4570)
+	aiadmin2	====> testuser2(7570)(1570,4570)
+	aiadmin3	====> testuser3(7570)(1570,4570)
+
+3) Modify all users home directory from /home to /export/app/home:
+==================================================================
+
+Exp: Before modification
+
+unixuser1:x:1235:89:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+ 
+Exp: After modification
+
+unixuser1:x:1235:89:unixuser1@google.com;EMID-20645:/export/app/home/unixuser1:/bin/bash
+
+After that copy all user content from old directory to new directory with same time stamp.
