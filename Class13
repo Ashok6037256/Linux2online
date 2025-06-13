@@ -51,3 +51,415 @@ Lab Session:
 3) vi .bash_profile ===> take a new session and create a file and directory in /webdata
 (1-0020, 2-0001, 3-0222, 4-0044, 5-0660, 6-0444, 7-0606, 8-0600, 9-0114, 10-0001)
 4) Once done with all users, /webdata modify files (rw-rw-r--) and directories (rwxr-x--x)permissions.
+
+Session Outputs:
+================
+
+Network error: Connection timed out
+
+---------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Wed Jun 11 18:58:43 2025 from 192.168.29.79
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# umask
+0022
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# umask 0002
+[root@c111xyz ~]# umask
+0002
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 12
+drwxr-xr-x. 2 1490 sshd  6 Jun  4 18:51 admin
+-rwxr--r--. 1 root root 24 Jun 11 19:53 bash.sh
+-rw-r--r--. 1 root root 62 Jun 11 19:55 checkout
+lrwxrwxrwx. 1 root root 16 Jun  2 19:49 dir1 -> /root/ashok/dir1
+-rw-r--r--. 1 root root 29 Jun 11 19:53 file12
+drwx------. 3 root root 17 Jun 13 19:41 systemd-private-c248c1603be44edb9e0dc53560798cb7-vgauthd.se
+drwx------. 3 root root 17 Jun 13 19:41 systemd-private-c248c1603be44edb9e0dc53560798cb7-vmtoolsd.s
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# rm -rf *
+[root@c111xyz tmp]# ls -l
+total 0
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# umask
+0002
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# mkdir ashok
+[root@c111xyz tmp]# touch file34
+[root@c111xyz tmp]# ls -l
+total 0
+drwxrwxr-x. 2 root root 6 Jun 13 19:47 ashok
+-rw-rw-r--. 1 root root 0 Jun 13 19:47 file34
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l
+
+total 16
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun 13 19:41 dev
+drwxr-xr-x.  76 root root 8192 Jun 11 20:11 etc
+drwxr-xr-x.   3 root root   17 Jun  4 19:10 export
+drwxr-xr-x.   6 root root   62 Jun 11 18:59 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 169 root root    0 Jun 13 19:41 proc
+drwxrwxrwx.   4 root root   84 Jun 11 20:59 public
+dr-xr-x---.   3 root root  128 Jun  4 20:05 root
+drwxr-xr-x.  24 root root  700 Jun 13 19:42 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun 13 19:41 sys
+drwxrwxrwt.   8 root root  120 Jun 13 19:47 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# umask
+0002
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l
+total 16
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3240 Jun 13 19:41 dev
+drwxr-xr-x.  76 root root 8192 Jun 11 20:11 etc
+drwxr-xr-x.   3 root root   17 Jun  4 19:10 export
+drwxr-xr-x.   6 root root   62 Jun 11 18:59 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 173 root root    0 Jun 13 19:41 proc
+drwxrwxrwx.   4 root root   84 Jun 11 20:59 public
+dr-xr-x---.   3 root root  128 Jun  4 20:05 root
+drwxr-xr-x.  24 root root  700 Jun 13 19:42 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun 13 19:41 sys
+drwxrwxrwt.   9 root root  145 Jun 13 19:52 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 0
+drwxrwxr-x. 2 root root 6 Jun 13 19:47 ashok
+drwxr-xr-x. 2 root root 6 Jun 13 19:52 dir1
+-rw-r--r--. 1 root root 0 Jun 13 19:52 file1
+-rw-rw-r--. 1 root root 0 Jun 13 19:47 file34
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# mkdir dir33
+[root@c111xyz tmp]# ls -l
+total 0
+drwxrwxr-x. 2 root root 6 Jun 13 19:47 ashok
+drwxr-xr-x. 2 root root 6 Jun 13 19:52 dir1
+drwxrwxr-x. 2 root root 6 Jun 13 19:52 dir33
+-rw-r--r--. 1 root root 0 Jun 13 19:52 file1
+-rw-rw-r--. 1 root root 0 Jun 13 19:47 file34
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# umask
+0002
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat /etc/profile
+# /etc/profile
+
+# System wide environment and startup programs, for login setup
+# Functions and aliases go in /etc/bashrc
+
+# It's NOT a good idea to change this file unless you know what you
+# are doing. It's much better to create a custom.sh shell script in
+# /etc/profile.d/ to make custom changes to your environment, as this
+# will prevent the need for merging in future updates.
+
+pathmunge () {
+    case ":${PATH}:" in
+        *:"$1":*)
+            ;;
+        *)
+            if [ "$2" = "after" ] ; then
+                PATH=$PATH:$1
+            else
+                PATH=$1:$PATH
+            fi
+    esac
+}
+
+
+if [ -x /usr/bin/id ]; then
+    if [ -z "$EUID" ]; then
+        # ksh workaround
+        EUID=`/usr/bin/id -u`
+        UID=`/usr/bin/id -ru`
+    fi
+    USER="`/usr/bin/id -un`"
+    LOGNAME=$USER
+    MAIL="/var/spool/mail/$USER"
+fi
+
+# Path manipulation
+if [ "$EUID" = "0" ]; then
+    pathmunge /usr/sbin
+    pathmunge /usr/local/sbin
+else
+    pathmunge /usr/local/sbin after
+    pathmunge /usr/sbin after
+fi
+
+HOSTNAME=`/usr/bin/hostname 2>/dev/null`
+HISTSIZE=1000
+if [ "$HISTCONTROL" = "ignorespace" ] ; then
+    export HISTCONTROL=ignoreboth
+else
+    export HISTCONTROL=ignoredups
+fi
+
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL
+
+# By default, we want umask to get set. This sets it for login shell
+# Current threshold for system reserved uid/gids is 200
+# You could check uidgid reservation validity in
+# /usr/share/doc/setup-*/uidgid file
+if [ $UID -gt 199 ] && [ "`/usr/bin/id -gn`" = "`/usr/bin/id -un`" ]; then
+    umask 002
+else
+    umask 022
+fi
+
+for i in /etc/profile.d/*.sh ; do
+    if [ -r "$i" ]; then
+        if [ "${-#*i}" != "$-" ]; then
+            . "$i"
+        else
+            . "$i" >/dev/null
+        fi
+    fi
+done
+
+unset i
+unset -f pathmunge
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+unixuser1:x:1235:89:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+admin:x:2490:74:admin@yahoo.com:/export/app/home/admin:/bin/sh
+ashok:x:2491:2491::/home/ashok:/bin/bash
+ocpadmin:x:23:2492::/home/ocpadmin:/bin/bash
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# mkdir /webdata
+[root@c111xyz /]# ls -l /webdata
+total 0
+[root@c111xyz /]# ls -ld /webdata
+drwxrwxr-x. 2 root root 6 Jun 13 21:11 /webdata
+[root@c111xyz /]#
+[root@c111xyz /]# chmod o+w /webdata/
+[root@c111xyz /]# ls -ld /webdata
+drwxrwxrwx. 2 root root 6 Jun 13 21:11 /webdata
+[root@c111xyz /]#
+[root@c111xyz /]# groupadd -g 3550 ocp
+[root@c111xyz /]# useradd -u 4501 -g 3550 -d /home/ocpuser1 -c "ocpuser1@gmail.com" -s /bin/bash ocpuser1
+[root@c111xyz /]# id ocpuser1
+uid=4501(ocpuser1) gid=3550(ocp) groups=3550(ocp)
+[root@c111xyz /]#
+[root@c111xyz /]# passwd ocpuser1
+Changing password for user ocpuser1.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# su - ocpuser1
+Last login: Fri Jun 13 21:14:01 IST 2025 from 192.168.29.79 on pts/5
+[ocpuser1@c111xyz ~]$
+[ocpuser1@c111xyz ~]$
+[ocpuser1@c111xyz ~]$ cd /webdata/
+[ocpuser1@c111xyz webdata]$ ls -l
+total 0
+[ocpuser1@c111xyz webdata]$
+[ocpuser1@c111xyz webdata]$
+[ocpuser1@c111xyz webdata]$ mkdir ocpuser1dir1
+[ocpuser1@c111xyz webdata]$ touch ocpuser1file1
+[ocpuser1@c111xyz webdata]$ ls -l
+total 0
+drwxr-xrwx. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-r--rw-. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+[ocpuser1@c111xyz webdata]$
+[ocpuser1@c111xyz webdata]$
+[ocpuser1@c111xyz webdata]$ umask
+0020
+[ocpuser1@c111xyz webdata]$
+[ocpuser1@c111xyz webdata]$ logout
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# useradd -u 4502 -g 3550 -d /home/ocpuser2 -c "ocpuser2@gmail.com" -s /bin/bash ocpuser2
+[root@c111xyz /]# passwd ocpuser2
+Changing password for user ocpuser2.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# su - ocpuser2
+Last login: Fri Jun 13 21:17:52 IST 2025 from 192.168.29.79 on pts/6
+[ocpuser2@c111xyz ~]$
+[ocpuser2@c111xyz ~]$ umask
+0001
+[ocpuser2@c111xyz ~]$
+[ocpuser2@c111xyz ~]$ mkdir ocpuser2file1
+[ocpuser2@c111xyz ~]$ touch ocpuser2dir1
+[ocpuser2@c111xyz ~]$ ls -l
+total 0
+drwxr-xr-x. 2 ocpuser2 ocp 6 Jun 13 21:18 dir1
+-rw-r--r--. 1 ocpuser2 ocp 0 Jun 13 21:18 file1
+-rw-rw-rw-. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2dir1
+drwxrwxrw-. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2file1
+[ocpuser2@c111xyz ~]$
+[ocpuser2@c111xyz ~]$
+[ocpuser2@c111xyz ~]$ cd /webdata/
+[ocpuser2@c111xyz webdata]$ ls -l
+total 0
+drwxr-xrwx. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-r--rw-. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+[ocpuser2@c111xyz webdata]$
+[ocpuser2@c111xyz webdata]$
+[ocpuser2@c111xyz webdata]$ mkdir ocpuser2dir1
+[ocpuser2@c111xyz webdata]$ touch ocpuser2file1
+[ocpuser2@c111xyz webdata]$ ls -l
+total 0
+drwxr-xrwx. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-r--rw-. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+drwxrwxrw-. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2dir1
+-rw-rw-rw-. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2file1
+[ocpuser2@c111xyz webdata]$
+[ocpuser2@c111xyz webdata]$
+[ocpuser2@c111xyz webdata]$ logout
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd /webdata/
+[root@c111xyz webdata]#
+[root@c111xyz webdata]#
+[root@c111xyz webdata]# ls -l
+total 0
+drwxr-xrwx. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-r--rw-. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+drwxrwxrw-. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2dir1
+-rw-rw-rw-. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2file1
+[root@c111xyz webdata]#
+[root@c111xyz webdata]#
+[root@c111xyz webdata]# chmod o-rw ocpuser1dir1
+[root@c111xyz webdata]# ls -l
+total 0
+drwxr-x--x. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-r--rw-. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+drwxrwxrw-. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2dir1
+-rw-rw-rw-. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2file1
+[root@c111xyz webdata]#
+[root@c111xyz webdata]#
+[root@c111xyz webdata]# chmod g-w,o=x ocpuser2dir1
+[root@c111xyz webdata]# ls -l
+total 0
+drwxr-x--x. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-r--rw-. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+drwxr-x--x. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2dir1
+-rw-rw-rw-. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2file1
+[root@c111xyz webdata]#
+[root@c111xyz webdata]#
+[root@c111xyz webdata]# chmod g+w,o-w ocpuser1file1
+[root@c111xyz webdata]# ls -l
+total 0
+drwxr-x--x. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-rw-r--. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+drwxr-x--x. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2dir1
+-rw-rw-rw-. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2file1
+[root@c111xyz webdata]#
+[root@c111xyz webdata]# chmod o-w ocpuser2file1
+[root@c111xyz webdata]# ls -l
+total 0
+drwxr-x--x. 2 ocpuser1 ocp 6 Jun 13 21:15 ocpuser1dir1
+-rw-rw-r--. 1 ocpuser1 ocp 0 Jun 13 21:15 ocpuser1file1
+drwxr-x--x. 2 ocpuser2 ocp 6 Jun 13 21:19 ocpuser2dir1
+-rw-rw-r--. 1 ocpuser2 ocp 0 Jun 13 21:19 ocpuser2file1
+[root@c111xyz webdata]#
