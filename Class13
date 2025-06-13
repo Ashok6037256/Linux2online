@@ -1,0 +1,53 @@
+Class 13 13/06/2025
+
+Default permissions for file/directory
+=======================================
+
+umask 022 (user group other)      directory full 777 - 022 = 755 default directory permissions
+				  file full 666 - 022 = 644 default file permissions
+
+umask command will tell you the configured value:
+=================================================
+[root@gvnkansiblesrv tmp]# umask
+0022
+[root@gvnkansiblesrv tmp]#
+
+umask <value> will do the modification of the umask:
+====================================================
+[root@gvnkansiblesrv ~]# umask
+0022
+[root@gvnkansiblesrv ~]#
+[root@gvnkansiblesrv ~]# umask 0002
+[root@gvnkansiblesrv ~]# umask
+0002
+[root@gvnkansiblesrv ~]#
+
+1) umask value is the value which used to generate default permission for file/directory
+2) By default < 200 UID users will get 0022 umask value, which will reflect 755 for directory and 644 for file.
+3) If the UID is > 200 users will get 0002 umask value, which will reflect 775 for directory and 664 for file.
+4) Normally root user umask value will be 0022 and it won't modify at anytime
+5) If any user specific umask value can be modified with umask command and add entry in .bash_profile file for make it persistant.
+
+[ashok@gvnkansiblesrv ~]$ cat .bash_profile
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+umask 0022
+[ashok@gvnkansiblesrv ~]$
+
+Lab Session:
+============
+1) root user login and create /webdata directory and provide rwxrwxrwx permissions.
+2) add users 10 (ocpuser1---ocpuser10)(groups: ocp-3550) and create one file and one directory in home path.
+3) vi .bash_profile ===> take a new session and create a file and directory in /webdata
+(1-0020, 2-0001, 3-0222, 4-0044, 5-0660, 6-0444, 7-0606, 8-0600, 9-0114, 10-0001)
+4) Once done with all users, /webdata modify files (rw-rw-r--) and directories (rwxr-x--x)permissions.
