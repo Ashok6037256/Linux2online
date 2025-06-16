@@ -1,0 +1,424 @@
+Class 14 16/06/2025
+
+ls -l /file OR directory
+
+-rwxrwxrwx 2 root root 2320 wed 12 20:06 file23
+
+umask 
+0022
+
+SUID – SET USER ID : Only files
+===================
+Change user ID on execution. If SETUID bit is set, when the file will be executed by a user, the process will have the same rights as the owner of the file being executed. Many of the system commands are the best example for SetUID, basically the owner of the commands will be root, but still a normal user can execute it. 
+ 
+Example 
+By default ping command is having suid, so all users can run that command but if suid is removed and a normal user wants to user execute it, then it will show 'operation not.
+
+SGID – SET GROUP ID: Files and Directories
+===================
+Set group ID, used on executable files to allow the file to be run as if logged into the group (like SUID but uses file group permissions) SGID can also be used on a directory so that every file created in that directory will have the directory group owner rather than the group owner of the user creating the file.
+
+STICKY BIT - Only Directories
+==========
+If sticky bit is applied only directory, then only root and owner of that file or directory can delete it. Even if others are having full permissions they cannot delete the file or directory. 
+
+Permission Symbolic Form Numeric Form Syntax 
+SETUID s or S 4 #chmod u+s/u-s or #chmod 4766 
+SETGID s or S 2 #chmod g+s/g-s or #chmod 2766 
+STICKY BIT t or T 1 #chmod o+t/o-t or chmod 1766
+
+setUID = 4
+SetGID = 2
+Stickeybit = 1
+
+Note: Where s= setuid + execute permission and S= setuid only. Same is for SGID  and also for sticky bit .
+
+2. Access Control List (ACL) 
+============================
+Define more fine-grained discretionary access rights for files and directories. Often, you want to share files among certain groups and specific users. It is a good practice to designate a directory for that purpose. You want to allow those groups and users to read, and write files in that directory, as well as create new files into the directory. Such special permissions can be given using ACL. ACL can be applied on ACL enabled partition that means you need to enable ACL while mounting the partition. 
+
+* getfacl  <option> <dir/file name> 
+
+* setfacl <option> < argument > < file or directory name > 
+
+# setfacl –m g:<group name>:<permissions> <file or directory name>  ====> This will provide access for specified group people
+
+# setfacl –m u:<user name>:<permissions> <file or directory name>  ====> This will provide access for specified user
+		
+# setfacl –x u:<username> <dir name> =====> This will remove access for specified user
+
+# setfacl –x g:<groupname> <dir name> =====> This will remove access for specified group
+
+# setfacl –b <dir name> =====> This will remove all acl permissions for the directory
+
+# getfacl <directory name> ====> this command is used to view acl permissions of the directory
+
+Lab Session:
+============
+login as: ashok
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to ashok@192.168.29.120                                ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Mon Jun 16 18:16:43 2025 from 192.168.29.79
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ passwd
+Changing password for user ashok.
+Changing password for ashok.
+(current) UNIX password:
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ cd /tmp/
+[ashok@c111xyz tmp]$ mkdir ashok
+mkdir: cannot create directory ‘ashok’: File exists
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ mkdir asho1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ ls -l
+total 0
+drwxr-xr-x. 2 ashok ashok 6 Jun 16 18:40 asho1
+drwxrwxr-x. 2 root  root  6 Jun 13 19:47 ashok
+drwxr-xr-x. 2 root  root  6 Jun 13 19:52 dir1
+drwxrwxr-x. 2 root  root  6 Jun 13 19:52 dir33
+-rw-r--r--. 1 root  root  0 Jun 13 19:52 file1
+-rw-rw-r--. 1 root  root  0 Jun 13 19:47 file34
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ id
+uid=2491(ashok) gid=2491(ashok) groups=2491(ashok) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cd /
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$ mkdir /tmp/public
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$ ls -l /tmp/public
+total 0
+[ashok@c111xyz /]$ ls -ld /tmp/public
+drwxrwsrwx. 2 ashok ashok 6 Jun 16 18:41 /tmp/public
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$
+[ashok@c111xyz /]$ cd /tmp/public/
+[ashok@c111xyz public]$ ls -l
+total 0
+[ashok@c111xyz public]$
+[ashok@c111xyz public]$
+[ashok@c111xyz public]$ mkdir dir1 dir2 dir3
+[ashok@c111xyz public]$ touch file1 file2 file3
+[ashok@c111xyz public]$ ls pl
+ls: cannot access pl: No such file or directory
+[ashok@c111xyz public]$ ls -l
+total 0
+drwxr-sr-x. 2 ashok ashok 6 Jun 16 18:43 dir1
+drwxr-sr-x. 2 ashok ashok 6 Jun 16 18:43 dir2
+drwxr-sr-x. 2 ashok ashok 6 Jun 16 18:43 dir3
+-rw-r--r--. 1 ashok ashok 0 Jun 16 18:43 file1
+-rw-r--r--. 1 ashok ashok 0 Jun 16 18:43 file2
+-rw-r--r--. 1 ashok ashok 0 Jun 16 18:43 file3
+[ashok@c111xyz public]$
+[ashok@c111xyz public]$
+[ashok@c111xyz public]$ cd /publicdata/
+[ashok@c111xyz publicdata]$ ls -l
+total 0
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ cat > ashokfile1
+this is a new file created by ashok
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l
+total 4
+-rw-r--r--. 1 ashok ashok 36 Jun 16 18:55 ashokfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l
+total 4
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ cat > ashokfile1
+this is a new file created by ashok
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l
+total 8
+-rw-r--r--. 1 ashok    ashok    36 Jun 16 18:58 ashokfile1
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ rm ocpadminfile1
+rm: remove write-protected regular file ‘ocpadminfile1’? yes
+rm: cannot remove ‘ocpadminfile1’: Operation not permitted
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l
+total 8
+-rw-r--r--. 1 ashok    ashok    36 Jun 16 18:58 ashokfile1
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ cat > ashokfile2
+addming new file2
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l
+total 12
+-rw-r--r--. 1 ashok    ashok    36 Jun 16 18:58 ashokfile1
+-rw-r--r--. 1 ashok    ashok    18 Jun 16 18:58 ashokfile2
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ rm ashokfile2
+[ashok@c111xyz publicdata]$ ls -lrt
+total 8
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+-rw-r--r--. 1 ashok    ashok    36 Jun 16 18:58 ashokfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ rm ocpadminfile1
+rm: remove write-protected regular file ‘ocpadminfile1’? yes
+rm: cannot remove ‘ocpadminfile1’: Operation not permitted
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -lrt
+total 8
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+-rw-r--r--. 1 ashok    ashok    36 Jun 16 18:58 ashokfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -ld
+drwxrwxrwt. 2 root root 45 Jun 16 18:58 .
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ cat > ocpadminfile1
+-bash: ocpadminfile1: Permission denied
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ cat >> ashokfile1
+this is
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l
+total 8
+-rw-r--r--. 1 ashok    ashok    45 Jun 16 19:00 ashokfile1
+-rw-r--r--. 1 ocpadmin ocpadmin 30 Jun 16 18:56 ocpadminfile1
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ cat ashokfile1
+this is a new file created by ashok
+this is
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$
+[ashok@c111xyz publicdata]$ ls -l /usr/bin/passwd
+-rwsr-xr-x. 1 root root 27832 Jan 30  2014 /usr/bin/passwd
+[ashok@c111xyz publicdata]$ cd
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ cd /tmp/
+[ashok@c111xyz tmp]$ ls -lrt
+total 0
+drwxrwxr-x. 2 root     root       6 Jun 13 19:47 ashok
+-rw-rw-r--. 1 root     root       0 Jun 13 19:47 file34
+drwxr-xr-x. 2 root     root       6 Jun 13 19:52 dir1
+-rw-r--r--. 1 root     root       0 Jun 13 19:52 file1
+drwxrwxr-x. 2 root     root       6 Jun 13 19:52 dir33
+drwxr-xr-x. 2 ashok    ashok      6 Jun 16 18:40 asho1
+drwxr-xr-x. 2 ocpadmin ocpadmin   6 Jun 16 18:45 ocpadmindir1
+-rw-r--r--. 1 ocpadmin ocpadmin   0 Jun 16 18:45 ocpuserfile1
+drwxrwsrwx. 8 ashok    ashok    204 Jun 16 18:46 public
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cat > ashokfile1
+Adding entry from ashok account
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cat ashokfile1
+Adding entry from ashok account
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ ls -l ashokfile1
+-rw-r--r--. 1 ashok ashok 32 Jun 16 19:12 ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ chmod o+w ashokfile1
+[ashok@c111xyz tmp]$ ls -l ashokfile1
+-rw-r--rw-. 1 ashok ashok 32 Jun 16 19:12 ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ ls -l ashokfile1
+-rw-r--rw-. 1 ashok ashok 27 Jun 16 19:15 ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cat ashokfile1
+adding entry from ocpuser1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ chmod o-w ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ chmod o-w ashokfile1ls -l
+chmod: invalid option -- 'l'
+Try 'chmod --help' for more information.
+[ashok@c111xyz tmp]$ ls -l
+total 4
+drwxr-xr-x. 2 ashok    ashok      6 Jun 16 18:40 asho1
+drwxrwxr-x. 2 root     root       6 Jun 13 19:47 ashok
+-rw-r--r--. 1 ashok    ashok     27 Jun 16 19:15 ashokfile1
+drwxr-xr-x. 2 root     root       6 Jun 13 19:52 dir1
+drwxrwxr-x. 2 root     root       6 Jun 13 19:52 dir33
+-rw-r--r--. 1 root     root       0 Jun 13 19:52 file1
+-rw-rw-r--. 1 root     root       0 Jun 13 19:47 file34
+drwxr-xr-x. 2 ocpadmin ocpadmin   6 Jun 16 18:45 ocpadmindir1
+-rw-r--r--. 1 ocpadmin ocpadmin   0 Jun 16 18:45 ocpuserfile1
+drwxrwsrwx. 8 ashok    ashok    204 Jun 16 18:46 public
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+group::r--
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ setfacl -m u:ocpadmin:rw ashokfile1
+[ashok@c111xyz tmp]$ ls -l
+total 4
+drwxr-xr-x. 2 ashok    ashok      6 Jun 16 18:40 asho1
+drwxrwxr-x. 2 root     root       6 Jun 13 19:47 ashok
+-rw-rw-r--+ 1 ashok    ashok     27 Jun 16 19:15 ashokfile1
+drwxr-xr-x. 2 root     root       6 Jun 13 19:52 dir1
+drwxrwxr-x. 2 root     root       6 Jun 13 19:52 dir33
+-rw-r--r--. 1 root     root       0 Jun 13 19:52 file1
+-rw-rw-r--. 1 root     root       0 Jun 13 19:47 file34
+drwxr-xr-x. 2 ocpadmin ocpadmin   6 Jun 16 18:45 ocpadmindir1
+-rw-r--r--. 1 ocpadmin ocpadmin   0 Jun 16 18:45 ocpuserfile1
+drwxrwsrwx. 8 ashok    ashok    204 Jun 16 18:46 public
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+user:ocpadmin:rw-
+group::r--
+mask::rw-
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cat ashokfile1
+adding entry from ocpadmin1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cat >> ashokfile1
+adding entry from ashok account
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ cat ashokfile1
+adding entry from ocpadmin1
+adding entry from ashok account
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ ls -l ashokfile1
+-rw-rw-r--+ 1 ashok ashok 60 Jun 16 19:20 ashokfile1
+[ashok@c111xyz tmp]$ setfacl -m g:admins:rw ashokfile1
+setfacl: Option -m: Invalid argument near character 3
+[ashok@c111xyz tmp]$ tail /etc/group
+systemd-journal:x:190:
+systemd-network:x:192:
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+ashok:x:2491:unixuser1
+ocpadmin:x:2492:
+ocp:x:3550:
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ setfacl -m g:ocp:rw ashokfile1
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+user:ocpadmin:rw-
+group::r--
+group:ocp:rw-
+mask::rw-
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ setfacl -x g:ocp ashokfile1
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+user:ocpadmin:rw-
+group::r--
+mask::rw-
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ setfacl -x u:ocpadmin ashokfile1
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+group::r--
+mask::r--
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ ls -l ashokfile1
+-rw-r--r--+ 1 ashok ashok 87 Jun 16 19:24 ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ setfacl -m u:ocpadmin:rw ashokfile1
+[ashok@c111xyz tmp]$ setfacl -m u:ocpuser1:rw ashokfile1
+[ashok@c111xyz tmp]$ setfacl -m g:ocp:rw ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+user:ocpadmin:rw-
+user:ocpuser1:rw-
+group::r--
+group:ocp:rw-
+mask::rw-
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ setfacl -b ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ getfacl ashokfile1
+# file: ashokfile1
+# owner: ashok
+# group: ashok
+user::rw-
+group::r--
+other::r--
+
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$ ls -l ashokfile1
+-rw-r--r--. 1 ashok ashok 87 Jun 16 19:24 ashokfile1
+[ashok@c111xyz tmp]$
+[ashok@c111xyz tmp]$
+
