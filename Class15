@@ -1,0 +1,472 @@
+Class 15 18/06/2025
+
+-rwxrwxrwx ashok dba 
+
+SUID – SET USER ID 
+===================
+Change user ID on execution. If SETUID bit is set, when the file will be executed by a user, the process will have the same rights as the owner of the file being executed. Many of the system commands are the best example for SUID, basically the owner of the commands will be root, but still a normal user can execute it. 
+ 
+Example:
+By default ping command is having suid, so all users can run that command but if suid is removed and a normal user wants to user execute it, then it will show 'operation not
+
+SGID – SET GROUP ID 
+===================
+Set group ID, used on executable files to allow the file to be run as if logged into the group (like SUID but uses file group permissions) SGID can also be used on a directory so that every file created in that directory will have the directory group owner rather than the group owner of the user creating the file.
+
+STICKY BIT 
+==========
+If sticky bit is applied on a directory, then only root and owner of that file or directory can 
+delete it. Even if others are having full permissions they cannot delete the file or directory. 
+
+Permission Symbolic Form Numeric Form Syntax 
+SETUID s or S 4 #chmod u+s/u-s or chmod 4766 fileonly
+SETGID s or S 2 #chmod g+s/g-s or chmod 2777 file/dir
+STICKY BIT t or T 1 #chmod o+t/o-t or chmod 1777 dironly
+
+setUID = 4
+SetGID = 2
+Stickeybit = 1
+
+Note: Where s= setuid + execute permission and S= setuid only. Same is for SGID  and also for sticky bit .
+
+2. Access Control List (ACL) 
+============================
+Define more fine-grained discretionary access rights for files and directories. 
+Often, you want to share files among certain groups and specific users. It is a good practice to designate a directory for that purpose. You want to allow those groups and users to read, and write files in that directory, as well as create new files into the directory. Such special permissions can be given using ACL. 
+ACL can be applied on ACL enabled partition that means you need to enable ACL while mounting the partition. 
+
+* getfacl  <option> <dir/file name> 
+
+* setfacl <option> < argument > < file or directory name > 
+
+# setfacl –m g:<group name>:<permissions> <file or directory name>  ====> This will provide access for specified group people
+
+# setfacl –m u:<user name>:<permissions> <file or directory name>  ====> This will provide access for specified user
+		
+# setfacl –x u:<username> <dir name> =====> This will remove access for specified user
+
+# setfacl –x g:<groupname> <dir name> =====> This will remove access for specified group
+
+# setfacl –b <dir name> =====> This will remove all acl permissions for the directory
+
+# getfacl <directory name> ====> this command is used to view acl permissions of the directory
+
+Sudoers: Sudo stands for either "substitute user do" or "super user do"
+========
+What sudo does is incredibly important and crucial to many Linux distributions. Effectively, sudo allows a user to run a program as root user (most often the root user)
+
+/etc/sudoers
+
+visudo / vi /etc/sudoers
+
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+ocpadmin   ALL=(ALL)       /usr/sbin/parted
+
+## Allows members of the 'sys' group to run networking, software,
+
+ashok ALL=(ALL) ALL
+
+unixgrp ALL=(ALL) ALL
+
+Lab Session:
+=============
+1) create a user - wasadmin1, wasadmin2, wasadmin3, wasadmin4, wasadmin5 (WAS-2990)
+2) add entry in sudoers file then login the server and try that command (parted)
+3) Create a group - UserMgmt-9900 
+4) Add this group to sudoers and then tag all wasadmin users to this group (/usr/sbin/useradd,/usr/sbin/usermod,/usr/sbin/groupadd,/usr/sbin/groupmod,/usr/bin/passwd,/usr/sbin/userdel,/usr/sbin/groupdel,/usr/bin/chage)
+5) login each user and try to run all usermgmt commands and run sudo -l command
+
+Session Outputs:
+================
+
+Network error: Connection timed out
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+
+Network error: Connection timed out
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+
+Network error: Connection timed out
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Session stopped
+    - Press <Return> to exit tab
+    - Press R to restart session
+    - Press S to save terminal output to file
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last login: Tue Jun 17 20:01:46 2025 from 192.168.29.211
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /
+[root@c111xyz /]# ls -l
+total 20
+lrwxrwxrwx.   1 root root    7 May 22 20:19 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 May 22 21:16 boot
+drwxr-xr-x.  20 root root 3320 Jun 18 19:12 dev
+drwxr-xr-x.  76 root root 8192 Jun 18 19:12 etc
+drwxr-xr-x.   3 root root   17 Jun  4 19:10 export
+drwxr-xr-x.   9 root root  110 Jun 13 21:17 home
+lrwxrwxrwx.   1 root root    7 May 22 20:19 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 May 22 20:19 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x. 169 root root    0 Jun 18 19:12 proc
+drwxrwxrwx.   4 root root   84 Jun 11 20:59 public
+drwxrwxrwt.   2 root root   45 Jun 16 18:58 publicdata
+dr-xr-x---.   3 root root  128 Jun  4 20:05 root
+drwxr-xr-x.  24 root root  720 Jun 18 19:12 run
+lrwxrwxrwx.   1 root root    8 May 22 20:19 sbin -> usr/sbin
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x.  13 root root    0 Jun 18 19:12 sys
+drwxrwxrwt.  15 root root 4096 Jun 18 19:13 tmp
+drwxr-xr-x.   3 root root   20 Jun  2 19:47 tomcat
+drwxr-xr-x.  13 root root  171 May 28 20:07 usr
+drwxr-xr-x.  19 root root  267 May 22 21:15 var
+drwxrwxrwx.   4 root root   88 Jun 13 21:19 webdata
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l /usr/bin/passwd
+-rwsr-xr-x. 1 root root 27832 Jan 30  2014 /usr/bin/passwd
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# man setfacl
+[root@c111xyz /]#
+[root@c111xyz /]# man ls
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# su - ashok
+Last login: Mon Jun 16 18:20:58 IST 2025 from 192.168.29.79 on pts/1
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ parted -l
+/dev/mapper/control: open failed: Permission denied
+Failure to communicate with kernel device-mapper driver.
+Incompatible libdevmapper 1.02.140-RHEL7 (2017-05-03) and kernel driver (unknown version).
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$
+[ashok@c111xyz ~]$ logout
+[root@c111xyz /]#
+[root@c111xyz /]# parted -l
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  21.5GB  20.4GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start  End  Size  File system  Name  Flags
+
+
+Error: /dev/sdc: unrecognised disk label
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-swap: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system     Flags
+ 1      0.00B  2147MB  2147MB  linux-swap(v1)
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-root: 18.2GB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  18.2GB  18.2GB  xfs
+
+
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Model: NECVMWar VMware SATA CD01 (scsi)
+Disk /dev/sr0: 4374MB
+Sector size (logical/physical): 2048B/2048B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 2      1442MB  1479MB  36.8MB  primary
+
+
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cat /etc/etc/sudoers
+cat: /etc/etc/sudoers: No such file or directory
+[root@c111xyz /]# cat /etc/sudoers
+## Sudoers allows particular users to run various commands as
+## the root user, without needing the root password.
+##
+## Examples are provided at the bottom of the file for collections
+## of related commands, which can then be delegated out to particular
+## users or groups.
+##
+## This file must be edited with the 'visudo' command.
+
+## Host Aliases
+## Groups of machines. You may prefer to use hostnames (perhaps using
+## wildcards for entire domains) or IP addresses instead.
+# Host_Alias     FILESERVERS = fs1, fs2
+# Host_Alias     MAILSERVERS = smtp, smtp2
+
+## User Aliases
+## These aren't often necessary, as you can use regular groups
+## (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
+## rather than USERALIAS
+# User_Alias ADMINS = jsmith, mikem
+
+
+## Command Aliases
+## These are groups of related commands...
+
+## Networking
+# Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+
+## Installation and management of software
+# Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
+
+## Services
+# Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig, /usr/bin/systemctl start, /usr/bin/systemctl stop, /usr/bin/systemctl reload, /usr/bin/systemctl restart, /usr/bin/systemctl status, /usr/bin/systemctl enable, /usr/bin/systemctl disable
+
+## Updating the locate database
+# Cmnd_Alias LOCATE = /usr/bin/updatedb
+
+## Storage
+# Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+## Delegating permissions
+# Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp
+
+## Processes
+# Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+
+## Drivers
+# Cmnd_Alias DRIVERS = /sbin/modprobe
+
+# Defaults specification
+
+#
+# Refuse to run if unable to disable echo on the tty.
+#
+Defaults   !visiblepw
+
+#
+# Preserving HOME has security implications since many programs
+# use it when searching for configuration files. Note that HOME
+# is already set when the the env_reset option is enabled, so
+# this option is only effective for configurations where either
+# env_reset is disabled or HOME is present in the env_keep list.
+#
+Defaults    always_set_home
+Defaults    match_group_by_gid
+
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
+Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"
+
+#
+# Adding HOME to env_keep may enable a user to run unrestricted
+# commands via sudo.
+#
+# Defaults   env_keep += "HOME"
+
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+
+## Next comes the main part: which users can run what software on
+## which machines (the sudoers file can be shared between multiple
+## systems).
+## Syntax:
+##
+##      user    MACHINE=COMMANDS
+##
+## The COMMANDS section may have other options added to it.
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+
+## Allows members of the 'sys' group to run networking, software,
+## service management apps and more.
+# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+## Allows members of the users group to mount and unmount the
+## cdrom as root
+# %users  ALL=/sbin/mount /mnt/cdrom, /sbin/umount /mnt/cdrom
+
+## Allows members of the users group to shutdown this system
+# %users  localhost=/sbin/shutdown -h now
+
+## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
+#includedir /etc/sudoers.d
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# vi /etc/sudoers
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# passwd ashok
+Changing password for user ashok.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+>>> /etc/sudoers: syntax error near line 94 <<<
+What now?
+Options are:
+  (e)dit sudoers file again
+  e(x)it without saving changes to sudoers file
+  (Q)uit and save changes to sudoers file (DANGER!)
+
+What now? e
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# vi /etc/sudoers
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+>>> /etc/sudoers: syntax error near line 95 <<<
+>>> /etc/sudoers: syntax error near line 95 <<<
+What now?
+Options are:
+  (e)dit sudoers file again
+  e(x)it without saving changes to sudoers file
+  (Q)uit and save changes to sudoers file (DANGER!)
+
+What now? e
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# tail /etc/passwd
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+unixuser1:x:1235:89:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+admin:x:2490:74:admin@yahoo.com:/export/app/home/admin:/bin/sh
+ashok:x:2491:2491::/home/ashok:/bin/bash
+ocpadmin:x:23:2492::/home/ocpadmin:/bin/bash
+ocpuser1:x:4501:3550:ocpuser1@gmail.com:/home/ocpuser1:/bin/bash
+ocpuser2:x:4502:3550:ocpuser2@gmail.com:/home/ocpuser2:/bin/bash
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# groupadd -g diskmgmt 2450
+groupadd: invalid group ID 'diskmgmt'
+You have new mail in /var/spool/mail/root
+[root@c111xyz /]# groupadd -g 2450 diskmgmt
+[root@c111xyz /]# grep -i 2450 /etc/group
+diskmgmt:x:2450:
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# id ocpuser1
+uid=4501(ocpuser1) gid=3550(ocp) groups=3550(ocp)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -G diskmgmt ocpuser1
+[root@c111xyz /]# id ocpuser1
+uid=4501(ocpuser1) gid=3550(ocp) groups=3550(ocp),2450(diskmgmt)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -G diskmgmt ocpuser2
+[root@c111xyz /]# id ocpuser2
+uid=4502(ocpuser2) gid=3550(ocp) groups=3550(ocp),2450(diskmgmt)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# gpasswd -d diskmgmt ocpuser2
+gpasswd: group 'ocpuser2' does not exist in /etc/group
+[root@c111xyz /]# gpasswd -d ocpuser2 diskmgmt
+Removing user ocpuser2 from group diskmgmt
+[root@c111xyz /]# gpasswd -d ocpuser1 diskmgmt
+Removing user ocpuser1 from group diskmgmt
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# id ocpuser1
+uid=4501(ocpuser1) gid=3550(ocp) groups=3550(ocp)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# id ocpuser2
+uid=4502(ocpuser2) gid=3550(ocp) groups=3550(ocp)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# usermod -G diskmgmt ocpadmin
+[root@c111xyz /]#
+[root@c111xyz /]# id ocpadmin
+uid=23(ocpadmin) gid=2492(ocpadmin) groups=2492(ocpadmin),2450(diskmgmt)
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
