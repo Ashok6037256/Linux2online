@@ -1,0 +1,780 @@
+Class 16 20/06/2025
+
+Sudoers: Sudo stands for either "substitute user do" or "super user do"
+========
+
+With the help of sudoers we can provide super user privelleged commands to normal users.
+
+What sudo does is incredibly important and crucial to many Linux distributions. Effectively, sudo allows a user to run a program as another user (most often the root user)
+
+/etc/sudoers
+
+visudo / vi /etc/sudoers
+
+User Sudo Access:
+=================
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+admin   ALL=(ALL)       NOPASSWD:/usr/sbin/useradd
+UNIXADM	ALL=(ALL)       NOPASSWD:/usr/sbin/useradd
+UNIXADM	ALL=(ALL)       NOPASSWD:UNIXCMD
+
+Group Sudo Access:
+==================
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+%diskmgmt       ALL=(ALL)       /usr/sbin/parted,
+
+ashok ALL=(ALL) ALL
+
+unixgrp ALL=(ALL) ALL
+
+unixgrp ALL=(ALL) NOPASSWD:ALL
+
+User_Alias
+==========
+User_Alias UNIXADM = user1,user2,user3,user4,user5
+
+UNIXADM	ALL=(ALL)       /usr/sbin/useradd
+
+Cmnd_Alias
+==========
+UNIXCMD = command,command,command,command
+
+unixgrp ALL=(ALL) UNIXCMD
+
+Alternate sudoers file entries in /etc/sudoers.d directory:
+===========================================================
+[root@c111xyz sudoers.d]# ls -l
+total 4
+-rw-r--r--. 1 root root 187 Jun 20 20:18 crmapp_sudoers
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# cat crmapp_sudoers
+User_Alias LABADMINS = ocpuser1, ocpuser2
+
+Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+LABADMINS       ALL=(ALL)       STORAGE
+[root@c111xyz sudoers.d]#
+
+Sudoers Log Location : /var/log/secure
+
+Lab Session:
+============
+1) groupdel, userdel -r, rm -rf /home/*
+
+2) create users : ashok,imran,ameer,sharif,babar
+
+3) group=unixgrp add ashok,imran ---- 3,4 commands
+
+4) create Cmnd_Alias (CRMAPPCMD) and tag to unixgrp
+
+5) create User_Alias and tag all users ====> 5,6 commands
+
+6) verify sudo log file with below command
+	# grep -i sudo /var/log/secure
+
+Session Output:
+===============
+login as: root
+    +----------------------------------------------------------------------+
+    ¦                 • MobaXterm Personal Edition v24.2 •                 ¦
+    ¦               (SSH client, X server and network tools)               ¦
+    ¦                                                                      ¦
+    ¦ ? SSH session to root@192.168.29.120                                 ¦
+    ¦   • Direct SSH      :  ?                                             ¦
+    ¦   • SSH compression :  ?                                             ¦
+    ¦   • SSH-browser     :  ?                                             ¦
+    ¦   • X11-forwarding  :  ?  (disabled or not supported by server)      ¦
+    ¦                                                                      ¦
+    ¦ ? For more info, ctrl+click on help or visit our website.            ¦
+    +----------------------------------------------------------------------+
+
+Last failed login: Fri Jun 20 19:00:18 IST 2025 from 2405:201:c037:d269:c268:ccff:fe6b:db71 on ssh:notty
+There were 35 failed login attempts since the last successful login.
+Last login: Thu Jun 19 19:04:21 2025 from 192.168.29.211
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cat /etc/sudoers
+## Sudoers allows particular users to run various commands as
+## the root user, without needing the root password.
+##
+## Examples are provided at the bottom of the file for collections
+## of related commands, which can then be delegated out to particular
+## users or groups.
+##
+## This file must be edited with the 'visudo' command.
+
+## Host Aliases
+## Groups of machines. You may prefer to use hostnames (perhaps using
+## wildcards for entire domains) or IP addresses instead.
+# Host_Alias     FILESERVERS = fs1, fs2
+# Host_Alias     MAILSERVERS = smtp, smtp2
+
+## User Aliases
+## These aren't often necessary, as you can use regular groups
+## (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
+## rather than USERALIAS
+# User_Alias ADMINS = jsmith, mikem
+
+
+## Command Aliases
+## These are groups of related commands...
+
+## Networking
+# Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+
+## Installation and management of software
+# Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
+
+## Services
+# Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig, /usr/bin/systemctl start, /usr/bin/systemctl stop, /usr/bin/systemctl reload, /usr/bin/systemctl restart, /usr/bin/systemctl status, /usr/bin/systemctl enable, /usr/bin/systemctl disable
+
+## Updating the locate database
+# Cmnd_Alias LOCATE = /usr/bin/updatedb
+
+## Storage
+# Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+## Delegating permissions
+# Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp
+
+## Processes
+# Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+
+## Drivers
+# Cmnd_Alias DRIVERS = /sbin/modprobe
+
+# Defaults specification
+
+#
+# Refuse to run if unable to disable echo on the tty.
+#
+Defaults   !visiblepw
+
+#
+# Preserving HOME has security implications since many programs
+# use it when searching for configuration files. Note that HOME
+# is already set when the the env_reset option is enabled, so
+# this option is only effective for configurations where either
+# env_reset is disabled or HOME is present in the env_keep list.
+#
+Defaults    always_set_home
+Defaults    match_group_by_gid
+
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
+Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"
+
+#
+# Adding HOME to env_keep may enable a user to run unrestricted
+# commands via sudo.
+#
+# Defaults   env_keep += "HOME"
+
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+
+## Next comes the main part: which users can run what software on
+## which machines (the sudoers file can be shared between multiple
+## systems).
+## Syntax:
+##
+##      user    MACHINE=COMMANDS
+##
+## The COMMANDS section may have other options added to it.
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+ashok   ALL=(ALL)       /usr/sbin/parted
+
+## Allows members of the 'sys' group to run networking, software,
+## service management apps and more.
+# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+%diskmgmt       ALL=(ALL)       /usr/sbin/parted
+%UserMgmt       ALL=(ALL)       /usr/sbin/useradd,/usr/sbin/usermod,/usr/sbin/groupadd,/usr/sbin/groupmod,/usr/bin/passwd,/usr/sbin/userdel,/usr/sbin/groupdel,/usr/bin/chage
+
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+## Allows members of the users group to mount and unmount the
+## cdrom as root
+# %users  ALL=/sbin/mount /mnt/cdrom, /sbin/umount /mnt/cdrom
+
+## Allows members of the users group to shutdown this system
+# %users  localhost=/sbin/shutdown -h now
+
+## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
+#includedir /etc/sudoers.d
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# who
+root     pts/0        2025-06-20 19:00 (192.168.29.211)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# who
+root     tty1         2025-06-20 19:45
+root     pts/0        2025-06-20 19:00 (192.168.29.211)
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /public
+[root@c111xyz public]# cd /publicdata/
+[root@c111xyz publicdata]# ls
+ashokfile1  MobaXterm_192.168.29.120_20250613_212601.txt  ocpadminfile1
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]# ls -l
+total 48
+-rw-r--r--. 1 ashok    ashok       45 Jun 16 19:00 ashokfile1
+-rw-r--r--. 1 root     root     39608 Jun 13 21:26 MobaXterm_192.168.29.120_20250613_212601.txt
+-rw-r--r--. 1 ocpadmin ocpadmin    30 Jun 16 18:56 ocpadminfile1
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]# who
+root     tty1         2025-06-20 19:45
+root     pts/0        2025-06-20 19:00 (192.168.29.211)
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]# c d/
+-bash: c: command not found
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]#
+[root@c111xyz publicdata]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# tail /etc/passwd
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+unixuser1:x:1235:89:unixuser1@google.com;EMID-20645:/home/unixuser1:/bin/bash
+admin:x:2490:74:admin@yahoo.com:/export/app/home/admin:/bin/sh
+ashok:x:2491:2491::/home/ashok:/bin/bash
+ocpadmin:x:23:2492::/home/ocpadmin:/bin/bash
+ocpuser1:x:4501:3550:ocpuser1@gmail.com:/home/ocpuser1:/bin/bash
+ocpuser2:x:4502:3550:ocpuser2@gmail.com:/home/ocpuser2:/bin/bash
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# tail /etc/group
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+ashok:x:2491:unixuser1
+ocpadmin:x:2492:
+ocp:x:3550:
+diskmgmt:x:2450:ocpadmin
+UserMgmt:x:9900:ocpuser1
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# gpasswd -d ocpuser1 UserMgmt
+Removing user ocpuser1 from group UserMgmt
+[root@c111xyz /]# gpasswd -d ocpadmin diskmgmt
+Removing user ocpadmin from group diskmgmt
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# tail /etc/group
+dbus:x:81:admin
+polkitd:x:997:
+postdrop:x:90:
+postfix:x:89:
+sshd:x:74:
+ashok:x:2491:unixuser1
+ocpadmin:x:2492:
+ocp:x:3550:
+diskmgmt:x:2450:
+UserMgmt:x:9900:
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cat /etc/sudoers
+## Sudoers allows particular users to run various commands as
+## the root user, without needing the root password.
+##
+## Examples are provided at the bottom of the file for collections
+## of related commands, which can then be delegated out to particular
+## users or groups.
+##
+## This file must be edited with the 'visudo' command.
+
+## Host Aliases
+## Groups of machines. You may prefer to use hostnames (perhaps using
+## wildcards for entire domains) or IP addresses instead.
+# Host_Alias     FILESERVERS = fs1, fs2
+# Host_Alias     MAILSERVERS = smtp, smtp2
+
+## User Aliases
+## These aren't often necessary, as you can use regular groups
+## (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
+## rather than USERALIAS
+User_Alias LABADMINS = ocpuser1, ocpuser2
+
+
+## Command Aliases
+## These are groups of related commands...
+
+## Networking
+# Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+
+## Installation and management of software
+# Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
+
+## Services
+# Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig, /usr/bin/systemctl start, /usr/bin/systemctl stop, /usr/bin/systemctl reload, /usr/bin/systemctl restart, /usr/bin/systemctl status, /usr/bin/systemctl enable, /usr/bin/systemctl disable
+
+## Updating the locate database
+# Cmnd_Alias LOCATE = /usr/bin/updatedb
+
+## Storage
+Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+## Delegating permissions
+# Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp
+
+## Processes
+# Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+
+## Drivers
+# Cmnd_Alias DRIVERS = /sbin/modprobe
+
+# Defaults specification
+
+#
+# Refuse to run if unable to disable echo on the tty.
+#
+Defaults   !visiblepw
+
+#
+# Preserving HOME has security implications since many programs
+# use it when searching for configuration files. Note that HOME
+# is already set when the the env_reset option is enabled, so
+# this option is only effective for configurations where either
+# env_reset is disabled or HOME is present in the env_keep list.
+#
+Defaults    always_set_home
+Defaults    match_group_by_gid
+
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
+Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"
+
+#
+# Adding HOME to env_keep may enable a user to run unrestricted
+# commands via sudo.
+#
+# Defaults   env_keep += "HOME"
+
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+
+## Next comes the main part: which users can run what software on
+## which machines (the sudoers file can be shared between multiple
+## systems).
+## Syntax:
+##
+##      user    MACHINE=COMMANDS
+##
+## The COMMANDS section may have other options added to it.
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+ashok   ALL=(ALL)       /usr/sbin/parted
+LABADMINS       ALL=(ALL)       STORAGE
+
+## Allows members of the 'sys' group to run networking, software,
+## service management apps and more.
+# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+%diskmgmt       ALL=(ALL)       /usr/sbin/parted
+%UserMgmt       ALL=(ALL)       /usr/sbin/useradd,/usr/sbin/usermod,/usr/sbin/groupadd,/usr/sbin/groupmod,/usr/bin/passwd,/usr/sbin/userdel,/usr/sbin/groupdel,/usr/bin/chage
+
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+## Allows members of the users group to mount and unmount the
+## cdrom as root
+# %users  ALL=/sbin/mount /mnt/cdrom, /sbin/umount /mnt/cdrom
+
+## Allows members of the users group to shutdown this system
+# %users  localhost=/sbin/shutdown -h now
+
+## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
+#includedir /etc/sudoers.d
+[root@c111xyz /]# visudo
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# visudo
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd /etc/sudoers.d/
+[root@c111xyz sudoers.d]# ls -l
+total 0
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# cat > crmapp_sudoers
+User_Alias LABADMINS = ocpuser1, ocpuser2
+
+Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+LABADMINS       ALL=(ALL)       STORAGE
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# ls -l
+total 4
+-rw-r--r--. 1 root root 187 Jun 20 20:18 crmapp_sudoers
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# cat crmapp_sudoers
+User_Alias LABADMINS = ocpuser1, ocpuser2
+
+Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+LABADMINS       ALL=(ALL)       STORAGE
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# cat /etc/sudoers
+## Sudoers allows particular users to run various commands as
+## the root user, without needing the root password.
+##
+## Examples are provided at the bottom of the file for collections
+## of related commands, which can then be delegated out to particular
+## users or groups.
+##
+## This file must be edited with the 'visudo' command.
+
+## Host Aliases
+## Groups of machines. You may prefer to use hostnames (perhaps using
+## wildcards for entire domains) or IP addresses instead.
+# Host_Alias     FILESERVERS = fs1, fs2
+# Host_Alias     MAILSERVERS = smtp, smtp2
+
+## User Aliases
+## These aren't often necessary, as you can use regular groups
+## (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
+## rather than USERALIAS
+#User_Alias LABADMINS = ocpuser1, ocpuser2
+
+
+## Command Aliases
+## These are groups of related commands...
+
+## Networking
+# Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+
+## Installation and management of software
+# Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
+
+## Services
+# Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig, /usr/bin/systemctl start, /usr/bin/systemctl stop, /usr/bin/systemctl reload, /usr/bin/systemctl restart, /usr/bin/systemctl status, /usr/bin/systemctl enable, /usr/bin/systemctl disable
+
+## Updating the locate database
+# Cmnd_Alias LOCATE = /usr/bin/updatedb
+
+## Storage
+#Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+
+## Delegating permissions
+# Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp
+
+## Processes
+# Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+
+## Drivers
+# Cmnd_Alias DRIVERS = /sbin/modprobe
+
+# Defaults specification
+
+#
+# Refuse to run if unable to disable echo on the tty.
+#
+Defaults   !visiblepw
+
+#
+# Preserving HOME has security implications since many programs
+# use it when searching for configuration files. Note that HOME
+# is already set when the the env_reset option is enabled, so
+# this option is only effective for configurations where either
+# env_reset is disabled or HOME is present in the env_keep list.
+#
+Defaults    always_set_home
+Defaults    match_group_by_gid
+
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
+Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"
+
+#
+# Adding HOME to env_keep may enable a user to run unrestricted
+# commands via sudo.
+#
+# Defaults   env_keep += "HOME"
+
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+
+## Next comes the main part: which users can run what software on
+## which machines (the sudoers file can be shared between multiple
+## systems).
+## Syntax:
+##
+##      user    MACHINE=COMMANDS
+##
+## The COMMANDS section may have other options added to it.
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+#ashok  ALL=(ALL)       /usr/sbin/parted
+#LABADMINS      ALL=(ALL)       NOPASSWD:STORAGE
+
+## Allows members of the 'sys' group to run networking, software,
+## service management apps and more.
+# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+#%diskmgmt      ALL=(ALL)       /usr/sbin/parted
+#%UserMgmt      ALL=(ALL)       /usr/sbin/useradd,/usr/sbin/usermod,/usr/sbin/groupadd,/usr/sbin/groupmod,/usr/bin/passwd,/usr/sbin/userdel,/usr/sbin/groupdel,/usr/bin/chage
+
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+## Allows members of the users group to mount and unmount the
+## cdrom as root
+# %users  ALL=/sbin/mount /mnt/cdrom, /sbin/umount /mnt/cdrom
+
+## Allows members of the users group to shutdown this system
+# %users  localhost=/sbin/shutdown -h now
+
+## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
+#includedir /etc/sudoers.d
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# pwd
+/etc/sudoers.d
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# ls -l
+total 4
+-rw-r--r--. 1 root root 187 Jun 20 20:18 crmapp_sudoers
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]#
+[root@c111xyz sudoers.d]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cd /var/log/
+[root@c111xyz log]# ls -l
+total 4944
+drwxr-xr-x. 2 root root     232 May 22 20:48 anaconda
+drwx------. 2 root root      23 May 22 21:15 audit
+-rw-------. 1 root root       0 Jun 20 19:26 boot.log
+-rw-------. 1 root root    8708 Jun  2 20:46 boot.log-20250602
+-rw-------. 1 root root    8944 Jun  4 19:35 boot.log-20250604
+-rw-------. 1 root root   17694 Jun 11 19:16 boot.log-20250611
+-rw-------. 1 root root    8893 Jun 13 20:40 boot.log-20250613
+-rw-------. 1 root root       0 Jun 16 19:07 boot.log-20250616
+-rw-------. 1 root root   35454 Jun 18 20:21 boot.log-20250618
+-rw-------. 1 root root   18100 Jun 20 19:26 boot.log-20250620
+-rw-------. 1 root utmp  554112 Jun 20 20:30 btmp
+-rw-------. 1 root utmp    4608 Jun  2 20:31 btmp-20250602
+-rw-------. 1 root root    6165 Jun 20 20:01 cron
+-rw-------. 1 root root    2867 May 26 19:08 cron-20250526
+-rw-------. 1 root root    5997 Jun  2 20:46 cron-20250602
+-rw-------. 1 root root    4029 Jun 11 19:16 cron-20250611
+-rw-------. 1 root root    3514 Jun 16 19:07 cron-20250616
+-rw-r--r--. 1 root root  130848 Jun 20 19:00 dmesg
+-rw-r--r--. 1 root root  130862 Jun 19 19:01 dmesg.old
+-rw-r--r--. 1 root root    9824 Jun 20 19:00 firewalld
+-rw-r--r--. 1 root root     193 May 22 20:25 grubby_prune_debug
+-rw-r--r--. 1 root root 1314876 Jun 20 20:19 lastlog
+-rw-------. 1 root root    2934 Jun 20 19:00 maillog
+-rw-------. 1 root root     582 May 26 18:57 maillog-20250526
+-rw-------. 1 root root     582 Jun  2 19:40 maillog-20250602
+-rw-------. 1 root root     582 Jun 11 18:54 maillog-20250611
+-rw-------. 1 root root     194 Jun 13 19:42 maillog-20250616
+-rw-------. 1 root root  890799 Jun 20 20:19 messages
+-rw-------. 1 root root  439522 May 26 19:08 messages-20250526
+-rw-------. 1 root root  442048 Jun  2 20:33 messages-20250602
+-rw-------. 1 root root  433689 Jun 11 19:10 messages-20250611
+-rw-------. 1 root root  161905 Jun 16 19:01 messages-20250616
+drwxr-xr-x. 2 root root     238 Jun 16 19:07 rhsm
+-rw-------. 1 root root  757631 Jun 20 20:30 secure
+-rw-------. 1 root root    3213 May 26 18:57 secure-20250526
+-rw-------. 1 root root   11897 Jun  2 20:40 secure-20250602
+-rw-------. 1 root root   13952 Jun 11 19:00 secure-20250611
+-rw-------. 1 root root   13260 Jun 16 18:44 secure-20250616
+-rw-------. 1 root root       0 Jun 16 19:07 spooler
+-rw-------. 1 root root       0 May 22 20:29 spooler-20250526
+-rw-------. 1 root root       0 May 26 19:08 spooler-20250602
+-rw-------. 1 root root       0 Jun  2 20:46 spooler-20250611
+-rw-------. 1 root root       0 Jun 11 19:16 spooler-20250616
+-rw-------. 1 root root       0 May 22 20:25 tallylog
+drwxr-xr-x. 2 root root      23 May 22 21:15 tuned
+-rw-r--r--. 1 root root   24753 Jun 20 19:00 vmware-vgauthsvc.log.0
+-rw-r--r--. 1 root root  151824 Jun 20 19:00 vmware-vmsvc.log
+-rw-rw-r--. 1 root utmp   59520 Jun 20 19:49 wtmp
+-rw-r--r--. 1 root root       0 Jun  2 19:45 yum.log
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]# tail -20 secure
+Jun 20 20:30:02 c111xyz sshd[3026]: Failed password for admin from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40945 ssh2
+Jun 20 20:30:02 c111xyz sshd[3026]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40945:11: SSH client disconnected [preauth]
+Jun 20 20:30:02 c111xyz sshd[3026]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40945 [preauth]
+Jun 20 20:30:02 c111xyz unix_chkpwd[3034]: password check failed for user (admin)
+Jun 20 20:30:02 c111xyz sshd[3032]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=2405:201:c037:d269:c268:ccff:fe6b:db71  user=admin
+Jun 20 20:30:03 c111xyz sshd[3029]: Failed password for admin from fe80::c268:ccff:fe6b:db71%ens33 port 36655 ssh2
+Jun 20 20:30:03 c111xyz sshd[3029]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36655:11: SSH client disconnected [preauth]
+Jun 20 20:30:03 c111xyz sshd[3029]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36655 [preauth]
+Jun 20 20:30:04 c111xyz sshd[3035]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Jun 20 20:30:04 c111xyz unix_chkpwd[3037]: password check failed for user (admin)
+Jun 20 20:30:04 c111xyz sshd[3035]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=fe80::c268:ccff:fe6b:db71%ens33  user=admin
+Jun 20 20:30:04 c111xyz sshd[3032]: Failed password for admin from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40947 ssh2
+Jun 20 20:30:04 c111xyz sshd[3032]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40947:11: SSH client disconnected [preauth]
+Jun 20 20:30:04 c111xyz sshd[3032]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40947 [preauth]
+Jun 20 20:30:05 c111xyz sshd[3035]: Failed password for admin from fe80::c268:ccff:fe6b:db71%ens33 port 36657 ssh2
+Jun 20 20:30:05 c111xyz sshd[3035]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36657:11: SSH client disconnected [preauth]
+Jun 20 20:30:05 c111xyz sshd[3035]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36657 [preauth]
+Jun 20 20:30:13 c111xyz sudo: pam_unix(sudo:auth): conversation failed
+Jun 20 20:30:13 c111xyz sudo: pam_unix(sudo:auth): auth could not identify password for [ocpuser1]
+Jun 20 20:30:15 c111xyz sudo: ocpuser1 : command not allowed ; TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/reboot
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]# tail -50 secure
+Jun 20 20:30:02 c111xyz unix_chkpwd[3034]: password check failed for user (admin)
+Jun 20 20:30:02 c111xyz sshd[3032]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=2405:201:c037:d269:c268:ccff:fe6b:db71  user=admin
+Jun 20 20:30:03 c111xyz sshd[3029]: Failed password for admin from fe80::c268:ccff:fe6b:db71%ens33 port 36655 ssh2
+Jun 20 20:30:03 c111xyz sshd[3029]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36655:11: SSH client disconnected [preauth]
+Jun 20 20:30:03 c111xyz sshd[3029]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36655 [preauth]
+Jun 20 20:30:04 c111xyz sshd[3035]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Jun 20 20:30:04 c111xyz unix_chkpwd[3037]: password check failed for user (admin)
+Jun 20 20:30:04 c111xyz sshd[3035]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=fe80::c268:ccff:fe6b:db71%ens33  user=admin
+Jun 20 20:30:04 c111xyz sshd[3032]: Failed password for admin from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40947 ssh2
+Jun 20 20:30:04 c111xyz sshd[3032]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40947:11: SSH client disconnected [preauth]
+Jun 20 20:30:04 c111xyz sshd[3032]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40947 [preauth]
+Jun 20 20:30:05 c111xyz sshd[3035]: Failed password for admin from fe80::c268:ccff:fe6b:db71%ens33 port 36657 ssh2
+Jun 20 20:30:05 c111xyz sshd[3035]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36657:11: SSH client disconnected [preauth]
+Jun 20 20:30:05 c111xyz sshd[3035]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36657 [preauth]
+Jun 20 20:30:13 c111xyz sudo: pam_unix(sudo:auth): conversation failed
+Jun 20 20:30:13 c111xyz sudo: pam_unix(sudo:auth): auth could not identify password for [ocpuser1]
+Jun 20 20:30:15 c111xyz sudo: ocpuser1 : command not allowed ; TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/reboot
+Jun 20 20:31:04 c111xyz sshd[3042]: Invalid user none from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40950
+Jun 20 20:31:04 c111xyz sshd[3042]: input_userauth_request: invalid user none [preauth]
+Jun 20 20:31:04 c111xyz sshd[3042]: Failed none for invalid user none from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40950 ssh2
+Jun 20 20:31:04 c111xyz sshd[3042]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40950:11: SSH client disconnected [preauth]
+Jun 20 20:31:04 c111xyz sshd[3042]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40950 [preauth]
+Jun 20 20:31:04 c111xyz sshd[3044]: Invalid user Administrator from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40951
+Jun 20 20:31:04 c111xyz sshd[3044]: input_userauth_request: invalid user Administrator [preauth]
+Jun 20 20:31:04 c111xyz sshd[3044]: Failed none for invalid user Administrator from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40951 ssh2
+Jun 20 20:31:04 c111xyz sshd[3044]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40951:11: SSH client disconnected [preauth]
+Jun 20 20:31:04 c111xyz sshd[3044]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40951 [preauth]
+Jun 20 20:31:05 c111xyz sshd[3046]: Invalid user Dinion from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40952
+Jun 20 20:31:05 c111xyz sshd[3046]: input_userauth_request: invalid user Dinion [preauth]
+Jun 20 20:31:05 c111xyz sshd[3046]: Failed none for invalid user Dinion from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40952 ssh2
+Jun 20 20:31:05 c111xyz sshd[3046]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40952:11: SSH client disconnected [preauth]
+Jun 20 20:31:05 c111xyz sshd[3046]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 40952 [preauth]
+Jun 20 20:31:06 c111xyz sshd[3048]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Jun 20 20:31:06 c111xyz sshd[3048]: Invalid user none from fe80::c268:ccff:fe6b:db71%ens33 port 36662
+Jun 20 20:31:06 c111xyz sshd[3048]: input_userauth_request: invalid user none [preauth]
+Jun 20 20:31:06 c111xyz sshd[3048]: Failed none for invalid user none from fe80::c268:ccff:fe6b:db71%ens33 port 36662 ssh2
+Jun 20 20:31:06 c111xyz sshd[3048]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36662:11: SSH client disconnected [preauth]
+Jun 20 20:31:06 c111xyz sshd[3048]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36662 [preauth]
+Jun 20 20:31:06 c111xyz sshd[3050]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Jun 20 20:31:06 c111xyz sshd[3050]: Invalid user Administrator from fe80::c268:ccff:fe6b:db71%ens33 port 36663
+Jun 20 20:31:06 c111xyz sshd[3050]: input_userauth_request: invalid user Administrator [preauth]
+Jun 20 20:31:06 c111xyz sshd[3050]: Failed none for invalid user Administrator from fe80::c268:ccff:fe6b:db71%ens33 port 36663 ssh2
+Jun 20 20:31:06 c111xyz sshd[3050]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36663:11: SSH client disconnected [preauth]
+Jun 20 20:31:06 c111xyz sshd[3050]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36663 [preauth]
+Jun 20 20:31:06 c111xyz sshd[3052]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Jun 20 20:31:06 c111xyz sshd[3052]: Invalid user Dinion from fe80::c268:ccff:fe6b:db71%ens33 port 36664
+Jun 20 20:31:06 c111xyz sshd[3052]: input_userauth_request: invalid user Dinion [preauth]
+Jun 20 20:31:06 c111xyz sshd[3052]: Failed none for invalid user Dinion from fe80::c268:ccff:fe6b:db71%ens33 port 36664 ssh2
+Jun 20 20:31:06 c111xyz sshd[3052]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 36664:11: SSH client disconnected [preauth]
+Jun 20 20:31:06 c111xyz sshd[3052]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 36664 [preauth]
+[root@c111xyz log]# date
+Fri Jun 20 20:32:55 IST 2025
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]# grep -i sudo secure
+Jun 18 20:02:11 c111xyz sudo: pam_unix(sudo:auth): authentication failure; logname=root uid=2491 euid=0 tty=/dev/pts/1 ruser=ashok rhost=  user=ashok
+Jun 18 20:02:28 c111xyz sudo: pam_unix(sudo:auth): conversation failed
+Jun 18 20:02:28 c111xyz sudo: pam_unix(sudo:auth): auth could not identify password for [ashok]
+Jun 18 20:02:29 c111xyz sudo:   ashok : 2 incorrect password attempts ; TTY=pts/1 ; PWD=/home/ashok ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:02:59 c111xyz sudo:   ashok : TTY=pts/1 ; PWD=/home/ashok ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:10:48 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:11:18 c111xyz sudo: ocpuser1 : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:12:04 c111xyz sudo: ocpuser2 : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:17:45 c111xyz sudo: pam_unix(sudo:auth): authentication failure; logname=root uid=4501 euid=0 tty=/dev/pts/1 ruser=ocpuser1 rhost=  user=ocpuser1
+Jun 18 20:17:56 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:18:14 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 18 20:19:00 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:19:05 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=list
+Jun 18 20:20:53 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:21:12 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:21:27 c111xyz sudo: ocpuser2 : user NOT in sudoers ; TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:21:40 c111xyz sudo: ocpuser1 : command not allowed ; TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 18 20:22:09 c111xyz sudo: ocpadmin : TTY=pts/1 ; PWD=/home/ocpadmin ; USER=root ; COMMAND=/sbin/parted -l
+Jun 18 20:22:16 c111xyz sudo: ocpadmin : TTY=pts/1 ; PWD=/home/ocpadmin ; USER=root ; COMMAND=list
+Jun 18 20:41:58 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 18 20:42:14 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/usr/bin/passwd ashok
+Jun 18 20:43:04 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 20 20:02:54 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 20 20:03:10 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 20 20:08:11 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=list
+Jun 20 20:08:53 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 20 20:09:08 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=/bin/mount /dev/sr0 /mnt
+Jun 20 20:10:02 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/ ; USER=root ; COMMAND=/bin/umount /mnt
+Jun 20 20:11:58 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/ ; USER=root ; COMMAND=list
+Jun 20 20:12:18 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/ ; USER=root ; COMMAND=/bin/mount /dev/sr0 /mnt
+Jun 20 20:12:31 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/ ; USER=root ; COMMAND=/bin/umount /mnt
+Jun 20 20:12:56 c111xyz sudo: pam_unix(sudo:auth): conversation failed
+Jun 20 20:12:56 c111xyz sudo: pam_unix(sudo:auth): auth could not identify password for [ocpuser1]
+Jun 20 20:14:52 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 20 20:15:06 c111xyz sudo: ocpuser2 : TTY=pts/1 ; PWD=/home/ocpuser2 ; USER=root ; COMMAND=list
+Jun 20 20:19:25 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=list
+Jun 20 20:19:42 c111xyz sudo: ocpuser1 : TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/parted -l
+Jun 20 20:30:13 c111xyz sudo: pam_unix(sudo:auth): conversation failed
+Jun 20 20:30:13 c111xyz sudo: pam_unix(sudo:auth): auth could not identify password for [ocpuser1]
+Jun 20 20:30:15 c111xyz sudo: ocpuser1 : command not allowed ; TTY=pts/1 ; PWD=/home/ocpuser1 ; USER=root ; COMMAND=/sbin/reboot
+[root@c111xyz log]# ls -l /var/log/secure
+-rw-------. 1 root root 771204 Jun 20 20:34 /var/log/secure
+[root@c111xyz log]#
+[root@c111xyz log]#
+[root@c111xyz log]#
