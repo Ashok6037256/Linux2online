@@ -1,0 +1,74 @@
+Class 18 25/06/2025
+
+Disk Management
+
+Disk Partitioning Criteria: 
+===========================
+MBR = MASTER BOOT RECORD 
+P= PRIMARY PARTITION 
+EXTENDED= EXTENDED PARTITION 
+L= LOGICAL PARTITION  
+
+The Structure of Disk Partition:
+================================
+On the disk where O/S is installed, will have the first partition as MBR. 
+MBR is a Master Boot Record, which contains two important utilities, IPL (Initial Program Loader) and PTI (Partition Table information) 
+	
+IPL (Initial Program Loader) is responsible for booting the operating the system, because it contains the boot loader. In earlier versions of Linux i.e. up to RHEL 4, the default boot loader was LILO (Linux Loader). But, since RHEL5 onwards it has been changed to GRub (Grand Unified Boot loader), which is far more superior to LILO.
+ 
+PTI (Partition Table information) is the information about the number of partitions 
+on the disk, sizes of the partition and types of partitions. 
+ 
+THE CRITERIA OF DISK PARTITIONING:
+================================== 
+ 
+Every disk can do only 4 Primary Partitions. 
+
+Primary Partition: is a partition which usually holds the operating system. Only one amongst the 3 primary partitions can be active which will be booted by MBR to load the operating system. 
+
+Extended Partition: is a special type of primary partition which can be subdivided into multiple logical partitions. As there can be only 3 primary partitions per disk, and if the user is required to make further partitions then all the space remaining on the disk should be allocated to extended partition, which can be used to create the logical partitions later. There can be only one extended partition per disk. 
+
+Logical partition: is the partition which are created under extended partition, all the space in the extended partition can be used to create "n" number of logical partitions. 
+ 
+Disk Identification:  parted -l |fdisk -l
+====================
+Different type of disks will be having different initials in Linux 
+ 
+IDE  drive will be shown as /dev/hda  
+SCSI drive will be shown as /dev/sda 
+Virtual drive will be shown as /dev/xvda 
+ 
+FILE SYSTEM: Superblock, backsuperblock, inod and datablock
+============
+It is method of storing the data in an organized fashion on the disk. Every partition on the disk except MBR and Extended partition should be assigned with some file system in order to make them store the data. File system is applied on the partition by formatting it with a particular type of file system. Ex: Ext3, Ext4 & Xfs
+
+File system creating with new disk:
+===================================
+# echo "- - -" > /sys/class/scsi_host/host0/scan
+# echo "- - -" > /sys/class/scsi_host/host1/scan
+# echo "- - -" > /sys/class/scsi_host/host2/scan
+# parted -l
+# parted /dev/sdb
+	parted> mklabel msdos
+		Partition type?  primary/extended? primary
+		File system type?  [ext2]?
+		Start? 1
+		End? 500
+	parted> print	
+	parted> quit   
+# perted -l
+# mkfs -t ext4 /dev/sdb1 
+# blkid
+# mkdir /webdata
+# mount -t ext4 /dev/sdb1 /webdata
+# df -h /webdata
+# cd /webdata
+# mkdir dir1; touch file34
+# ls -l
+# cd /
+
+Lab Tasks:
+==========
+1) /dev/sdc ====> 10Gb - 10Partitions - /oradata1-10
+2) /dev/sdd ====> 20Gb - 10Partitions - /javadata1-10
+3) /dev/sde ====> 30Gb - 10Partitions - /wasdata1-10
