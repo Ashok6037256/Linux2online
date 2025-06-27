@@ -1,0 +1,56 @@
+Class 19 27/06/2025
+
+Persistance file system: To make file system persistenace need to perform below steps
+========================
+1) Add entry of the file systems into "/etc/fstab" file
+
+Device name	: /dev/sdb1
+Mount point	: /data1
+Fstype		: ext4
+Mount Options	: defaults
+Dump Options	: 0
+Fsck Options	: 0
+
+2) Verify entries
+# umount /data1
+# mount /data1
+
+File system Extention: To increase file systems need to follow below steps
+======================
+1) Add new disk with required size 500Mb
+2) Label the disk and create partitions 3-each 200M 
+3) Configure file system and mount /oracle1-2-3
+4) add fstab entries and verify with remounting
+5) Add data upto 80%
+6) Add new disk with 1Gb
+7) Label the disk and create partitions 3-each 400M
+8) each file system mount on /mnt and copy data from /oracle file systems
+	# mount -t ext4 /dev/sdc1 /mnt
+	# cd /mnt
+	# cp -rp /oracle1/* /mnt
+	# umount /mnt
+
+	# mount -t ext4 /dev/sdc2 /mnt
+	# cd /mnt
+	# cp -rp /oracle2/* /mnt
+	# umount /mnt
+
+	# mount -t ext4 /dev/sdc3 /mnt
+	# cd /mnt
+	# cp -rp /oracle3/* /mnt
+	# umount /mnt
+9) unmount /oracle1,2,3 file systema and remount with new disk
+	# mount -t ext4 /dev/sdc1 /oralce1
+	# mount -t ext4 /dev/sdc2 /oracle2
+	# mount -t ext4 /dev/sdc3 /oracle3
+	# df -h    ===================> all 3 file systems will show 40%
+10) delete the old disk
+	# umount /oracle1
+	# umount /oracle2
+	# umount /oracle3
+	# parted /dev/sdb
+	  parted> print
+	  parted> rm
+	  parted> quit
+11) shutdown the server and remove the old 500Gb disk
+12) poweron the server and check the file system access
