@@ -1,0 +1,1514 @@
+Class 19 12/06/2025
+
+Linux file systems, data blocks, inodes, and the superblock work together to store and manage files. The superblock contains file system metadata, inodes store file metadata (like permissions, timestamps, and pointers to data blocks), and data blocks hold the actual file content. 
+
+Superblock:
+===========
+1) The superblock is a crucial data structure that holds metadata about the entire file system. 
+2) It includes information like:
+	File system type (e.g., ext4, XFS). 
+	File system size. 
+	Block size. 
+	Number of inodes. 
+	Location of the inode table. 
+	Availability of free blocks. 
+	Backup superblocks for redundancy. 
+3) The superblock is essential for the operating system to understand and access the file system. 
+
+100000 =====> 1 superblock, 15 backup superblocks, 45000 inodes, 44984 datablock
+
+Inodes:
+=======
+1) An inode is a data structure that describes a file or directory. 
+2) Each file or directory has a unique inode number, which acts as its identifier. 
+3) Inodes store metadata such as:
+	File type (regular file, directory, symbolic link, etc.). 
+	Permissions (read, write, execute for owner, group, and others). 
+	Timestamps (creation, last access, last modification). 
+	File size. 
+	Number of hard links. 
+	Pointers to the data blocks where the file content is stored. 
+4) For larger files, inodes may use indirect blocks (single, double, or triple indirect) to point to data blocks, allowing for efficient storage of large files.
+ 
+Data Blocks:
+============
+1) Data blocks are the fundamental units of storage within a file system. 
+2) They hold the actual content of files and directories. 
+3) When a file is accessed, the inode is read first to locate the data blocks containing the file's content. 
+4) Data blocks are allocated and deallocated as files are created, modified, and deleted. 
+
+EXT4 file system features:
+==========================
+1) Stands for Fouth Extended File System 
+2) It was introduced in 2008
+3) Supports Journaling Feature
+4) Maximum File Size 16 TB
+5) Maximum ext4 file system size is 1EB (Exabyte). 1 EB = 1024 PB (Petabyte). 1 PB = 1024 TB (Terabyte). 
+6) All previous ext file systems can easily be converted into ext4 file system. You can also mount an existing ext3 f/s as ext4 f/s (without having to upgrade it)
+
+XFS file sytsem features:
+=========================
+1) Its 64-bit file system with a max file system size of 8EB.
+2) Supports metadata journaling which helps in faster data recovery in case of a system crash
+3) It can be extended while mounted and active.
+4) Online de-fragmentation is supported
+5) It has native backup (xfsdump) & restore (xfsrestore) utilities.
+6) Draback of the XFS is not able to reduce.
+
+XFS file system used commands:
+==============================
+Create xfs file system : "mkfs -t xfs" command.
+Mount xfs file system : "mount -t xfs" command
+Extending file system : xfs_growfs command
+Repair file system : xfs_repair command
+Backcup : xfsdump command
+Restore : xfsrestore command
+
+XFS file system creation:
+========================= 
+1) Add disk to server and bring into LVM control
+	# pvs
+	# pvcreate <partition name> 
+	# pvs
+2) Create Volume Group
+	# vgs
+	# vgcreate <name for the VG> <partition name> 
+	# vgs
+3) Create Logical Volume
+	# lvs
+	# lvcreate –L <size of LV> -n <name for LV> <VG name> 
+	# lvs
+4) Configure XFS file system
+	# mkfs -t xfs </dev/vgname/lvname> 
+	# blkid
+5) Create Mountpoint
+	# mkdir <mountpoint>
+6) Mount the file system
+	# mount -t xfs </dev/vgname/lvname> </mountpoint>
+	# df -h </mountpoint>
+7) Add into /etc/fstab file to make file system perminent...
+/dev/vgname/lvname		/mountpoint	fstype	mountoptions	dumpoptions	fsckoptions
+Ex: /dev/bigdatavg/bigdatalv	/bigdata	xfs	defaults	0		0
+
+XFS File system expanding:
+==========================
+file system expansion will do in 2 methods 1) VG free space is available
+					   2) VG free space not available
+Method 1 file system expanstion:
+=================================
+1) Verify free space in VG
+	# vgs
+2) Expand the LV with available free space
+	# lvextend –L <+addition size> </dev/vg/lv name> 
+3) Expand the file system
+	# xfs_growfs -d  </mountpoint>
+4) Check the file system size
+	# df -h </mountpoint>
+
+Method 2 file system expansion:
+===============================
+1) Verify free space in VG
+	# vgs
+2) Add new disk to server and format the disk
+	# parted /dev/<new disk>
+3) Bring into LVM control
+	# pvcreate /dev/<new disk>
+	# pvs
+4) Add new disk to existing VG
+	# vgextend <VG name> <partition name>
+	# vgs
+5) Expand the LV
+	# lvextend –L <+addition size> </dev/vg/lv name> 
+	# lvs
+6) Expand the file system
+	# xfs_growfs -d  </mountpoint>
+7) Check the file system size
+	# df -h </mountpoint>
+
+Lab Tasks:
+==========
+1) Configure /bigdata file system with 1Gb Volume
+2) add 2gb volume to server and attach to VG
+3) Extend file system with another 1GB with method 2
+4) Expand file system with 1Gb with method1
+
+Session Outputs:
+================
+login as: root
+root@192.168.29.120's password:
+Last failed login: Fri Jul 11 19:52:56 IST 2025 from 2405:201:c037:d269:c268:ccf                                                                                             f:fe6b:db71 on ssh:notty
+There were 59 failed login attempts since the last successful login.
+Last login: Wed Jul  9 19:22:38 2025 from 192.168.29.211
+[root@c111xyz ~]# cd /tm
+-bash: cd: /tm: No such file or directory
+[root@c111xyz ~]# cd /tmp/
+[root@c111xyz tmp]# ls -l
+total 0
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-vgauthd.service-O5z6TI
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-vmtoolsd.service-vzgHrJ
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-ypbind.service-GzJdGc
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-yppasswdd.service-NbWP3R
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-ypserv.service-XXyCF5
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-ypxfrd.service-Qa8KQY
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.2G   16G   7% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.9M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/rjvg-rjlv1            1.1G   13M  975M   2% /rj1
+/dev/mapper/rjvg-rjlv3            961M   31M  882M   4% /rj3
+/dev/mapper/dheeragvg-dheeraglv1  1.5G  218M  1.2G  16% /dheerag1
+/dev/mapper/dheeragvg-dheeraglv3  1.5G  269M  1.1G  20% /dheerag3
+/dev/mapper/dheeragvg-dheeraglv2  1.5G  211M  1.2G  16% /dheerag2
+/dev/mapper/rjvg-rjlv2            961M   31M  882M   4% /rj2
+/dev/mapper/ashokvg-ashoklv       1.5G  151M  1.2G  11% /ashok
+/dev/mapper/dheeragvg-dheeraglv4  1.6G  4.7M  1.5G   1% /dheerag4
+/dev/mapper/rjvg-rjlv4            961M   31M  882M   4% /rj4
+tmpfs                             183M     0  183M   0% /run/user/0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -Th
+Filesystem                       Type      Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root            xfs        17G  1.2G   16G   7% /
+devtmpfs                         devtmpfs  901M     0  901M   0% /dev
+tmpfs                            tmpfs     912M     0  912M   0% /dev/shm
+tmpfs                            tmpfs     912M  8.9M  903M   1% /run
+tmpfs                            tmpfs     912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        xfs      1014M  143M  872M  15% /boot
+/dev/mapper/rjvg-rjlv1           ext4      1.1G   13M  975M   2% /rj1
+/dev/mapper/rjvg-rjlv3           ext4      961M   31M  882M   4% /rj3
+/dev/mapper/dheeragvg-dheeraglv1 ext4      1.5G  218M  1.2G  16% /dheerag1
+/dev/mapper/dheeragvg-dheeraglv3 ext4      1.5G  269M  1.1G  20% /dheerag3
+/dev/mapper/dheeragvg-dheeraglv2 ext4      1.5G  211M  1.2G  16% /dheerag2
+/dev/mapper/rjvg-rjlv2           ext4      961M   31M  882M   4% /rj2
+/dev/mapper/ashokvg-ashoklv      ext4      1.5G  151M  1.2G  11% /ashok
+/dev/mapper/dheeragvg-dheeraglv4 ext4      1.6G  4.7M  1.5G   1% /dheerag4
+/dev/mapper/rjvg-rjlv4           ext4      961M   31M  882M   4% /rj4
+tmpfs                            tmpfs     183M     0  183M   0% /run/user/0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -i
+Filesystem                        Inodes IUsed   IFree IUse% Mounted on
+/dev/mapper/rhel-root            8910848 33123 8877725    1% /
+devtmpfs                          230473   649  229824    1% /dev
+tmpfs                             233245     1  233244    1% /dev/shm
+tmpfs                             233245   926  232319    1% /run
+tmpfs                             233245    16  233229    1% /sys/fs/cgroup
+/dev/sda1                         524288   326  523962    1% /boot
+/dev/mapper/rjvg-rjlv1            274320    56  274264    1% /rj1
+/dev/mapper/rjvg-rjlv3            254000    85  253915    1% /rj3
+/dev/mapper/dheeragvg-dheeraglv1   96000  4314   91686    5% /dheerag1
+/dev/mapper/dheeragvg-dheeraglv3   96000  4392   91608    5% /dheerag3
+/dev/mapper/dheeragvg-dheeraglv2   96000  4278   91722    5% /dheerag2
+/dev/mapper/rjvg-rjlv2            254000    85  253915    1% /rj2
+/dev/mapper/ashokvg-ashoklv        96000  4171   91829    5% /ashok
+/dev/mapper/dheeragvg-dheeraglv4  102544    11  102533    1% /dheerag4
+/dev/mapper/rjvg-rjlv4            254000    85  253915    1% /rj4
+tmpfs                             233245     1  233244    1% /run/user/0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# cd /ashok
+[root@c111xyz ashok]# ls
+adm  cache  crash  db  empty  ftp  games  gopher  kerberos  lib  local  lock  log  lost+found  mail  messages  nis  opt  preserve  run  spool  tmp  yp
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# mkdir dir1
+[root@c111xyz ashok]# df -i
+Filesystem                        Inodes IUsed   IFree IUse% Mounted on
+/dev/mapper/rhel-root            8910848 33123 8877725    1% /
+devtmpfs                          230473   649  229824    1% /dev
+tmpfs                             233245     1  233244    1% /dev/shm
+tmpfs                             233245   926  232319    1% /run
+tmpfs                             233245    16  233229    1% /sys/fs/cgroup
+/dev/sda1                         524288   326  523962    1% /boot
+/dev/mapper/rjvg-rjlv1            274320    56  274264    1% /rj1
+/dev/mapper/rjvg-rjlv3            254000    85  253915    1% /rj3
+/dev/mapper/dheeragvg-dheeraglv1   96000  4314   91686    5% /dheerag1
+/dev/mapper/dheeragvg-dheeraglv3   96000  4392   91608    5% /dheerag3
+/dev/mapper/dheeragvg-dheeraglv2   96000  4278   91722    5% /dheerag2
+/dev/mapper/rjvg-rjlv2            254000    85  253915    1% /rj2
+/dev/mapper/ashokvg-ashoklv        96000  4172   91828    5% /ashok
+/dev/mapper/dheeragvg-dheeraglv4  102544    11  102533    1% /dheerag4
+/dev/mapper/rjvg-rjlv4            254000    85  253915    1% /rj4
+tmpfs                             233245     1  233244    1% /run/user/0
+[root@c111xyz ashok]# touch file23
+[root@c111xyz ashok]# df -i
+Filesystem                        Inodes IUsed   IFree IUse% Mounted on
+/dev/mapper/rhel-root            8910848 33123 8877725    1% /
+devtmpfs                          230473   649  229824    1% /dev
+tmpfs                             233245     1  233244    1% /dev/shm
+tmpfs                             233245   926  232319    1% /run
+tmpfs                             233245    16  233229    1% /sys/fs/cgroup
+/dev/sda1                         524288   326  523962    1% /boot
+/dev/mapper/rjvg-rjlv1            274320    56  274264    1% /rj1
+/dev/mapper/rjvg-rjlv3            254000    85  253915    1% /rj3
+/dev/mapper/dheeragvg-dheeraglv1   96000  4314   91686    5% /dheerag1
+/dev/mapper/dheeragvg-dheeraglv3   96000  4392   91608    5% /dheerag3
+/dev/mapper/dheeragvg-dheeraglv2   96000  4278   91722    5% /dheerag2
+/dev/mapper/rjvg-rjlv2            254000    85  253915    1% /rj2
+/dev/mapper/ashokvg-ashoklv        96000  4173   91827    5% /ashok
+/dev/mapper/dheeragvg-dheeraglv4  102544    11  102533    1% /dheerag4
+/dev/mapper/rjvg-rjlv4            254000    85  253915    1% /rj4
+tmpfs                             233245     1  233244    1% /run/user/0
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# ls -l
+total 748
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 adm
+drwxr-xr-x  5 root root   4096 Jul  7 20:06 cache
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 crash
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 db
+drwxr-xr-x  2 root root   4096 Jul 11 19:54 dir1
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 empty
+-rw-r--r--  1 root root      0 Jul 11 19:55 file23
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 ftp
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 games
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 gopher
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 kerberos
+drwxr-xr-x 29 root root   4096 Jul  7 20:06 lib
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 local
+lrwxrwxrwx  1 root root     11 Jul  7 20:06 lock -> ../run/lock
+drwxr-xr-x  6 root root   4096 Jul  7 20:06 log
+drwx------  2 root root  16384 Jul  7 19:58 lost+found
+lrwxrwxrwx  1 root root     10 Jul  7 20:06 mail -> spool/mail
+-rw-------  1 root root 667819 Jul  7 20:06 messages
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 nis
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 opt
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 preserve
+lrwxrwxrwx  1 root root      6 Jul  7 20:06 run -> ../run
+drwxr-xr-x 10 root root   4096 Jul  7 20:06 spool
+drwxr-xr-t  8 root root   4096 Jul  7 20:06 tmp
+drwxr-xr-x  4 root root   4096 Jul  7 20:06 yp
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cd /tmp
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# ls -l
+total 0
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-vgauthd.service-O5z6TI
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-vmtoolsd.service-vzgHrJ
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-ypbind.service-GzJdGc
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-yppasswdd.service-NbWP3R
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-ypserv.service-XXyCF5
+drwx------ 3 root root 17 Jul 11 19:50 systemd-private-8312ed2e58a548089f8ffaee7eed5d02-ypxfrd.service-Qa8KQY
+[root@c111xyz tmp]#
+[root@c111xyz tmp]#
+[root@c111xyz tmp]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls -l file23
+ls: cannot access file23: No such file or directory
+[root@c111xyz /]# cd /ashok
+[root@c111xyz ashok]# ls -l file23
+-rw-r--r-- 1 root root 0 Jul 11 19:55 file23
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# ls -l
+total 748
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 adm
+drwxr-xr-x  5 root root   4096 Jul  7 20:06 cache
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 crash
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 db
+drwxr-xr-x  2 root root   4096 Jul 11 19:54 dir1
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 empty
+-rw-r--r--  1 root root      0 Jul 11 19:55 file23
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 ftp
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 games
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 gopher
+drwxr-xr-x  3 root root   4096 Jul  7 20:06 kerberos
+drwxr-xr-x 29 root root   4096 Jul  7 20:06 lib
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 local
+lrwxrwxrwx  1 root root     11 Jul  7 20:06 lock -> ../run/lock
+drwxr-xr-x  6 root root   4096 Jul  7 20:06 log
+drwx------  2 root root  16384 Jul  7 19:58 lost+found
+lrwxrwxrwx  1 root root     10 Jul  7 20:06 mail -> spool/mail
+-rw-------  1 root root 667819 Jul  7 20:06 messages
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 nis
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 opt
+drwxr-xr-x  2 root root   4096 Jul  7 20:06 preserve
+lrwxrwxrwx  1 root root      6 Jul  7 20:06 run -> ../run
+drwxr-xr-x 10 root root   4096 Jul  7 20:06 spool
+drwxr-xr-t  8 root root   4096 Jul  7 20:06 tmp
+drwxr-xr-x  4 root root   4096 Jul  7 20:06 yp
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cat file23
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cat > file23
+this data is beongs to production
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cat file23
+this data is beongs to production
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]#
+[root@c111xyz ashok]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# fsck
+fsck from util-linux 2.23.2
+[root@c111xyz /]#
+[root@c111xyz /]# cd /ashok
+[root@c111xyz ashok]# cd lost+found/
+[root@c111xyz lost+found]# ls -l
+total 0
+[root@c111xyz lost+found]#
+[root@c111xyz lost+found]#
+[root@c111xyz lost+found]# cd /
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# parted -l |more
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  21.5GB  20.4GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  1073MB  1072MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  1073MB  1072MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdd: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type      File system  Flags
+ 1      1049kB  500MB   499MB  primary   ext4
+ 2      501MB   1000MB  499MB  primary   ext4
+ 3      1001MB  1200MB  198MB  primary   ext4
+ 4      1201MB  2146MB  946MB  extended               lba
+ 5      1201MB  1400MB  199MB  logical   ext4
+ 6      1401MB  1600MB  199MB  logical   ext4
+ 7      1601MB  1800MB  199MB  logical   ext4
+ 8      1801MB  2146MB  345MB  logical   ext4
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sde: 5369MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  5368MB  5367MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdf: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  300MB   299MB  primary  ext4
+ 2      301MB   600MB   299MB  primary  ext4
+ 3      601MB   1073MB  472MB  primary  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/oraclevg-oradata1lv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/oraclevg-oradata2lv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/webvg-weblv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv3: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv1: 1132MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1132MB  1132MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv2: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv4: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+--More--Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Disk /dev/mapper/dheeragvg-dheeraglv3: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv1: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv2: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/sharevg-sharelv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv4: 1678MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1678MB  1678MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/ashokvg-ashoklv: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-swap: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system     Flags
+ 1      0.00B  2147MB  2147MB  linux-swap(v1)
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-root: 18.2GB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  18.2GB  18.2GB  xfs
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdg: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  2146MB  2145MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdh: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  2146MB  2145MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdi: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1073MB  1072MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdj: 1611MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1610MB  1609MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdk: 3221MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  3220MB  3219MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdl: 3221MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  3220MB  3219MB  primary
+
+
+Model: NECVMWar VMware SATA CD01 (scsi)
+Disk /dev/sr0: 4374MB
+Sector size (logical/physical): 2048B/2048B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 2      1442MB  1479MB  36.8MB  primary
+
+
+[root@c111xyz /]#
+[root@c111xyz /]# echo "- - -" > /sys/class/scsi_host/host0/scan
+[root@c111xyz /]# echo "- - -" > /sys/class/scsi_host/host1/scan
+[root@c111xyz /]# echo "- - -" > /sys/class/scsi_host/host2/scan
+[root@c111xyz /]#
+[root@c111xyz /]# parted -l |more
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  21.5GB  20.4GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  1073MB  1072MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  1073MB  1072MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdd: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type      File system  Flags
+ 1      1049kB  500MB   499MB  primary   ext4
+ 2      501MB   1000MB  499MB  primary   ext4
+ 3      1001MB  1200MB  198MB  primary   ext4
+ 4      1201MB  2146MB  946MB  extended               lba
+ 5      1201MB  1400MB  199MB  logical   ext4
+ 6      1401MB  1600MB  199MB  logical   ext4
+ 7      1601MB  1800MB  199MB  logical   ext4
+ 8      1801MB  2146MB  345MB  logical   ext4
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sde: 5369MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  5368MB  5367MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdf: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  300MB   299MB  primary  ext4
+ 2      301MB   600MB   299MB  primary  ext4
+ 3      601MB   1073MB  472MB  primary  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/oraclevg-oradata1lv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/oraclevg-oradata2lv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/webvg-weblv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+--More--Error: /dev/sdm: unrecognised disk label
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv3: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv1: 1132MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1132MB  1132MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv2: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rjvg-rjlv4: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv3: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv1: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv2: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/sharevg-sharelv: 1049MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1049MB  1049MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/dheeragvg-dheeraglv4: 1678MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1678MB  1678MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/ashokvg-ashoklv: 1573MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  1573MB  1573MB  ext4
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-swap: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system     Flags
+ 1      0.00B  2147MB  2147MB  linux-swap(v1)
+
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-root: 18.2GB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system  Flags
+ 1      0.00B  18.2GB  18.2GB  xfs
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdg: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  2146MB  2145MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdh: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  2146MB  2145MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdi: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1073MB  1072MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdj: 1611MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1610MB  1609MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdk: 3221MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  3220MB  3219MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdl: 3221MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  3220MB  3219MB  primary
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdm: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+
+Model: NECVMWar VMware SATA CD01 (scsi)
+Disk /dev/sr0: 4374MB
+Sector size (logical/physical): 2048B/2048B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 2      1442MB  1479MB  36.8MB  primary
+
+
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# parted -l >> /tmp/diskbeforescan
+Error: /dev/sdm: unrecognised disk label
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# echo "- - -" > /sys/class/scsi_host/host0/scan
+[root@c111xyz /]# echo "- - -" > /sys/class/scsi_host/host1/scan
+[root@c111xyz /]# echo "- - -" > /sys/class/scsi_host/host2/scan
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# parted -l >> /tmp/diskafterscan
+Error: /dev/sdm: unrecognised disk label
+Error: /dev/sdn: unrecognised disk label
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# diff /tmp/diskbeforescan /tmp/diskafterscan
+286a287,292
+Model: VMware, VMware Virtual S (scsi)
+> Disk /dev/sdn: 1074MB
+> Sector size (logical/physical): 512B/512B
+> Partition Table: unknown
+> Disk Flags:
+>
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# parted /dev/sdm
+GNU Parted 3.1
+Using /dev/sdm
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) print
+Error: /dev/sdm: unrecognised disk label
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdm: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+(parted)
+(parted) select /de/sda
+Error: Could not stat device /de/sda - No such file or directory.
+Retry/Cancel?
+Retry/Cancel? select /dev/sda
+parted: invalid token: select
+Retry/Cancel? R
+Error: Could not stat device /de/sda - No such file or directory.
+Retry/Cancel? C
+(parted)
+(parted)
+(parted)
+(parted)
+(parted)
+(parted) select /dev/sda
+Using /dev/sda
+(parted)
+(parted)
+(parted)
+(parted)
+(parted)
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  21.5GB  20.4GB  primary               lvm
+
+(parted)
+(parted)
+(parted) select /dev/sdm
+Using /dev/sdm
+(parted)
+(parted)
+(parted)
+(parted) print
+Error: /dev/sdm: unrecognised disk label
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdm: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+(parted)
+(parted)
+(parted) mklabel msdos
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdm: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start  End  Size  Type  File system  Flags
+
+(parted)
+(parted) mkpart
+Partition type?  primary/extended? primary
+File system type?  [ext2]?
+Start? 1
+End? -1
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdm: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1073MB  1072MB  primary
+
+(parted)
+(parted)
+(parted) quit
+Information: You may need to update /etc/fstab.
+
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# pvs
+  PV         VG        Fmt  Attr PSize    PFree
+  /dev/sda2  rhel      lvm2 a--   <19.00g     0
+  /dev/sdb1  sharevg   lvm2 a--  1020.00m 20.00m
+  /dev/sdc1  webvg     lvm2 a--  1020.00m 20.00m
+  /dev/sde1  oraclevg  lvm2 a--    <5.00g  3.04g
+  /dev/sdg1  rjvg      lvm2 a--    <2.00g     0
+  /dev/sdh1  rjvg      lvm2 a--    <2.00g  8.00m
+  /dev/sdi1  ashokvg   lvm2 a--  1020.00m     0
+  /dev/sdj1  ashokvg   lvm2 a--    <1.50g <1.03g
+  /dev/sdk1  dheeragvg lvm2 a--    <3.00g     0
+  /dev/sdl1  dheeragvg lvm2 a--    <3.00g 36.00m
+[root@c111xyz /]#
+[root@c111xyz /]# pvcreate /dev/sdm1
+  Physical volume "/dev/sdm1" successfully created.
+[root@c111xyz /]# pvs
+  PV         VG        Fmt  Attr PSize    PFree
+  /dev/sda2  rhel      lvm2 a--   <19.00g       0
+  /dev/sdb1  sharevg   lvm2 a--  1020.00m   20.00m
+  /dev/sdc1  webvg     lvm2 a--  1020.00m   20.00m
+  /dev/sde1  oraclevg  lvm2 a--    <5.00g    3.04g
+  /dev/sdg1  rjvg      lvm2 a--    <2.00g       0
+  /dev/sdh1  rjvg      lvm2 a--    <2.00g    8.00m
+  /dev/sdi1  ashokvg   lvm2 a--  1020.00m       0
+  /dev/sdj1  ashokvg   lvm2 a--    <1.50g   <1.03g
+  /dev/sdk1  dheeragvg lvm2 a--    <3.00g       0
+  /dev/sdl1  dheeragvg lvm2 a--    <3.00g   36.00m
+  /dev/sdm1            lvm2 ---  1022.00m 1022.00m
+[root@c111xyz /]#
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g <1.03g
+  dheeragvg   2   4   0 wz--n-    5.99g 36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g  3.04g
+  rhel        1   2   0 wz--n-  <19.00g     0
+  rjvg        2   4   0 wz--n-    3.99g  8.00m
+  sharevg     1   1   0 wz--n- 1020.00m 20.00m
+  webvg       1   1   0 wz--n- 1020.00m 20.00m
+[root@c111xyz /]#
+[root@c111xyz /]# vgcreate bigdatavg /dev/sdm1
+  Volume group "bigdatavg" successfully created
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g   <1.03g
+  bigdatavg   1   0   0 wz--n- 1020.00m 1020.00m
+  dheeragvg   2   4   0 wz--n-    5.99g   36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g    3.04g
+  rhel        1   2   0 wz--n-  <19.00g       0
+  rjvg        2   4   0 wz--n-    3.99g    8.00m
+  sharevg     1   1   0 wz--n- 1020.00m   20.00m
+  webvg       1   1   0 wz--n- 1020.00m   20.00m
+[root@c111xyz /]#
+[root@c111xyz /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ashoklv    ashokvg   -wi-ao----    1.46g
+  dheeraglv1 dheeragvg -wi-ao----    1.46g
+  dheeraglv2 dheeragvg -wi-ao----    1.46g
+  dheeraglv3 dheeragvg -wi-ao----    1.46g
+  dheeraglv4 dheeragvg -wi-ao----    1.56g
+  oradata1lv oraclevg  -wi-a----- 1000.00m
+  oradata2lv oraclevg  -wi-a----- 1000.00m
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  rjlv1      rjvg      -wi-ao----    1.05g
+  rjlv2      rjvg      -wi-ao---- 1000.00m
+  rjlv3      rjvg      -wi-ao---- 1000.00m
+  rjlv4      rjvg      -wi-ao---- 1000.00m
+  sharelv    sharevg   -wi-a----- 1000.00m
+  weblv      webvg     -wi-a----- 1000.00m
+[root@c111xyz /]#
+[root@c111xyz /]# lvcreate -l 100%FREE bigdatavg -n bigdatalv
+  Logical volume "bigdatalv" created.
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g <1.03g
+  bigdatavg   1   1   0 wz--n- 1020.00m     0
+  dheeragvg   2   4   0 wz--n-    5.99g 36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g  3.04g
+  rhel        1   2   0 wz--n-  <19.00g     0
+  rjvg        2   4   0 wz--n-    3.99g  8.00m
+  sharevg     1   1   0 wz--n- 1020.00m 20.00m
+  webvg       1   1   0 wz--n- 1020.00m 20.00m
+[root@c111xyz /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ashoklv    ashokvg   -wi-ao----    1.46g
+  bigdatalv  bigdatavg -wi-a----- 1020.00m
+  dheeraglv1 dheeragvg -wi-ao----    1.46g
+  dheeraglv2 dheeragvg -wi-ao----    1.46g
+  dheeraglv3 dheeragvg -wi-ao----    1.46g
+  dheeraglv4 dheeragvg -wi-ao----    1.56g
+  oradata1lv oraclevg  -wi-a----- 1000.00m
+  oradata2lv oraclevg  -wi-a----- 1000.00m
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  rjlv1      rjvg      -wi-ao----    1.05g
+  rjlv2      rjvg      -wi-ao---- 1000.00m
+  rjlv3      rjvg      -wi-ao---- 1000.00m
+  rjlv4      rjvg      -wi-ao---- 1000.00m
+  sharelv    sharevg   -wi-a----- 1000.00m
+  weblv      webvg     -wi-a----- 1000.00m
+[root@c111xyz /]# mkfs -t xfs /dev/bigdatavg/bigdatalv
+meta-data=/dev/bigdatavg/bigdatalv isize=512    agcount=4, agsize=65280 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=261120, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@c111xyz /]#
+[root@c111xyz /]# blkid |tail -2
+/dev/sdm1: UUID="vC3Nrk-u9CE-CTmW-OU5B-BLZc-2BG9-zPi9z5" TYPE="LVM2_member"
+/dev/mapper/bigdatavg-bigdatalv: UUID="9cfd8da4-4e22-4935-a426-0c78a7684790" TYPE="xfs"
+[root@c111xyz /]#
+[root@c111xyz /]# mkdir /bigdata
+[root@c111xyz /]# mount -t xfs /dev/bigdatavg/bigdatalv /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]# df -h /bigdata/
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/bigdatavg-bigdatalv 1017M   33M  985M   4% /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]# cp /etc/fstab /etc/fstab.bigdata
+[root@c111xyz /]# vi /etc/fstab
+[root@c111xyz /]#
+[root@c111xyz /]# umount /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]# df -h /bigdata/
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   17G  1.2G   16G   7% /
+[root@c111xyz /]#
+[root@c111xyz /]# mount /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]# df -h /bigdata/
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/bigdatavg-bigdatalv 1017M   33M  985M   4% /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# cp /var/log/* /bigdata
+cp: omitting directory ‘/var/log/anaconda’
+cp: omitting directory ‘/var/log/audit’
+cp: omitting directory ‘/var/log/rhsm’
+cp: omitting directory ‘/var/log/tuned’
+[root@c111xyz /]# cp -r /var/log/* /bigdata
+cp: overwrite ‘/bigdata/boot.log’? yes
+cp: overwrite ‘/bigdata/boot.log-20250626’? yes
+cp: overwrite ‘/bigdata/boot.log-20250702’? yes
+cp: overwrite ‘/bigdata/boot.log-20250703’? yes
+cp: overwrite ‘/bigdata/boot.log-20250704’? yes
+cp: overwrite ‘/bigdata/boot.log-20250707’? yes
+cp: overwrite ‘/bigdata/boot.log-20250709’? yes
+cp: overwrite ‘/bigdata/boot.log-20250711’? yes
+cp: overwrite ‘/bigdata/btmp’? y
+cp: overwrite ‘/bigdata/btmp-20250702’? y
+cp: overwrite ‘/bigdata/cron’? y
+cp: overwrite ‘/bigdata/cron-20250616’? y
+cp: overwrite ‘/bigdata/cron-20250624’? y
+cp: overwrite ‘/bigdata/cron-20250702’? yy
+cp: overwrite ‘/bigdata/cron-20250707’? y
+cp: overwrite ‘/bigdata/dmesg’? y
+cp: overwrite ‘/bigdata/dmesg.old’? y
+cp: overwrite ‘/bigdata/firewalld’? y
+cp: overwrite ‘/bigdata/grubby_prune_debug’? yy
+cp: overwrite ‘/bigdata/lastlog’? y
+cp: overwrite ‘/bigdata/maillog’? y
+cp: overwrite ‘/bigdata/maillog-20250616’? y
+cp: overwrite ‘/bigdata/maillog-20250624’? y
+cp: overwrite ‘/bigdata/maillog-20250702’? y
+cp: overwrite ‘/bigdata/maillog-20250707’? y
+cp: overwrite ‘/bigdata/messages’? yy
+cp: overwrite ‘/bigdata/messages-20250616’? y
+cp: overwrite ‘/bigdata/messages-20250624’? y
+cp: overwrite ‘/bigdata/messages-20250702’? yy
+cp: overwrite ‘/bigdata/messages-20250707’? y
+ycp: overwrite ‘/bigdata/secure’? y
+cp: overwrite ‘/bigdata/secure-20250616’? y
+cp: overwrite ‘/bigdata/secure-20250624’? y
+cp: overwrite ‘/bigdata/secure-20250702’? y
+cp: overwrite ‘/bigdata/secure-20250707’? yy
+cp: overwrite ‘/bigdata/spooler’? y
+cp: overwrite ‘/bigdata/spooler-20250616’? y
+cp: overwrite ‘/bigdata/spooler-20250624’? y
+cp: overwrite ‘/bigdata/spooler-20250702’? yy
+cp: overwrite ‘/bigdata/spooler-20250707’? y
+cp: overwrite ‘/bigdata/tallylog’? y
+cp: overwrite ‘/bigdata/vmware-vgauthsvc.log.0’? yy
+cp: overwrite ‘/bigdata/vmware-vmsvc.log’? y
+cp: overwrite ‘/bigdata/wtmp’? y
+cp: overwrite ‘/bigdata/yum.log’? y
+[root@c111xyz /]# y
+-bash: y: command not found
+[root@c111xyz /]# y
+-bash: y: command not found
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# df -h /bigdata/
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/bigdatavg-bigdatalv 1017M   67M  951M   7% /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# ls /bigdata/
+anaconda           boot.log-20250704  cron           dmesg.old           maillog-20250624   messages-20250702  secure-20250702   spooler-20250707        yum.log
+audit              boot.log-20250707  cron-20250616  firewalld           maillog-20250702   messages-20250707  secure-20250707   tallylog
+boot.log           boot.log-20250709  cron-20250624  grubby_prune_debug  maillog-20250707   rhsm               spooler           tuned
+boot.log-20250626  boot.log-20250711  cron-20250702  lastlog             messages           secure             spooler-20250616  vmware-vgauthsvc.log.0
+boot.log-20250702  btmp               cron-20250707  maillog             messages-20250616  secure-20250616    spooler-20250624  vmware-vmsvc.log
+boot.log-20250703  btmp-20250702      dmesg          maillog-20250616    messages-20250624  secure-20250624    spooler-20250702  wtmp
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# diff /tmp/diskbeforescan /tmp/diskafterscan
+286a287,292
+Model: VMware, VMware Virtual S (scsi)
+> Disk /dev/sdn: 1074MB
+> Sector size (logical/physical): 512B/512B
+> Partition Table: unknown
+> Disk Flags:
+>
+[root@c111xyz /]#
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g <1.03g
+  bigdatavg   1   1   0 wz--n- 1020.00m     0
+  dheeragvg   2   4   0 wz--n-    5.99g 36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g  3.04g
+  rhel        1   2   0 wz--n-  <19.00g     0
+  rjvg        2   4   0 wz--n-    3.99g  8.00m
+  sharevg     1   1   0 wz--n- 1020.00m 20.00m
+  webvg       1   1   0 wz--n- 1020.00m 20.00m
+[root@c111xyz /]#
+[root@c111xyz /]# parted /dev/sdn
+GNU Parted 3.1
+Using /dev/sdn
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) print
+Error: /dev/sdn: unrecognised disk label
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdn: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+(parted)
+(parted) mklabel msdos
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdn: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start  End  Size  Type  File system  Flags
+
+(parted)
+(parted) mkpart
+Partition type?  primary/extended? primary
+File system type?  [ext2]?
+Start? 1
+End? -1
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdn: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1073MB  1072MB  primary
+
+(parted)
+(parted) quit
+Information: You may need to update /etc/fstab.
+
+[root@c111xyz /]#
+[root@c111xyz /]# pvs
+  PV         VG        Fmt  Attr PSize    PFree
+  /dev/sda2  rhel      lvm2 a--   <19.00g     0
+  /dev/sdb1  sharevg   lvm2 a--  1020.00m 20.00m
+  /dev/sdc1  webvg     lvm2 a--  1020.00m 20.00m
+  /dev/sde1  oraclevg  lvm2 a--    <5.00g  3.04g
+  /dev/sdg1  rjvg      lvm2 a--    <2.00g     0
+  /dev/sdh1  rjvg      lvm2 a--    <2.00g  8.00m
+  /dev/sdi1  ashokvg   lvm2 a--  1020.00m     0
+  /dev/sdj1  ashokvg   lvm2 a--    <1.50g <1.03g
+  /dev/sdk1  dheeragvg lvm2 a--    <3.00g     0
+  /dev/sdl1  dheeragvg lvm2 a--    <3.00g 36.00m
+  /dev/sdm1  bigdatavg lvm2 a--  1020.00m     0
+[root@c111xyz /]#
+[root@c111xyz /]# pvcreate /dev/sdn1
+  Physical volume "/dev/sdn1" successfully created.
+[root@c111xyz /]# pvs
+  PV         VG        Fmt  Attr PSize    PFree
+  /dev/sda2  rhel      lvm2 a--   <19.00g       0
+  /dev/sdb1  sharevg   lvm2 a--  1020.00m   20.00m
+  /dev/sdc1  webvg     lvm2 a--  1020.00m   20.00m
+  /dev/sde1  oraclevg  lvm2 a--    <5.00g    3.04g
+  /dev/sdg1  rjvg      lvm2 a--    <2.00g       0
+  /dev/sdh1  rjvg      lvm2 a--    <2.00g    8.00m
+  /dev/sdi1  ashokvg   lvm2 a--  1020.00m       0
+  /dev/sdj1  ashokvg   lvm2 a--    <1.50g   <1.03g
+  /dev/sdk1  dheeragvg lvm2 a--    <3.00g       0
+  /dev/sdl1  dheeragvg lvm2 a--    <3.00g   36.00m
+  /dev/sdm1  bigdatavg lvm2 a--  1020.00m       0
+  /dev/sdn1            lvm2 ---  1022.00m 1022.00m
+[root@c111xyz /]#
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g <1.03g
+  bigdatavg   1   1   0 wz--n- 1020.00m     0
+  dheeragvg   2   4   0 wz--n-    5.99g 36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g  3.04g
+  rhel        1   2   0 wz--n-  <19.00g     0
+  rjvg        2   4   0 wz--n-    3.99g  8.00m
+  sharevg     1   1   0 wz--n- 1020.00m 20.00m
+  webvg       1   1   0 wz--n- 1020.00m 20.00m
+[root@c111xyz /]#
+[root@c111xyz /]# vgextend bigdatavg /dev/sdn1
+  Volume group "bigdatavg" successfully extended
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g   <1.03g
+  bigdatavg   2   1   0 wz--n-    1.99g 1020.00m
+  dheeragvg   2   4   0 wz--n-    5.99g   36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g    3.04g
+  rhel        1   2   0 wz--n-  <19.00g       0
+  rjvg        2   4   0 wz--n-    3.99g    8.00m
+  sharevg     1   1   0 wz--n- 1020.00m   20.00m
+  webvg       1   1   0 wz--n- 1020.00m   20.00m
+[root@c111xyz /]#
+[root@c111xyz /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ashoklv    ashokvg   -wi-ao----    1.46g
+  bigdatalv  bigdatavg -wi-ao---- 1020.00m
+  dheeraglv1 dheeragvg -wi-ao----    1.46g
+  dheeraglv2 dheeragvg -wi-ao----    1.46g
+  dheeraglv3 dheeragvg -wi-ao----    1.46g
+  dheeraglv4 dheeragvg -wi-ao----    1.56g
+  oradata1lv oraclevg  -wi-a----- 1000.00m
+  oradata2lv oraclevg  -wi-a----- 1000.00m
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  rjlv1      rjvg      -wi-ao----    1.05g
+  rjlv2      rjvg      -wi-ao---- 1000.00m
+  rjlv3      rjvg      -wi-ao---- 1000.00m
+  rjlv4      rjvg      -wi-ao---- 1000.00m
+  sharelv    sharevg   -wi-a----- 1000.00m
+  weblv      webvg     -wi-a----- 1000.00m
+[root@c111xyz /]# lvextend -l 100%FREE /dev/bigdatavg/bigdatalv
+  New size (255 extents) matches existing size (255 extents).
+[root@c111xyz /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ashoklv    ashokvg   -wi-ao----    1.46g
+  bigdatalv  bigdatavg -wi-ao---- 1020.00m
+  dheeraglv1 dheeragvg -wi-ao----    1.46g
+  dheeraglv2 dheeragvg -wi-ao----    1.46g
+  dheeraglv3 dheeragvg -wi-ao----    1.46g
+  dheeraglv4 dheeragvg -wi-ao----    1.56g
+  oradata1lv oraclevg  -wi-a----- 1000.00m
+  oradata2lv oraclevg  -wi-a----- 1000.00m
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  rjlv1      rjvg      -wi-ao----    1.05g
+  rjlv2      rjvg      -wi-ao---- 1000.00m
+  rjlv3      rjvg      -wi-ao---- 1000.00m
+  rjlv4      rjvg      -wi-ao---- 1000.00m
+  sharelv    sharevg   -wi-a----- 1000.00m
+  weblv      webvg     -wi-a----- 1000.00m
+[root@c111xyz /]# lvextend -l +100%FREE /dev/bigdatavg/bigdatalv
+  Size of logical volume bigdatavg/bigdatalv changed from 1020.00 MiB (255 extents) to 1.99 GiB (510 extents).
+  Logical volume bigdatavg/bigdatalv successfully resized.
+[root@c111xyz /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ashoklv    ashokvg   -wi-ao----    1.46g
+  bigdatalv  bigdatavg -wi-ao----    1.99g
+  dheeraglv1 dheeragvg -wi-ao----    1.46g
+  dheeraglv2 dheeragvg -wi-ao----    1.46g
+  dheeraglv3 dheeragvg -wi-ao----    1.46g
+  dheeraglv4 dheeragvg -wi-ao----    1.56g
+  oradata1lv oraclevg  -wi-a----- 1000.00m
+  oradata2lv oraclevg  -wi-a----- 1000.00m
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  rjlv1      rjvg      -wi-ao----    1.05g
+  rjlv2      rjvg      -wi-ao---- 1000.00m
+  rjlv3      rjvg      -wi-ao---- 1000.00m
+  rjlv4      rjvg      -wi-ao---- 1000.00m
+  sharelv    sharevg   -wi-a----- 1000.00m
+  weblv      webvg     -wi-a----- 1000.00m
+[root@c111xyz /]# vgs
+  VG        #PV #LV #SN Attr   VSize    VFree
+  ashokvg     2   1   0 wz--n-    2.49g <1.03g
+  bigdatavg   2   1   0 wz--n-    1.99g     0
+  dheeragvg   2   4   0 wz--n-    5.99g 36.00m
+  oraclevg    1   2   0 wz--n-   <5.00g  3.04g
+  rhel        1   2   0 wz--n-  <19.00g     0
+  rjvg        2   4   0 wz--n-    3.99g  8.00m
+  sharevg     1   1   0 wz--n- 1020.00m 20.00m
+  webvg       1   1   0 wz--n- 1020.00m 20.00m
+[root@c111xyz /]#
+[root@c111xyz /]# xfs_growfs -d /bigdata
+meta-data=/dev/mapper/bigdatavg-bigdatalv isize=512    agcount=4, agsize=65280 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0 spinodes=0
+data     =                       bsize=4096   blocks=261120, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal               bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+data blocks changed from 261120 to 522240
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]# df -h /bigdata
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/bigdatavg-bigdatalv  2.0G   66M  2.0G   4% /bigdata
+[root@c111xyz /]#
+[root@c111xyz /]#
+[root@c111xyz /]#
