@@ -1,0 +1,51 @@
+Class 24 14/07/2025
+
+Moving or Migrating the LV (data) from one pv to another PV 
+===========================================================
+There might be a situation where the PV might be failing are the disk has to move different vendor and it is required to be replaced, in such case, we need to migrate or move the data from such PV to the other and isolate the PV. 
+
+The Steps to migrate the PV 
+============================
+1) Configure new file system /crmdata
+	# parted /dev/sdb ====> label and create partition
+	# pvcreate /dev/sdb1
+	# vgcreate crmvg /dev/sdb1
+	# lvcreate -l 100%FREE -n crmlv crmvg
+	# mkfs -t xfs /dev/crmvg/crmlv
+	# mkdir /crmdata
+	# mount -t ext4 /dev/crmvg/crmlv /crmdata
+	# df -h /crmdata
+2) Add some data into "/crmdata" file system
+	# cp /var/log/messages /crmdata
+3) Verify the size of the PV by pvs command or pvdisplay command
+	# df -h /crmdata
+	# pvdisplay /dev/crmvg/crmlv
+	# ls -l /crmdata
+4) Add new PV, which should be of the same size or higher than that of the replacing PV to the volume group. 
+	# pvcreate /dev/sdc1
+	# vgextend crmvg /dev/sdc1
+5) Unmount the file system on that PV. 
+	# umount /crmdata
+	# df -h
+6) Migrate the PVs contents to the new PV using following command 
+	# pvs
+	# pvmove /dev/sdb1 /dev/sdc1
+	# pvs 
+7) Mount back the LV, access the mount point and verify the data in it.
+	# mount -t ext4 /dev/crmvg/crmlv /crmdata
+	# df -h /crmdata
+	# ls -l /crmdata
+8) Remove the old PV from Volume Group
+	# vgreduce crmvg /dev/sdb1
+	# pvs
+	# pvremove /dev/sdb1
+	# pvs
+9) Poweroff the server and remove the old disk
+	# poweroff (remove old 1.5Gb disk)
+	# poweron (cross check the disks)
+10) finally access the file system and close the request
+	# df -h /crmdata
+	# ls -l /crmdata
+	# pvs 
+	# vgs
+	# lvs
