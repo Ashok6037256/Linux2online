@@ -13,7 +13,7 @@ The Steps to migrate the PV
 	# lvcreate -l 100%FREE -n crmlv crmvg
 	# mkfs -t xfs /dev/crmvg/crmlv
 	# mkdir /crmdata
-	# mount -t ext4 /dev/crmvg/crmlv /crmdata
+	# mount -t xfs /dev/crmvg/crmlv /crmdata
 	# df -h /crmdata    ====> add in fstab file to make perminent mount
 2) Add some data into "/crmdata" file system
 	# cp /var/log/messages /crmdata
@@ -32,7 +32,7 @@ The Steps to migrate the PV
 	# pvmove /dev/sdb1 /dev/sdc1
 	# pvs 
 7) Mount back the LV, access the mount point and verify the data in it.
-	# mount -t ext4 /dev/crmvg/crmlv /crmdata
+	# mount /crmdata
 	# df -h /crmdata
 	# ls -l /crmdata
 8) Remove the old PV from Volume Group
