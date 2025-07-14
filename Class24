@@ -14,7 +14,7 @@ The Steps to migrate the PV
 	# mkfs -t xfs /dev/crmvg/crmlv
 	# mkdir /crmdata
 	# mount -t ext4 /dev/crmvg/crmlv /crmdata
-	# df -h /crmdata
+	# df -h /crmdata    ====> add in fstab file to make perminent mount
 2) Add some data into "/crmdata" file system
 	# cp /var/log/messages /crmdata
 3) Verify the size of the PV by pvs command or pvdisplay command
