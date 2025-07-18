@@ -1,0 +1,117 @@
+class 25 18/07/2025
+
+LVM Volume renaming: Need to unmount the file system before proceeding the activity.
+====================================================================================
+
+# df -h /ashok
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/ashokvg-ashoklv  969M  5.1M  898M   1% /ashok
+
+1) rename Mountpoint
+# umount /ashok
+# mv /ashok /sharedata
+
+2) Rename the Logical Volume
+# lvs
+ashoklv ashokvg -wi-a----- 1000.00m
+# lvrename /dev/ashokvg/ashoklv /dev/ashokvg/sharelv
+  Renamed "ashoklv" to "sharelv" in volume group "ashokvg"
+# lvs
+sharelv ashokvg -wi-a----- 1000.00m
+
+3) Rename Volume Group
+# vgrename ashokvg sharevg
+Volume group "ashokvg" successfully renamed to "sharevg"
+# vgs
+VG      #PV #LV #SN Attr   VSize    VFree
+rhel      1   2   0 wz--n-  <19.00g     0
+sharevg   1   1   0 wz--n- 1020.00m 20.00m
+
+4) Modify entry in fstab, mount the file system and check the file system data
+# mount -t ext4 /dev/sharedatavg/sharedatalv /sharedata OR # mount /sharedata
+# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/sharedatavg-sharedatalv  969M  5.1M  898M   1% /shareddata
+# cd /shareddata/
+shareddata# ls
+boot.log           boot.log-20250616  cron-20250616       
+shareddata#
+
+LVM Volume deleting: Need to unmount the file system before proceeding the activity.
+====================================================================================
+
+# df -h /sharedata
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/sharedatavg-sharedatalv  969M  5.1M  898M   1% /sharedata
+
+1) unmount the file system
+# umount /sharedata
+# df -h
+# rmdir /sharedata
+
+2) Remove Logical Volume
+# lvremove /dev/sharevg/sharelv
+Do you really want to remove active logical volume sharevg/sharelv? [y/n]: yes
+Logical volume "sharelv" successfully removed
+# lvs
+LV   VG   Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+root rhel -wi-ao---- <17.00g
+swap rhel -wi-ao----   2.00g
+#
+
+3) Remove VolumeGroup
+# vgs
+VG      #PV #LV #SN Attr   VSize    VFree
+rhel      1   2   0 wz--n-  <19.00g       0
+sharevg   1   0   0 wz--n- 1020.00m 1020.00m
+# vgremove sharevg
+Volume group "sharevg" successfully removed
+# vgs
+VG   #PV #LV #SN Attr   VSize   VFree
+rhel   1   2   0 wz--n- <19.00g    0
+#
+
+4) Remove Physical Volume
+# pvs
+PV         VG   Fmt  Attr PSize    PFree
+/dev/sda2  rhel lvm2 a--   <19.00g       0
+/dev/sdb1       lvm2 ---  1022.00m 1022.00m
+#
+# pvremove /dev/sdb1
+Labels on physical volume "/dev/sdb1" successfully wiped.
+# pvs
+PV         VG   Fmt  Attr PSize   PFree
+/dev/sda2  rhel lvm2 a--  <19.00g    0
+#
+
+5) Removing the partion and good to handover the disk to storage team
+# parted /dev/sdb
+GNU Parted 3.1
+Using /dev/sdb
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted)
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  1073MB  1072MB               logical
+
+(parted) rm
+Partition number? 1
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start  End  Size  File system  Name  Flags
+
+(parted)
+(parted) quit
+Information: You may need to update /etc/fstab.
+#
