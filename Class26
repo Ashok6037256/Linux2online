@@ -1,0 +1,1356 @@
+Class 26 21/07/2025
+
+Shared file system setup:
+=========================
+1) Need to add shareddisks (sdb,sdc) to servers
+	Poweroff the both the servers
+	add disklocking entries in vmx file of the server configuration
+	add disks
+	poweron the servers one after one
+2) Need to identify disks in both the servers
+3) Once the disks are showing then need to format and create partion along with label
+4) Configure file system (/dev/sharevg/sharelv)
+
+The filesystem import steps:
+============================
+5) umount the file system
+6) inactive logical volumes with vgchange command
+	# lvscan
+  	ACTIVE            '/dev/sharevg/sharelv' [1000.00 MiB] inherit
+  	# vgchange -a n sharevg
+  	0 logical volume(s) in volume group "sharevg" now active
+	# lvscan
+  	inactive          '/dev/sharevg/sharelv' [1000.00 MiB] inherit
+7) Import the volume Group
+	# vgexport sharevg
+  	Volume group "sharevg" successfully exported
+	# vgs
+  	VG      #PV #LV #SN Attr   VSize    VFree
+  	rhel      1   2   0 wz--n-  <19.00g     0
+  	sharevg   1   1   0 wzx-n- 1020.00m 20.00m
+	# vgscan
+  	Reading volume groups from cache.
+  	Found exported volume group "sharevg" using metadata type lvm2
+  	Found volume group "rhel" using metadata type lvm2
+8) Login into The pairing server and import volume group
+	# vgscan
+  	Reading volume groups from cache.
+  	Found volume group "rhel" using metadata type lvm2
+  	Found exported volume group "sharevg" using metadata type lvm2
+	# vgimport sharevg
+  	Volume group "sharevg" successfully imported
+	# vgscan
+  	Reading volume groups from cache.
+  	Found volume group "rhel" using metadata type lvm2
+  	Found volume group "sharevg" using metadata type lvm2
+9) Activte Logical Volume
+	# lvscan
+  	inactive          '/dev/sharevg/sharelv' [1000.00 MiB] inherit
+	# vgchange -a y sharevg
+  	1 logical volume(s) in volume group "sharevg" now active
+	# lvscan
+	ACTIVE            '/dev/sharevg/sharelv' [1000.00 MiB] inherit
+10) Mount the file system and handover to application
+	# mount -t ext4 /dev/sharevg/sharelv /sharedata/
+	# df -h
+	Filesystem                   Size  Used Avail Use% Mounted on
+	/dev/mapper/sharevg-sharelv  969M  2.5M  900M   1% /sharedata
+	# cd /sharedata/
+	# ls -l
+	total 20
+	drwxr-xr-x. 2 root root 4096 Jun 19 19:21 dir1
+	drwxr-xr-x. 2 root root 4096 Jun 19 19:21 dir2
+	drwxr-xr-x. 2 root root 4096 Jun 19 19:21 dir3
+	drwxr-xr-x. 2 root root 4096 Jun 19 19:21 dir4
+	drwxr-xr-x. 2 root root 4096 Jun 19 19:21 dir5
+	-rw-r--r--. 1 root root    0 Jun 19 19:22 file1
+	-rw-r--r--. 1 root root    0 Jun 19 19:22 file2
+	-rw-r--r--. 1 root root    0 Jun 19 19:22 file3
+	-rw-r--r--. 1 root root    0 Jun 19 19:22 file4
+	-rw-r--r--. 1 root root    0 Jun 19 19:22 file5
+
+Session Outputs:(ansiblesrv)
+============================
+login as: root
+root@192.168.29.176's password:
+Last login: Mon Jul 21 19:02:24 2025 from gateway
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]# parted -l |more
+Error: /dev/sdb: unrecognised disk label
+Error: /dev/sdc: unrecognised disk label
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 53.7GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  53.7GB  52.6GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/rhel-swap: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End     Size    File system     Flags
+ 1      0.00B  2147MB  2147MB  linux-swap(v1)
+
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]# parted -l |more
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 53.7GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  53.7GB  52.6GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  2146MB  2145MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  2146MB  2145MB               logical
+
+
+Model: Linux device-mapper (linear) (dm)
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]# parted -l |more
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 53.7GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  53.7GB  52.6GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  2146MB  2145MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  2146MB  2145MB               logical
+
+
+Model: Linux device-mapper (linear) (dm)
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]# blkid
+/dev/sda1: UUID="2e83314c-d3cc-4735-b3b0-c711cec2d699" TYPE="xfs"
+/dev/sda2: UUID="W26kJ5-d31U-9Xsi-CU3S-08qE-iDsx-sqaJpf" TYPE="LVM2_member"
+/dev/sdb1: UUID="N1yFXo-SIB6-3RSv-9FjX-tM3C-ckts-KB8uf7" TYPE="LVM2_member" PARTLABEL="logical" PARTUUID="c9c4a7cc-3082-4d37-9052-fa9744120882"
+/dev/sdc1: PARTLABEL="logical" PARTUUID="e73d93d2-9a9b-4f64-8ad6-293275c19465"
+/dev/sr0: UUID="2018-01-19-09-23-44-00" LABEL="RHEL-7.4 Server.x86_64" TYPE="iso9660" PTTYPE="dos"
+/dev/mapper/rhel-root: UUID="a0ed92f2-a9b6-439e-9af7-9d0c31e0deb2" TYPE="xfs"
+/dev/mapper/rhel-swap: UUID="424d0bdb-d8b6-45fa-bd6b-811c444b0338" TYPE="swap"
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]#
+[root@ansiblesrv ~]# cd /
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root       rhel      -wi-ao----   46.99g
+  swap       rhel      -wi-ao----    2.00g
+  webdata1lv webdatavg -wi-a----- 1000.00m
+  webdata2lv webdatavg -wi-a-----  600.00m
+  webdata3lv webdatavg -wi-a-----  444.00m
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvscan
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [46.99 GiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgscan
+  Reading volume groups from cache.
+  Found volume group "rhel" using metadata type lvm2
+  Found volume group "webdatavg" using metadata type lvm2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# ls
+ansible-playbook  crmdata  data5   home      lib        opt       oradata4  public     shareddir  usr
+ansiroles         data1    data6   Imran_md  lib64      oracle    oradata5  root       sharehome  var
+bigdata           data2    dev     infra     media      oradata1  oradata6  run        srv        webdata
+bin               data3    etc     IPL-2025  mnt        oradata2  private   sbin       sys        webdata1
+boot              data4    export  jupiter   nohup.out  oradata3  proc      sharedata  tmp        webdata2
+[root@ansiblesrv /]# mount -t ext4 /dev/webdatavg/webdata1lv /webdata1
+[root@ansiblesrv /]# mount -t ext4 /dev/webdatavg/webdata2lv /webdata2
+mount: wrong fs type, bad option, bad superblock on /dev/mapper/webdatavg-webdata2lv,
+       missing codepage or helper program, or other error
+
+       In some cases useful info is found in syslog - try
+       dmesg | tail or so.
+[root@ansiblesrv /]# mount -t xfs /dev/webdatavg/webdata2lv /webdata2
+[root@ansiblesrv /]# mkdir /webdata3
+[root@ansiblesrv /]# mount -t xfs /dev/webdatavg/webdata3lv /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M   69M  834M   8% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   90M  508M  15% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M  140M  302M  32% /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# cd /webdata1
+[root@ansiblesrv webdata1]# ls
+abattis-cantarell-fonts-0.0.25-1.el7.noarch.rpm       apr-1.4.8-3.el7_4.1.i686.rpm
+abrt-2.1.11-48.el7.x86_64.rpm                         apr-1.4.8-3.el7_4.1.x86_64.rpm
+abrt-addon-ccpp-2.1.11-48.el7.x86_64.rpm              apr-devel-1.4.8-3.el7_4.1.i686.rpm
+abrt-addon-kerneloops-2.1.11-48.el7.x86_64.rpm        apr-devel-1.4.8-3.el7_4.1.x86_64.rpm
+abrt-addon-pstoreoops-2.1.11-48.el7.x86_64.rpm        apr-util-1.5.2-6.el7.i686.rpm
+abrt-addon-python-2.1.11-48.el7.x86_64.rpm            apr-util-1.5.2-6.el7.x86_64.rpm
+abrt-addon-vmcore-2.1.11-48.el7.x86_64.rpm            apr-util-devel-1.5.2-6.el7.i686.rpm
+abrt-addon-xorg-2.1.11-48.el7.x86_64.rpm              apr-util-devel-1.5.2-6.el7.x86_64.rpm
+abrt-cli-2.1.11-48.el7.x86_64.rpm                     args4j-2.0.16-13.el7.noarch.rpm
+abrt-console-notification-2.1.11-48.el7.x86_64.rpm    ark-4.10.5-4.el7.x86_64.rpm
+abrt-dbus-2.1.11-48.el7.x86_64.rpm                    ark-libs-4.10.5-4.el7.i686.rpm
+abrt-desktop-2.1.11-48.el7.x86_64.rpm                 ark-libs-4.10.5-4.el7.x86_64.rpm
+abrt-gui-2.1.11-48.el7.x86_64.rpm                     arptables-0.0.4-8.el7.x86_64.rpm
+abrt-gui-libs-2.1.11-48.el7.i686.rpm                  arpwatch-2.1a15-36.el7.x86_64.rpm
+abrt-gui-libs-2.1.11-48.el7.x86_64.rpm                at-3.1.13-22.el7_4.2.x86_64.rpm
+abrt-java-connector-1.0.6-12.el7.x86_64.rpm           atk-2.22.0-3.el7.i686.rpm
+abrt-libs-2.1.11-48.el7.i686.rpm                      atk-2.22.0-3.el7.x86_64.rpm
+abrt-libs-2.1.11-48.el7.x86_64.rpm                    atk-devel-2.22.0-3.el7.i686.rpm
+abrt-python-2.1.11-48.el7.x86_64.rpm                  atk-devel-2.22.0-3.el7.x86_64.rpm
+abrt-tui-2.1.11-48.el7.x86_64.rpm                     atkmm-2.24.2-1.el7.i686.rpm
+accountsservice-0.6.45-3.el7_4.1.x86_64.rpm           atkmm-2.24.2-1.el7.x86_64.rpm
+accountsservice-libs-0.6.45-3.el7_4.1.i686.rpm        atlas-3.10.1-12.el7.i686.rpm
+accountsservice-libs-0.6.45-3.el7_4.1.x86_64.rpm      atlas-3.10.1-12.el7.x86_64.rpm
+acl-2.2.51-12.el7.x86_64.rpm                          atlas-sse2-3.10.1-12.el7.i686.rpm
+acpid-2.0.19-8.el7.x86_64.rpm                         atlas-sse3-3.10.1-12.el7.i686.rpm
+adcli-0.8.1-3.el7.x86_64.rpm                          at-spi2-atk-2.22.0-2.el7.i686.rpm
+adwaita-cursor-theme-3.22.0-1.el7.noarch.rpm          at-spi2-atk-2.22.0-2.el7.x86_64.rpm
+adwaita-gtk2-theme-3.22.2-1.el7.i686.rpm              at-spi2-atk-devel-2.22.0-2.el7.i686.rpm
+adwaita-gtk2-theme-3.22.2-1.el7.x86_64.rpm            at-spi2-atk-devel-2.22.0-2.el7.x86_64.rpm
+adwaita-icon-theme-3.22.0-1.el7.noarch.rpm            at-spi2-core-2.22.0-1.el7.i686.rpm
+adwaita-qt-0.4-1.el7.x86_64.rpm                       at-spi2-core-2.22.0-1.el7.x86_64.rpm
+adwaita-qt4-0.4-1.el7.i686.rpm                        at-spi2-core-devel-2.22.0-1.el7.i686.rpm
+adwaita-qt4-0.4-1.el7.x86_64.rpm                      at-spi2-core-devel-2.22.0-1.el7.x86_64.rpm
+adwaita-qt-common-0.4-1.el7.noarch.rpm                attica-0.4.2-1.el7.i686.rpm
+agg-2.5-18.el7.i686.rpm                               attica-0.4.2-1.el7.x86_64.rpm
+agg-2.5-18.el7.x86_64.rpm                             attica-devel-0.4.2-1.el7.i686.rpm
+aic94xx-firmware-30-6.el7.noarch.rpm                  attica-devel-0.4.2-1.el7.x86_64.rpm
+aide-0.15.1-13.el7.x86_64.rpm                         attr-2.4.46-12.el7.x86_64.rpm
+akonadi-1.9.2-4.el7.i686.rpm                          audispd-plugins-2.7.6-3.el7.x86_64.rpm
+akonadi-1.9.2-4.el7.x86_64.rpm                        audit-2.7.6-3.el7.x86_64.rpm
+akonadi-mysql-1.9.2-4.el7.x86_64.rpm                  audit-libs-2.7.6-3.el7.i686.rpm
+alacarte-3.11.91-1.el7.noarch.rpm                     audit-libs-2.7.6-3.el7.x86_64.rpm
+alsa-firmware-1.0.28-2.el7.noarch.rpm                 audit-libs-devel-2.7.6-3.el7.i686.rpm
+alsa-lib-1.1.3-3.el7.i686.rpm                         audit-libs-devel-2.7.6-3.el7.x86_64.rpm
+alsa-lib-1.1.3-3.el7.x86_64.rpm                       audit-libs-python-2.7.6-3.el7.x86_64.rpm
+alsa-lib-devel-1.1.3-3.el7.i686.rpm                   augeas-1.4.0-2.el7_4.2.x86_64.rpm
+alsa-lib-devel-1.1.3-3.el7.x86_64.rpm                 augeas-libs-1.4.0-2.el7_4.2.i686.rpm
+alsa-plugins-pulseaudio-1.1.1-1.el7.i686.rpm          augeas-libs-1.4.0-2.el7_4.2.x86_64.rpm
+alsa-plugins-pulseaudio-1.1.1-1.el7.x86_64.rpm        authconfig-6.2.8-30.el7.x86_64.rpm
+alsa-tools-firmware-1.1.0-1.el7.x86_64.rpm            authconfig-gtk-6.2.8-30.el7.x86_64.rpm
+alsa-utils-1.1.3-2.el7.x86_64.rpm                     authd-1.4.3-42.el7.x86_64.rpm
+amanda-3.3.3-18.el7.x86_64.rpm                        autoconf-2.69-11.el7.noarch.rpm
+amanda-client-3.3.3-18.el7.x86_64.rpm                 autoconf-archive-2017.03.21-1.el7.noarch.rpm
+amanda-libs-3.3.3-18.el7.x86_64.rpm                   autofs-5.0.7-70.el7_4.x86_64.rpm
+amanda-server-3.3.3-18.el7.x86_64.rpm                 autogen-libopts-5.18-5.el7.i686.rpm
+anaconda-21.48.22.121-1.el7.x86_64.rpm                autogen-libopts-5.18-5.el7.x86_64.rpm
+anaconda-core-21.48.22.121-1.el7.x86_64.rpm           automake-1.13.4-3.el7.noarch.rpm
+anaconda-gui-21.48.22.121-1.el7.x86_64.rpm            automoc-1.0-0.20.rc3.el7.x86_64.rpm
+anaconda-tui-21.48.22.121-1.el7.x86_64.rpm            avahi-0.6.31-17.el7.i686.rpm
+anaconda-user-help-7.3.2-1.el7.noarch.rpm             avahi-0.6.31-17.el7.x86_64.rpm
+anaconda-widgets-21.48.22.121-1.el7.x86_64.rpm        avahi-autoipd-0.6.31-17.el7.x86_64.rpm
+ant-1.9.2-9.el7.noarch.rpm                            avahi-glib-0.6.31-17.el7.i686.rpm
+antlr-tool-2.7.7-30.el7.noarch.rpm                    avahi-glib-0.6.31-17.el7.x86_64.rpm
+apache-commons-cli-1.2-13.el7.noarch.rpm              avahi-gobject-0.6.31-17.el7.i686.rpm
+apache-commons-codec-1.8-7.el7.noarch.rpm             avahi-gobject-0.6.31-17.el7.x86_64.rpm
+apache-commons-collections-3.2.1-22.el7_2.noarch.rpm  avahi-libs-0.6.31-17.el7.i686.rpm
+apache-commons-daemon-1.0.13-6.el7.x86_64.rpm         avahi-libs-0.6.31-17.el7.x86_64.rpm
+apache-commons-dbcp-1.4-17.el7.noarch.rpm             avahi-ui-gtk3-0.6.31-17.el7.i686.rpm
+apache-commons-io-2.4-12.el7.noarch.rpm               avahi-ui-gtk3-0.6.31-17.el7.x86_64.rpm
+apache-commons-lang-2.6-15.el7.noarch.rpm             avalon-framework-4.3-10.el7.noarch.rpm
+apache-commons-logging-1.1.2-7.el7.noarch.rpm         avalon-logkit-2.1-14.el7.noarch.rpm
+apache-commons-pool-1.6-9.el7.noarch.rpm              lost+found
+appstream-data-7-20170301.el7.noarch.rpm
+[root@ansiblesrv webdata1]#
+[root@ansiblesrv webdata1]#
+[root@ansiblesrv webdata1]# rm -rf *
+[root@ansiblesrv webdata1]# ls -l
+total 0
+[root@ansiblesrv webdata1]#
+[root@ansiblesrv webdata1]#
+[root@ansiblesrv webdata1]# mkdir dir1 dir2 dir3 dir4 dir5 dir6 dir7 dir8 dir9 dir10
+[root@ansiblesrv webdata1]# ls -l
+total 40
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir1
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir10
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir2
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir3
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir4
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir5
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir6
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir7
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir8
+drwxr-xr-x 2 root root 4096 Jul 21 19:56 dir9
+[root@ansiblesrv webdata1]#
+[root@ansiblesrv webdata1]# cd /webdata2
+[root@ansiblesrv webdata2]# ls
+babel-0.9.6-8.el7.noarch.rpm                          boost-devel-1.53.0-27.el7.x86_64.rpm
+babl-0.1.10-9.el7.i686.rpm                            boost-filesystem-1.53.0-27.el7.i686.rpm
+babl-0.1.10-9.el7.x86_64.rpm                          boost-filesystem-1.53.0-27.el7.x86_64.rpm
+bacula-client-5.2.13-23.1.el7.x86_64.rpm              boost-graph-1.53.0-27.el7.i686.rpm
+bacula-common-5.2.13-23.1.el7.x86_64.rpm              boost-graph-1.53.0-27.el7.x86_64.rpm
+bacula-libs-5.2.13-23.1.el7.x86_64.rpm                boost-iostreams-1.53.0-27.el7.i686.rpm
+baobab-3.22.1-1.el7.x86_64.rpm                        boost-iostreams-1.53.0-27.el7.x86_64.rpm
+basesystem-10.0-7.el7.noarch.rpm                      boost-locale-1.53.0-27.el7.i686.rpm
+bash-4.2.46-29.el7_4.x86_64.rpm                       boost-locale-1.53.0-27.el7.x86_64.rpm
+bash-completion-2.1-6.el7.noarch.rpm                  boost-math-1.53.0-27.el7.i686.rpm
+bc-1.06.95-13.el7.x86_64.rpm                          boost-math-1.53.0-27.el7.x86_64.rpm
+bcel-5.2-18.el7.noarch.rpm                            boost-program-options-1.53.0-27.el7.i686.rpm
+bea-stax-1.2.0-9.el7.noarch.rpm                       boost-program-options-1.53.0-27.el7.x86_64.rpm
+bea-stax-api-1.2.0-9.el7.noarch.rpm                   boost-python-1.53.0-27.el7.i686.rpm
+bind-9.9.4-51.el7_4.1.x86_64.rpm                      boost-python-1.53.0-27.el7.x86_64.rpm
+bind-chroot-9.9.4-51.el7_4.1.x86_64.rpm               boost-random-1.53.0-27.el7.i686.rpm
+bind-dyndb-ldap-11.1-4.el7.x86_64.rpm                 boost-random-1.53.0-27.el7.x86_64.rpm
+bind-libs-9.9.4-51.el7_4.1.i686.rpm                   boost-regex-1.53.0-27.el7.i686.rpm
+bind-libs-9.9.4-51.el7_4.1.x86_64.rpm                 boost-regex-1.53.0-27.el7.x86_64.rpm
+bind-libs-lite-9.9.4-51.el7_4.1.i686.rpm              boost-serialization-1.53.0-27.el7.i686.rpm
+bind-libs-lite-9.9.4-51.el7_4.1.x86_64.rpm            boost-serialization-1.53.0-27.el7.x86_64.rpm
+bind-license-9.9.4-51.el7_4.1.noarch.rpm              boost-signals-1.53.0-27.el7.i686.rpm
+bind-pkcs11-9.9.4-51.el7_4.1.x86_64.rpm               boost-signals-1.53.0-27.el7.x86_64.rpm
+bind-pkcs11-libs-9.9.4-51.el7_4.1.i686.rpm            boost-system-1.53.0-27.el7.i686.rpm
+bind-pkcs11-libs-9.9.4-51.el7_4.1.x86_64.rpm          boost-system-1.53.0-27.el7.x86_64.rpm
+bind-pkcs11-utils-9.9.4-51.el7_4.1.x86_64.rpm         boost-test-1.53.0-27.el7.i686.rpm
+bind-utils-9.9.4-51.el7_4.1.x86_64.rpm                boost-test-1.53.0-27.el7.x86_64.rpm
+binutils-2.25.1-32.base.el7_4.2.x86_64.rpm            boost-thread-1.53.0-27.el7.i686.rpm
+binutils-devel-2.25.1-32.base.el7_4.2.i686.rpm        boost-thread-1.53.0-27.el7.x86_64.rpm
+binutils-devel-2.25.1-32.base.el7_4.2.x86_64.rpm      boost-timer-1.53.0-27.el7.i686.rpm
+biosdevname-0.7.2-2.el7.x86_64.rpm                    boost-timer-1.53.0-27.el7.x86_64.rpm
+bison-3.0.4-1.el7.x86_64.rpm                          boost-wave-1.53.0-27.el7.i686.rpm
+bitmap-fixed-fonts-0.3-21.el7.noarch.rpm              boost-wave-1.53.0-27.el7.x86_64.rpm
+bitmap-lucida-typewriter-fonts-0.3-21.el7.noarch.rpm  bpg-chveulebrivi-fonts-3.002-3.el7.noarch.rpm
+blas-3.4.2-8.el7.i686.rpm                             bpg-courier-fonts-4.002-3.el7.noarch.rpm
+blas-3.4.2-8.el7.x86_64.rpm                           bpg-fonts-common-20120413-3.el7.noarch.rpm
+blktrace-1.0.5-8.el7.x86_64.rpm                       bpg-glaho-fonts-9.000-3.el7.noarch.rpm
+bltk-1.1.0-10.el7.i686.rpm                            brasero-3.12.1-2.el7.x86_64.rpm
+bltk-1.1.0-10.el7.x86_64.rpm                          brasero-libs-3.12.1-2.el7.i686.rpm
+bluedevil-2.1-1.el7.x86_64.rpm                        brasero-libs-3.12.1-2.el7.x86_64.rpm
+bluez-5.44-4.el7_4.x86_64.rpm                         brasero-nautilus-3.12.1-2.el7.x86_64.rpm
+bluez-libs-5.44-4.el7_4.i686.rpm                      bridge-utils-1.5-9.el7.x86_64.rpm
+bluez-libs-5.44-4.el7_4.x86_64.rpm                    brlapi-0.6.0-15.el7.i686.rpm
+boost-1.53.0-27.el7.i686.rpm                          brlapi-0.6.0-15.el7.x86_64.rpm
+boost-1.53.0-27.el7.x86_64.rpm                        brltty-4.5-15.el7.x86_64.rpm
+boost-atomic-1.53.0-27.el7.i686.rpm                   btrfs-progs-4.9.1-1.el7.i686.rpm
+boost-atomic-1.53.0-27.el7.x86_64.rpm                 btrfs-progs-4.9.1-1.el7.x86_64.rpm
+boost-chrono-1.53.0-27.el7.i686.rpm                   byacc-1.9.20130304-3.el7.x86_64.rpm
+boost-chrono-1.53.0-27.el7.x86_64.rpm                 bzip2-1.0.6-13.el7.x86_64.rpm
+boost-context-1.53.0-27.el7.i686.rpm                  bzip2-devel-1.0.6-13.el7.i686.rpm
+boost-context-1.53.0-27.el7.x86_64.rpm                bzip2-devel-1.0.6-13.el7.x86_64.rpm
+boost-date-time-1.53.0-27.el7.i686.rpm                bzip2-libs-1.0.6-13.el7.i686.rpm
+boost-date-time-1.53.0-27.el7.x86_64.rpm              bzip2-libs-1.0.6-13.el7.x86_64.rpm
+boost-devel-1.53.0-27.el7.i686.rpm                    bzr-2.5.1-14.el7.x86_64.rpm
+[root@ansiblesrv webdata2]# rm -rf *
+[root@ansiblesrv webdata2]#
+[root@ansiblesrv webdata2]# touch file1 file2 file3 file4 file5 file6 file7 file8 file9 file10
+[root@ansiblesrv webdata2]# ls -l
+total 0
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file1
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file10
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file2
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file3
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file4
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file5
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file6
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file7
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file8
+-rw-r--r-- 1 root root 0 Jul 21 19:56 file9
+[root@ansiblesrv webdata2]#
+[root@ansiblesrv webdata2]# cd /webdata3
+[root@ansiblesrv webdata3]# ls
+ca-certificates-2017.2.14-71.el7.noarch.rpm          compat-libgnome-bluetooth11-3.8.2.1-2.el7.x86_64.rpm
+cachefilesd-0.10.9-1.el7.x86_64.rpm                  compat-libgnome-desktop3-7-3.8.4-2.el7.i686.rpm
+cairo-1.14.8-2.el7.i686.rpm                          compat-libgnome-desktop3-7-3.8.4-2.el7.x86_64.rpm
+cairo-1.14.8-2.el7.x86_64.rpm                        compat-libgweather3-3.8.2-1.el7.i686.rpm
+cairo-devel-1.14.8-2.el7.i686.rpm                    compat-libgweather3-3.8.2-1.el7.x86_64.rpm
+cairo-devel-1.14.8-2.el7.x86_64.rpm                  compat-libmediaart0-0.7.0-1.el7.i686.rpm
+cairo-gobject-1.14.8-2.el7.i686.rpm                  compat-libmediaart0-0.7.0-1.el7.x86_64.rpm
+cairo-gobject-1.14.8-2.el7.x86_64.rpm                compat-libpackagekit-glib2-16-0.8.9-1.el7.i686.rpm
+cairo-gobject-devel-1.14.8-2.el7.i686.rpm            compat-libpackagekit-glib2-16-0.8.9-1.el7.x86_64.rpm
+cairo-gobject-devel-1.14.8-2.el7.x86_64.rpm          compat-libtiff3-3.9.4-11.el7.i686.rpm
+cairomm-1.12.0-1.el7.i686.rpm                        compat-libtiff3-3.9.4-11.el7.x86_64.rpm
+cairomm-1.12.0-1.el7.x86_64.rpm                      compat-libupower-glib1-0.9.20-1.el7.i686.rpm
+cal10n-0.7.7-4.el7.noarch.rpm                        compat-libupower-glib1-0.9.20-1.el7.x86_64.rpm
+c-ares-1.10.0-3.el7.i686.rpm                         compat-libxcb-1.9-1.el7.i686.rpm
+c-ares-1.10.0-3.el7.x86_64.rpm                       compat-libxcb-1.9-1.el7.x86_64.rpm
+c-ares-devel-1.10.0-3.el7.i686.rpm                   compat-openldap-2.3.43-5.el7.i686.rpm
+c-ares-devel-1.10.0-3.el7.x86_64.rpm                 compat-openldap-2.3.43-5.el7.x86_64.rpm
+caribou-0.4.21-1.el7.i686.rpm                        compat-openmpi16-1.6.4-10.5.el7.i686.rpm
+caribou-0.4.21-1.el7.x86_64.rpm                      compat-openmpi16-1.6.4-10.5.el7.x86_64.rpm
+caribou-gtk2-module-0.4.21-1.el7.i686.rpm            compat-opensm-libs-3.3.15-2.el7.i686.rpm
+caribou-gtk2-module-0.4.21-1.el7.x86_64.rpm          compat-opensm-libs-3.3.15-2.el7.x86_64.rpm
+caribou-gtk3-module-0.4.21-1.el7.x86_64.rpm          compat-poppler022-0.22.5-4.el7.i686.rpm
+cdparanoia-10.2-17.el7.x86_64.rpm                    compat-poppler022-0.22.5-4.el7.x86_64.rpm
+cdparanoia-libs-10.2-17.el7.i686.rpm                 compat-poppler022-glib-0.22.5-4.el7.i686.rpm
+cdparanoia-libs-10.2-17.el7.x86_64.rpm               compat-poppler022-glib-0.22.5-4.el7.x86_64.rpm
+cdrdao-1.2.3-20.el7.x86_64.rpm                       compat-poppler022-qt-0.22.5-4.el7.i686.rpm
+celt051-0.5.1.3-8.el7.i686.rpm                       compat-poppler022-qt-0.22.5-4.el7.x86_64.rpm
+celt051-0.5.1.3-8.el7.x86_64.rpm                     comps-extras-7-2.el7.noarch.rpm
+ceph-common-0.94.5-2.el7.x86_64.rpm                  conman-0.2.7-15.el7.x86_64.rpm
+certmonger-0.78.4-3.el7.x86_64.rpm                   conntrack-tools-1.4.4-3.el7.x86_64.rpm
+cgdcbxd-1.0.2-7.el7.x86_64.rpm                       control-center-3.22.2-5.el7.i686.rpm
+check-0.9.9-5.el7.i686.rpm                           control-center-3.22.2-5.el7.x86_64.rpm
+check-0.9.9-5.el7.x86_64.rpm                         control-center-filesystem-3.22.2-5.el7.x86_64.rpm
+check-devel-0.9.9-5.el7.i686.rpm                     convmv-1.15-2.el7.noarch.rpm
+check-devel-0.9.9-5.el7.x86_64.rpm                   coolkey-1.1.0-37.el7.i686.rpm
+checkpolicy-2.5-4.el7.x86_64.rpm                     coolkey-1.1.0-37.el7.x86_64.rpm
+cheese-3.22.1-1.el7.x86_64.rpm                       copy-jdk-configs-2.2-5.el7_4.noarch.rpm
+cheese-libs-3.22.1-1.el7.i686.rpm                    coreutils-8.22-18.el7.x86_64.rpm
+cheese-libs-3.22.1-1.el7.x86_64.rpm                  cpio-2.11-25.el7_4.x86_64.rpm
+chkconfig-1.7.4-1.el7.x86_64.rpm                     cpp-4.8.5-16.el7_4.1.x86_64.rpm
+chrony-3.1-2.el7.x86_64.rpm                          cpuid-20170122-6.el7.x86_64.rpm
+chrpath-0.16-0.el7.x86_64.rpm                        cracklib-2.9.0-11.el7.i686.rpm
+cifs-utils-6.2-10.el7.x86_64.rpm                     cracklib-2.9.0-11.el7.x86_64.rpm
+cim-schema-2.33.0-6.el7.noarch.rpm                   cracklib-dicts-2.9.0-11.el7.x86_64.rpm
+cjkuni-ukai-fonts-0.2.20080216.1-51.el7.noarch.rpm   crash-7.1.9-2.el7.x86_64.rpm
+cjkuni-uming-fonts-0.2.20080216.1-53.el7.noarch.rpm  crash-gcore-command-1.3.1-0.el7.x86_64.rpm
+clevis-6-1.el7.x86_64.rpm                            crash-ptdump-command-1.0.3-2.el7.x86_64.rpm
+clevis-dracut-6-1.el7.x86_64.rpm                     crash-trace-command-2.0-12.el7.x86_64.rpm
+clevis-luks-6-1.el7.x86_64.rpm                       crda-3.13_2016.02.08-1.el7.x86_64.rpm
+clevis-udisks2-6-1.el7.x86_64.rpm                    createrepo-0.9.9-28.el7.noarch.rpm
+cloud-init-0.7.9-9.el7_4.2.x86_64.rpm                criu-2.12-2.el7.x86_64.rpm
+cloud-utils-growpart-0.29-2.el7.noarch.rpm           cronie-1.4.11-17.el7.x86_64.rpm
+clucene-core-2.3.3.4-11.el7.i686.rpm                 cronie-anacron-1.4.11-17.el7.x86_64.rpm
+clucene-core-2.3.3.4-11.el7.x86_64.rpm               cronie-noanacron-1.4.11-17.el7.x86_64.rpm
+clutter-1.26.0-1.el7.i686.rpm                        crontabs-1.11-6.20121102git.el7.noarch.rpm
+clutter-1.26.0-1.el7.x86_64.rpm                      crypto-utils-2.4.1-42.el7.x86_64.rpm
+clutter-gst2-2.0.18-1.el7.i686.rpm                   cryptsetup-1.7.4-3.el7_4.1.x86_64.rpm
+clutter-gst2-2.0.18-1.el7.x86_64.rpm                 cryptsetup-libs-1.7.4-3.el7_4.1.i686.rpm
+clutter-gst3-3.0.22-1.el7.i686.rpm                   cryptsetup-libs-1.7.4-3.el7_4.1.x86_64.rpm
+clutter-gst3-3.0.22-1.el7.x86_64.rpm                 cryptsetup-python-1.7.4-3.el7_4.1.x86_64.rpm
+clutter-gtk-1.8.2-1.el7.i686.rpm                     cryptsetup-reencrypt-1.7.4-3.el7_4.1.x86_64.rpm
+clutter-gtk-1.8.2-1.el7.x86_64.rpm                   cscope-15.8-10.el7.x86_64.rpm
+cmake-2.8.12.2-2.el7.x86_64.rpm                      ctags-5.8-13.el7.x86_64.rpm
+cmpi-bindings-pywbem-0.9.5-6.el7.x86_64.rpm          ctags-etags-5.8-13.el7.x86_64.rpm
+cockpit-138-10.el7_4.x86_64.rpm                      culmus-aharoni-clm-fonts-0.130-3.el7.noarch.rpm
+cockpit-bridge-138-10.el7_4.x86_64.rpm               culmus-caladings-clm-fonts-0.130-3.el7.noarch.rpm
+cockpit-system-138-10.el7_4.noarch.rpm               culmus-david-clm-fonts-0.130-3.el7.noarch.rpm
+cockpit-ws-138-10.el7_4.i686.rpm                     culmus-drugulin-clm-fonts-0.130-3.el7.noarch.rpm
+cockpit-ws-138-10.el7_4.x86_64.rpm                   culmus-ellinia-clm-fonts-0.130-3.el7.noarch.rpm
+codemodel-2.6-9.el7.noarch.rpm                       culmus-fonts-common-0.130-3.el7.noarch.rpm
+cogl-1.22.2-1.el7.i686.rpm                           culmus-frank-ruehl-clm-fonts-0.130-3.el7.noarch.rpm
+cogl-1.22.2-1.el7.x86_64.rpm                         culmus-hadasim-clm-fonts-0.130-3.el7.noarch.rpm
+colord-1.3.4-1.el7.x86_64.rpm                        culmus-keteryg-fonts-0.130-3.el7.noarch.rpm
+colord-gtk-0.1.25-4.el7.i686.rpm                     culmus-miriam-clm-fonts-0.130-3.el7.noarch.rpm
+colord-gtk-0.1.25-4.el7.x86_64.rpm                   culmus-miriam-mono-clm-fonts-0.130-3.el7.noarch.rpm
+colord-kde-0.3.0-3.el7.x86_64.rpm                    culmus-nachlieli-clm-fonts-0.130-3.el7.noarch.rpm
+colord-libs-1.3.4-1.el7.i686.rpm                     culmus-simple-clm-fonts-0.130-3.el7.noarch.rpm
+colord-libs-1.3.4-1.el7.x86_64.rpm                   culmus-stamashkenaz-clm-fonts-0.130-3.el7.noarch.rpm
+color-filesystem-1-13.el7.noarch.rpm                 culmus-stamsefarad-clm-fonts-0.130-3.el7.noarch.rpm
+compat-cheese314-3.14.2-1.el7.i686.rpm               culmus-yehuda-clm-fonts-0.130-3.el7.noarch.rpm
+compat-cheese314-3.14.2-1.el7.x86_64.rpm             cups-1.6.3-29.el7.x86_64.rpm
+compat-dapl-1.2.19-4.el7.i686.rpm                    cups-client-1.6.3-29.el7.x86_64.rpm
+compat-dapl-1.2.19-4.el7.x86_64.rpm                  cups-devel-1.6.3-29.el7.i686.rpm
+compat-db47-4.7.25-28.el7.i686.rpm                   cups-devel-1.6.3-29.el7.x86_64.rpm
+compat-db47-4.7.25-28.el7.x86_64.rpm                 cups-filesystem-1.6.3-29.el7.noarch.rpm
+compat-db-headers-4.7.25-28.el7.noarch.rpm           cups-filters-1.0.35-22.el7.x86_64.rpm
+compat-gcc-44-4.4.7-8.el7.x86_64.rpm                 cups-filters-libs-1.0.35-22.el7.i686.rpm
+compat-gcc-44-c++-4.4.7-8.el7.x86_64.rpm             cups-filters-libs-1.0.35-22.el7.x86_64.rpm
+compat-glade315-3.15.0-1.el7.i686.rpm                cups-libs-1.6.3-29.el7.i686.rpm
+compat-glade315-3.15.0-1.el7.x86_64.rpm              cups-libs-1.6.3-29.el7.x86_64.rpm
+compat-glibc-2.12-4.el7.x86_64.rpm                   cups-lpd-1.6.3-29.el7.x86_64.rpm
+compat-glibc-headers-2.12-4.el7.x86_64.rpm           cups-pk-helper-0.2.6-2.el7.x86_64.rpm
+compat-gnome-desktop314-3.14.2-1.el7.i686.rpm        curl-7.29.0-42.el7_4.1.x86_64.rpm
+compat-gnome-desktop314-3.14.2-1.el7.x86_64.rpm      custodia-0.3.1-4.el7.noarch.rpm
+compat-grilo02-0.2.12-1.el7.i686.rpm                 cvs-1.11.23-35.el7.x86_64.rpm
+compat-grilo02-0.2.12-1.el7.x86_64.rpm               cyrus-imapd-2.4.17-13.el7.x86_64.rpm
+compat-libcap1-1.10-7.el7.i686.rpm                   cyrus-imapd-utils-2.4.17-13.el7.x86_64.rpm
+compat-libcap1-1.10-7.el7.x86_64.rpm                 cyrus-sasl-2.1.26-21.el7.i686.rpm
+compat-libcogl12-1.14.0-3.el7.i686.rpm               cyrus-sasl-2.1.26-21.el7.x86_64.rpm
+compat-libcogl12-1.14.0-3.el7.x86_64.rpm             cyrus-sasl-devel-2.1.26-21.el7.i686.rpm
+compat-libcogl-pango12-1.14.0-3.el7.i686.rpm         cyrus-sasl-devel-2.1.26-21.el7.x86_64.rpm
+compat-libcogl-pango12-1.14.0-3.el7.x86_64.rpm       cyrus-sasl-gssapi-2.1.26-21.el7.i686.rpm
+compat-libcolord1-1.0.4-1.el7.i686.rpm               cyrus-sasl-gssapi-2.1.26-21.el7.x86_64.rpm
+compat-libcolord1-1.0.4-1.el7.x86_64.rpm             cyrus-sasl-lib-2.1.26-21.el7.i686.rpm
+compat-libf2c-34-3.4.6-32.el7.i686.rpm               cyrus-sasl-lib-2.1.26-21.el7.x86_64.rpm
+compat-libf2c-34-3.4.6-32.el7.x86_64.rpm             cyrus-sasl-md5-2.1.26-21.el7.i686.rpm
+compat-libgdata13-0.13.3-1.el7.i686.rpm              cyrus-sasl-md5-2.1.26-21.el7.x86_64.rpm
+compat-libgdata13-0.13.3-1.el7.x86_64.rpm            cyrus-sasl-plain-2.1.26-21.el7.i686.rpm
+compat-libgfortran-41-4.1.2-44.el7.i686.rpm          cyrus-sasl-plain-2.1.26-21.el7.x86_64.rpm
+compat-libgfortran-41-4.1.2-44.el7.x86_64.rpm        cyrus-sasl-scram-2.1.26-21.el7.i686.rpm
+compat-libgnome-bluetooth11-3.8.2.1-2.el7.i686.rpm   cyrus-sasl-scram-2.1.26-21.el7.x86_64.rpm
+[root@ansiblesrv webdata3]# rm -rf *
+[root@ansiblesrv webdata3]# ls -l
+total 0
+[root@ansiblesrv webdata3]#
+[root@ansiblesrv webdata3]# mkdir data1 data2 data3 data4 data5
+[root@ansiblesrv webdata3]# touch share1 share2 share3 share4 share5
+[root@ansiblesrv webdata3]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 Jul 21 19:57 data1
+drwxr-xr-x 2 root root 6 Jul 21 19:57 data2
+drwxr-xr-x 2 root root 6 Jul 21 19:57 data3
+drwxr-xr-x 2 root root 6 Jul 21 19:57 data4
+drwxr-xr-x 2 root root 6 Jul 21 19:57 data5
+-rw-r--r-- 1 root root 0 Jul 21 19:57 share1
+-rw-r--r-- 1 root root 0 Jul 21 19:57 share2
+-rw-r--r-- 1 root root 0 Jul 21 19:57 share3
+-rw-r--r-- 1 root root 0 Jul 21 19:57 share4
+-rw-r--r-- 1 root root 0 Jul 21 19:57 share5
+[root@ansiblesrv webdata3]#
+[root@ansiblesrv webdata3]#
+[root@ansiblesrv webdata3]# cd /
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# ls /webdata1
+dir1  dir10  dir2  dir3  dir4  dir5  dir6  dir7  dir8  dir9
+[root@ansiblesrv /]# ls /webdata2
+file1  file10  file2  file3  file4  file5  file6  file7  file8  file9
+[root@ansiblesrv /]# ls /webdata3
+data1  data2  data3  data4  data5  share1  share2  share3  share4  share5
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root       rhel      -wi-ao----   46.99g
+  swap       rhel      -wi-ao----    2.00g
+  webdata1lv webdatavg -wi-ao---- 1000.00m
+  webdata2lv webdatavg -wi-ao----  600.00m
+  webdata3lv webdatavg -wi-ao----  444.00m
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvscan
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [46.99 GiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# umount /webdata1
+[root@ansiblesrv /]# umount /webdata2
+[root@ansiblesrv /]# umount /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   47G  6.0G   41G  13% /
+devtmpfs               225M     0  225M   0% /dev
+tmpfs                  236M     0  236M   0% /dev/shm
+tmpfs                  236M  4.7M  231M   2% /run
+tmpfs                  236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1             1014M  125M  890M  13% /boot
+tmpfs                   48M     0   48M   0% /run/user/0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgchange -a n webdatavg
+  0 logical volume(s) in volume group "webdatavg" now active
+[root@ansiblesrv /]# lvscan
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [46.99 GiB] inherit
+  inactive          '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgexport webdatavg
+  Volume group "webdatavg" successfully exported
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgscan
+  Reading volume groups from cache.
+  Found volume group "rhel" using metadata type lvm2
+  Found exported volume group "webdatavg" using metadata type lvm2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvs
+  Volume group webdatavg is exported
+  LV   VG   Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root rhel -wi-ao---- 46.99g
+  swap rhel -wi-ao----  2.00g
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   47G  6.0G   41G  13% /
+devtmpfs               225M     0  225M   0% /dev
+tmpfs                  236M     0  236M   0% /dev/shm
+tmpfs                  236M  4.7M  231M   2% /run
+tmpfs                  236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1             1014M  125M  890M  13% /boot
+tmpfs                   48M     0   48M   0% /run/user/0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# pvcreate /dev/sdc1
+  Physical volume "/dev/sdc1" successfully created.
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgcreate sharevg /dev/sdc1
+  Volume group "sharevg" successfully created
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g  4.00m
+  sharevg     1   0   0 wz--n-  <2.00g <2.00g
+  webdatavg   1   3   0 wzx-n-  <2.00g     0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvcreate -L 700M sharevg -n sharedata1lv
+  Logical volume "sharedata1lv" created.
+[root@ansiblesrv /]# mkfs -t xfs /dev/sharevg/sharedata1lv
+meta-data=/dev/sharevg/sharedata1lv isize=512    agcount=4, agsize=44800 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=179200, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@ansiblesrv /]# mkdir /sharedata1
+[root@ansiblesrv /]# mount -t xfs /dev/sharevg/sharedata1lv /sharedata1
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvcreate -L 700M sharevg -n sharedata2lv
+  Logical volume "sharedata2lv" created.
+[root@ansiblesrv /]# mkfs -t xfs /dev/sharevg/sharedata2lv
+meta-data=/dev/sharevg/sharedata2lv isize=512    agcount=4, agsize=44800 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=179200, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@ansiblesrv /]# mkdir /sharedata2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# mount -t xfs /dev/sharevg/sharedata2lv /sharedata2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvcreate -l 100%FREE sharevg -n sharedata3lv
+  Logical volume "sharedata3lv" created.
+[root@ansiblesrv /]# lvs
+  Volume group webdatavg is exported
+  LV           VG      Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root         rhel    -wi-ao----  46.99g
+  swap         rhel    -wi-ao----   2.00g
+  sharedata1lv sharevg -wi-ao---- 700.00m
+  sharedata2lv sharevg -wi-ao---- 700.00m
+  sharedata3lv sharevg -wi-a----- 644.00m
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# mkfs -t xfs /dev/sharevg/sharedata3lv
+meta-data=/dev/sharevg/sharedata3lv isize=512    agcount=4, agsize=41216 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=164864, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@ansiblesrv /]# mkdir /sharedata3
+[root@ansiblesrv /]# mount -t xfs /dev/sharevg/sharedata3lv /sharedata3/
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  sharevg     1   3   0 wz--n-  <2.00g    0
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# umount /sharedata1
+[root@ansiblesrv /]# umount /sharedata2
+[root@ansiblesrv /]# umount /sharedata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   47G  6.0G   41G  13% /
+devtmpfs               225M     0  225M   0% /dev
+tmpfs                  236M     0  236M   0% /dev/shm
+tmpfs                  236M  4.7M  231M   2% /run
+tmpfs                  236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1             1014M  125M  890M  13% /boot
+tmpfs                   48M     0   48M   0% /run/user/0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  sharevg     1   3   0 wz--n-  <2.00g    0
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvscan
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [46.99 GiB] inherit
+  Volume group webdatavg is exported
+  ACTIVE            '/dev/sharevg/sharedata1lv' [700.00 MiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata2lv' [700.00 MiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata3lv' [644.00 MiB] inherit
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgchange -a n sharevg
+  0 logical volume(s) in volume group "sharevg" now active
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# lvscan
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [46.99 GiB] inherit
+  Volume group webdatavg is exported
+  inactive          '/dev/sharevg/sharedata1lv' [700.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata2lv' [700.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata3lv' [644.00 MiB] inherit
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgexport sharevg
+  Volume group "sharevg" successfully exported
+[root@ansiblesrv /]# vgscan
+  Reading volume groups from cache.
+  Found volume group "rhel" using metadata type lvm2
+  Found exported volume group "webdatavg" using metadata type lvm2
+  Found exported volume group "sharevg" using metadata type lvm2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgscan
+  Reading volume groups from cache.
+  Found volume group "rhel" using metadata type lvm2
+  Found exported volume group "webdatavg" using metadata type lvm2
+  Found exported volume group "sharevg" using metadata type lvm2
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgimport webdatavg
+  Volume group "webdatavg" successfully imported
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <49.00g 4.00m
+  sharevg     1   3   0 wz--n-  <2.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgscan
+  Reading volume groups from cache.
+  Found volume group "rhel" using metadata type lvm2
+  Found volume group "webdatavg" using metadata type lvm2
+  Found volume group "sharevg" using metadata type lvm2
+[root@ansiblesrv /]# lvscan
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [46.99 GiB] inherit
+  inactive          '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata1lv' [700.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata2lv' [700.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata3lv' [644.00 MiB] inherit
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# vgchange -a y webdatavg
+  3 logical volume(s) in volume group "webdatavg" now active
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# mount -t ext4 /dev/webdatavg/webdata1lv /webdata1
+[root@ansiblesrv /]# mount -t ext4 /dev/webdatavg/webdata2lv /webdata2
+mount: wrong fs type, bad option, bad superblock on /dev/mapper/webdatavg-webdata2lv,
+       missing codepage or helper program, or other error
+
+       In some cases useful info is found in syslog - try
+       dmesg | tail or so.
+[root@ansiblesrv /]# mount -t xfs /dev/webdatavg/webdata2lv /webdata2
+[root@ansiblesrv /]# mount -t xfs /dev/webdatavg/webdata3lv /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              47G  6.0G   41G  13% /
+devtmpfs                          225M     0  225M   0% /dev
+tmpfs                             236M     0  236M   0% /dev/shm
+tmpfs                             236M  4.7M  231M   2% /run
+tmpfs                             236M     0  236M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  125M  890M  13% /boot
+tmpfs                              48M     0   48M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# ls /webdata1
+dir1  dir10  dir2  dir3  dir4  dir5  dir6  dir7  dir8  dir9
+[root@ansiblesrv /]# ls /webdata2
+file1  file10  file2  file3  file4  file5  file6  file7  file8  file9
+[root@ansiblesrv /]# ls /webdata3
+data1  data2  data3  data4  data5  share1  share2  share3  share4  share5
+[root@ansiblesrv /]#
+[root@ansiblesrv /]# systemctl reboot
+
+
+
+Session Output:(c111xyz)
+========================
+login as: root
+root@192.168.29.120's password:
+Last login: Mon Jul 21 19:33:11 2025 from 192.168.29.211
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/webdatavg-webdata1lv  969M   69M  834M   8% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   90M  508M  15% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M  140M  302M  32% /webdata3
+tmpfs                             183M     0  183M   0% /run/user/0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# umount /webdata1
+[root@c111xyz ~]# umount /webdata2
+[root@c111xyz ~]# umount /webdata3
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   17G  1.4G   16G   8% /
+devtmpfs               901M     0  901M   0% /dev
+tmpfs                  912M     0  912M   0% /dev/shm
+tmpfs                  912M  8.7M  903M   1% /run
+tmpfs                  912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1             1014M  143M  872M  15% /boot
+tmpfs                  183M     0  183M   0% /run/user/0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@c111xyz ~]# vgscan
+  Reading volume groups from cache.
+  Found volume group "webdatavg" using metadata type lvm2
+  Found volume group "rhel" using metadata type lvm2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvscan
+  ACTIVE            '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgchange -a n webdatavg
+  0 logical volume(s) in volume group "webdatavg" now active
+[root@c111xyz ~]# lvscan
+  inactive          '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgscan
+  Reading volume groups from cache.
+  Found volume group "webdatavg" using metadata type lvm2
+  Found volume group "rhel" using metadata type lvm2
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgexport webdatavg
+  Volume group "webdatavg" successfully exported
+[root@c111xyz ~]# vgscan
+  Reading volume groups from cache.
+  Found exported volume group "webdatavg" using metadata type lvm2
+  Found volume group "rhel" using metadata type lvm2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvs
+  Volume group webdatavg is exported
+  LV   VG   Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root rhel -wi-ao---- <17.00g
+  swap rhel -wi-ao----   2.00g
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvs
+  Volume group webdatavg is exported
+  LV   VG   Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root rhel -wi-ao---- <17.00g
+  swap rhel -wi-ao----   2.00g
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgscan
+  Reading volume groups from cache.
+  Found exported volume group "webdatavg" using metadata type lvm2
+  Found volume group "rhel" using metadata type lvm2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvs
+  Volume group webdatavg is exported
+  LV   VG   Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root rhel -wi-ao---- <17.00g
+  swap rhel -wi-ao----   2.00g
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wzx-n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgimport webdatavg
+  Volume group "webdatavg" successfully imported
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvs
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  webdata1lv webdatavg -wi------- 1000.00m
+  webdata2lv webdatavg -wi-------  600.00m
+  webdata3lv webdatavg -wi-------  444.00m
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvscan
+  inactive          '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgchange -a y webdatavg
+  3 logical volume(s) in volume group "webdatavg" now active
+[root@c111xyz ~]# lvscan
+  ACTIVE            '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# mount -t ext4 /dev/webdatavg/webdata1lv /webdata1
+[root@c111xyz ~]# mount -t xfs /dev/webdatavg/webdata2lv /webdata2
+[root@c111xyz ~]# mount -t xfs /dev/webdatavg/webdata3lv /webdata3
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# ls /webdata1
+dir1  dir10  dir2  dir3  dir4  dir5  dir6  dir7  dir8  dir9
+[root@c111xyz ~]# ls /webdata2
+file1  file10  file2  file3  file4  file5  file6  file7  file8  file9
+[root@c111xyz ~]# ls /webdata3
+data1  data2  data3  data4  data5  share1  share2  share3  share4  share5
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# pvs
+  PV         VG        Fmt  Attr PSize   PFree
+  /dev/sda2  rhel      lvm2 a--  <19.00g    0
+  /dev/sdb1  webdatavg lvm2 a--   <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgimport sharvg
+  Volume group "sharvg" not found
+  Cannot process volume group sharvg
+[root@c111xyz ~]# vgimport sharevg
+  Volume group "sharevg" successfully imported
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  sharevg     1   3   0 wz--n-  <2.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvscan
+  ACTIVE            '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+  inactive          '/dev/sharevg/sharedata1lv' [700.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata2lv' [700.00 MiB] inherit
+  inactive          '/dev/sharevg/sharedata3lv' [644.00 MiB] inherit
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgchange -a y sharevg
+  3 logical volume(s) in volume group "sharevg" now active
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvscan
+  ACTIVE            '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  ACTIVE            '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata1lv' [700.00 MiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata2lv' [700.00 MiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata3lv' [644.00 MiB] inherit
+[root@c111xyz ~]#
+[root@c111xyz ~]# mkdir /sharedata1 /sharedata2 /sharedata3
+mkdir: cannot create directory ‘/sharedata1’: File exists
+mkdir: cannot create directory ‘/sharedata2’: File exists
+mkdir: cannot create directory ‘/sharedata3’: File exists
+[root@c111xyz ~]#
+[root@c111xyz ~]# mount -t xfs /dev/sharevg/sharedata1lv /sharedata1
+[root@c111xyz ~]# mount -t xfs /dev/sharevg/sharedata2lv /sharedata2
+[root@c111xyz ~]# mount -t xfs /dev/sharevg/sharedata3lv /sharedata3
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/webdatavg-webdata1lv  969M  2.5M  900M   1% /webdata1
+/dev/mapper/webdatavg-webdata2lv  597M   31M  567M   6% /webdata2
+/dev/mapper/webdatavg-webdata3lv  441M   23M  419M   6% /webdata3
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# umount /webdata1
+[root@c111xyz ~]# umount /webdata2
+[root@c111xyz ~]# umount /webdata3
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgchange -a n webdatavg
+  0 logical volume(s) in volume group "webdatavg" now active
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvscan
+  inactive          '/dev/webdatavg/webdata1lv' [1000.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata2lv' [600.00 MiB] inherit
+  inactive          '/dev/webdatavg/webdata3lv' [444.00 MiB] inherit
+  ACTIVE            '/dev/rhel/swap' [2.00 GiB] inherit
+  ACTIVE            '/dev/rhel/root' [<17.00 GiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata1lv' [700.00 MiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata2lv' [700.00 MiB] inherit
+  ACTIVE            '/dev/sharevg/sharedata3lv' [644.00 MiB] inherit
+[root@c111xyz ~]# vgexport webdatavg
+  Volume group "webdatavg" successfully exported
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgscan
+  Reading volume groups from cache.
+  Found exported volume group "webdatavg" using metadata type lvm2
+  Found volume group "rhel" using metadata type lvm2
+  Found volume group "sharevg" using metadata type lvm2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root              17G  1.4G   16G   8% /
+devtmpfs                          901M     0  901M   0% /dev
+tmpfs                             912M     0  912M   0% /dev/shm
+tmpfs                             912M  8.7M  903M   1% /run
+tmpfs                             912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                        1014M  143M  872M  15% /boot
+/dev/mapper/sharevg-sharedata3lv  641M   33M  609M   6% /sharedata3
+tmpfs                             183M     0  183M   0% /run/user/0
+/dev/mapper/sharevg-sharedata1lv  697M   33M  665M   5% /sharedata1
+/dev/mapper/sharevg-sharedata2lv  697M   33M  665M   5% /sharedata2
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+
