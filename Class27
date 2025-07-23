@@ -1,0 +1,345 @@
+Class 27 23/07/2025
+
+To create a vg with customized PE size:
+=======================================
+
+# vgcreate  -s <size of PE( 1-128)> <name for the vg > <pv names> 
+
+# lvcreate –l <no of LE> -n <name for the LV> <volume group name> 
+
+OS installation with LVM
+
+rootlv	17Gb - 17408
+varlv	10Gb - 10240
+tmplv	5Gb - 5120
+optlv	3Gb - 3072
+homelv	2Gb - 2048
+boot	1Gb - 1024
+swap	2Gb - 2048
+
+Session Outputs:
+================
+login as: root
+root@192.168.29.120's password:
+Last failed login: Wed Jul 23 18:59:14 IST 2025 from fe80::b6a7:c6ff:fec8:485c%e                                          ns33 on ssh:notty
+There were 10 failed login attempts since the last successful login.
+Last login: Tue Jul 22 20:01:35 2025 from 192.168.29.211
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root   17G  1.5G   16G   9% /
+devtmpfs               901M     0  901M   0% /dev
+tmpfs                  912M     0  912M   0% /dev/shm
+tmpfs                  912M  8.7M  903M   1% /run
+tmpfs                  912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1             1014M  143M  872M  15% /boot
+tmpfs                  183M     0  183M   0% /run/user/0
+[root@c111xyz ~]#
+[root@c111xyz ~]# echo "- - -">/sys/class/scsi_host/host0/scan
+[root@c111xyz ~]# echo "- - -">/sys/class/scsi_host/host1/scan
+[root@c111xyz ~]# echo "- - -">/sys/class/scsi_host/host2/scan
+[root@c111xyz ~]#
+[root@c111xyz ~]# parted -l |more
+Error: /dev/sdd: unrecognised disk label
+Warning: Unable to open /dev/sr0 read-write (Read-only file system).  /dev/sr0
+has been opened read-only.
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  1075MB  1074MB  primary  xfs          boot
+ 2      1075MB  21.5GB  20.4GB  primary               lvm
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  2146MB  2145MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdc: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  2146MB  2145MB               logical
+
+
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdd: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+
+Model: Linux device-mapper (linear) (dm)
+Disk /dev/mapper/webdatavg-webdata3lv: 466MB
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# parted /dev/sdd
+GNU Parted 3.1
+Using /dev/sdd
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) print
+Error: /dev/sdd: unrecognised disk label
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdd: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: unknown
+Disk Flags:
+(parted)
+(parted) mklabel gpt
+(parted) mkpart
+Partition name?  []? logical
+File system type?  [ext2]?
+Start? 1
+End? -1
+(parted) print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdd: 1074MB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name     Flags
+ 1      1049kB  1073MB  1072MB               logical
+
+(parted) quit
+Information: You may need to update /etc/fstab.
+
+[root@c111xyz ~]#
+[root@c111xyz ~]# pvcreate /dev/sdd1
+  Physical volume "/dev/sdd1" successfully created.
+[root@c111xyz ~]# vgcreate ashokvg /dev/sdd1
+  Volume group "ashokvg" successfully created
+[root@c111xyz ~]# lvcreate -l 100%FREE ashokvg -n ashoklv
+  Logical volume "ashoklv" created.
+[root@c111xyz ~]# mkfs -t xfs /dev/ashokvg/ashoklv
+meta-data=/dev/ashokvg/ashoklv   isize=512    agcount=4, agsize=65280 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=261120, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=855, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@c111xyz ~]# mkdir /ashok
+[root@c111xyz ~]# mount -t xfs /dev/ashokvg/ashoklv /ashok
+[root@c111xyz ~]# df -h /ashok
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/ashokvg-ashoklv 1017M   33M  985M   4% /ashok
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgdisplay ashokvg
+  --- Volume group ---
+  VG Name               ashokvg
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  2
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               1
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1020.00 MiB
+  PE Size               4.00 MiB
+  Total PE              255
+  Alloc PE / Size       255 / 1020.00 MiB
+  Free  PE / Size       0 / 0
+  VG UUID               boRHpS-T0qL-Yqsy-TRkv-2nQm-hWld-uiXKfY
+
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvdisplay /dev/ashokvg/ashoklv
+  --- Logical volume ---
+  LV Path                /dev/ashokvg/ashoklv
+  LV Name                ashoklv
+  VG Name                ashokvg
+  LV UUID                ELgiiz-tCDA-DLTh-3Aek-6RN1-xd11-SZF7e3
+  LV Write Access        read/write
+  LV Creation host, time c111xyz, 2025-07-23 19:45:53 +0530
+  LV Status              available
+  # open                 1
+  LV Size                1020.00 MiB
+  Current LE             255
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:5
+
+[root@c111xyz ~]#
+[root@c111xyz ~]#
+[root@c111xyz ~]# umount /ashok
+[root@c111xyz ~]# lvremove /dev/ashokvg/ashoklv
+Do you really want to remove active logical volume ashokvg/ashoklv? [y/n]: yes
+  Logical volume "ashoklv" successfully removed
+[root@c111xyz ~]# vgremove ashokvg
+  Volume group "ashokvg" successfully removed
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  rhel        1   2   0 wz--n- <19.00g    0
+  sharevg     1   3   0 wzx-n-  <2.00g    0
+  webdatavg   1   3   0 wz--n-  <2.00g    0
+[root@c111xyz ~]# lvs
+  Volume group sharevg is exported
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  webdata1lv webdatavg -wi-a----- 1000.00m
+  webdata2lv webdatavg -wi-a-----  600.00m
+  webdata3lv webdatavg -wi-a-----  444.00m
+[root@c111xyz ~]#
+[root@c111xyz ~]# pvs
+  PV         VG        Fmt  Attr PSize    PFree
+  /dev/sda2  rhel      lvm2 a--   <19.00g       0
+  /dev/sdb1  webdatavg lvm2 a--    <2.00g       0
+  /dev/sdc1  sharevg   lvm2 ax-    <2.00g       0
+  /dev/sdd1            lvm2 ---  1022.00m 1022.00m
+[root@c111xyz ~]#
+[root@c111xyz ~]# vgcreate -s 6M ashokvg /dev/sdd1
+  Volume group "ashokvg" successfully created
+[root@c111xyz ~]# vgdisplay ashokvg
+  --- Volume group ---
+  VG Name               ashokvg
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1020.00 MiB
+  PE Size               6.00 MiB
+  Total PE              170
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       170 / 1020.00 MiB
+  VG UUID               yb7Lmy-SgRa-8YeF-ScWp-LThQ-eVAA-TVr9ZF
+
+[root@c111xyz ~]# lvcreate -l 50 ashokvg -n ashok1lv
+WARNING: xfs signature detected on /dev/ashokvg/ashok1lv at offset 0. Wipe it? [y/n]: y
+  Wiping xfs signature on /dev/ashokvg/ashok1lv.
+  Logical volume "ashok1lv" created.
+[root@c111xyz ~]# lvs
+  Volume group sharevg is exported
+  LV         VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ashok1lv   ashokvg   -wi-a-----  300.00m
+  root       rhel      -wi-ao----  <17.00g
+  swap       rhel      -wi-ao----    2.00g
+  webdata1lv webdatavg -wi-a----- 1000.00m
+  webdata2lv webdatavg -wi-a-----  600.00m
+  webdata3lv webdatavg -wi-a-----  444.00m
+[root@c111xyz ~]# lvdisplay /dev/ashokvg/ashok1lv
+  --- Logical volume ---
+  LV Path                /dev/ashokvg/ashok1lv
+  LV Name                ashok1lv
+  VG Name                ashokvg
+  LV UUID                1jYKUJ-ItJW-19D8-5raR-9Kst-LW8d-Vek0Vj
+  LV Write Access        read/write
+  LV Creation host, time c111xyz, 2025-07-23 19:55:59 +0530
+  LV Status              available
+  # open                 0
+  LV Size                300.00 MiB
+  Current LE             50
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:5
+
+[root@c111xyz ~]# vgdisplay ashokvg
+  --- Volume group ---
+  VG Name               ashokvg
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  2
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1020.00 MiB
+  PE Size               6.00 MiB
+  Total PE              170
+  Alloc PE / Size       50 / 300.00 MiB
+  Free  PE / Size       120 / 720.00 MiB
+  VG UUID               yb7Lmy-SgRa-8YeF-ScWp-LThQ-eVAA-TVr9ZF
+
+[root@c111xyz ~]# lvcreate -l 70 ashokvg -n ashok1lv
+  Logical Volume "ashok1lv" already exists in volume group "ashokvg"
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvcreate -l 70 ashokvg -n ashok2lv
+  Logical volume "ashok2lv" created.
+[root@c111xyz ~]#
+[root@c111xyz ~]# lvdisplay /dev/ashokvg/ashok2lv
+  --- Logical volume ---
+  LV Path                /dev/ashokvg/ashok2lv
+  LV Name                ashok2lv
+  VG Name                ashokvg
+  LV UUID                v8eK8U-NSym-Qhrx-s6DJ-PQ2y-11RF-0o4riH
+  LV Write Access        read/write
+  LV Creation host, time c111xyz, 2025-07-23 19:59:23 +0530
+  LV Status              available
+  # open                 0
+  LV Size                420.00 MiB
+  Current LE             70
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:6
+
+[root@c111xyz ~]# vgdisplay ashokvg
+  --- Volume group ---
+  VG Name               ashokvg
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1020.00 MiB
+  PE Size               6.00 MiB
+  Total PE              170
+  Alloc PE / Size       120 / 720.00 MiB
+  Free  PE / Size       50 / 300.00 MiB
+  VG UUID               yb7Lmy-SgRa-8YeF-ScWp-LThQ-eVAA-TVr9ZF
+
+[root@c111xyz ~]#
+[root@c111xyz ~]#
