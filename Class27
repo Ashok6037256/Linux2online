@@ -17,6 +17,14 @@ homelv	2Gb - 2048
 boot	1Gb - 1024
 swap	2Gb - 2048
 
+Lab Tasks:
+==========
+1) 2 servers OS Installation with above rootvg 
+2) ashokvg 6M, oraclvg 8M, weblogicvg12M
+3) ashok1lv 25PE, ashok2lv 50PE, ashok3lv all remainingPE's
+4) oracle1lv 50PE, oracle2lv 50PE, oracle3lv all remainingPE's
+5) weblogic1lv 300PE, weblogic2lv 20PE, weblogic3lv all remainingPE's
+
 Session Outputs:
 ================
 login as: root
