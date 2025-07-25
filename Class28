@@ -186,6 +186,21 @@ Step3: mount the file system on clinet server
 	# umount /mnt
 	# mkdir /shareinfra
 	# mount -t nfs nfssrv:/infra /shareinfra
+	nfssrv:/infra   /shareinfra     nfs     rw,intr,sync,nosuid,noacl       0       0
 Step3: utilize the data
 	# cd /shareinfra
 	# ls -l 
+
+Lab Session:
+============
+/dev/mapper/linuxvg-redhatlv  3.0G   33M  3.0G   2% /redhat
+/dev/mapper/linuxvg-suselv  3.0G   33M  3.0G   2% /suse
+/dev/mapper/linuxvg-centlv  3.0G   33M  3.0G   2% /cent
+
+/dev/mapper/solarisvg-solarislv  2.0G   33M  2.0G   2% /solaris
+
+/dev/mapper/aixvg-aix1lv  1.0G   33M  1.0G   2% /aix1
+/dev/mapper/aixvg-aix2lv  1.0G   33M  1.0G   2% /aix2
+/dev/mapper/aixvg-aix3lv  1.0G   33M  1.0G   2% /aix3
+/dev/mapper/aixvg-aix4lv  1.0G   33M  1.0G   2% /aix4
+/dev/mapper/aixvg-aix5lv  1.0G   33M  1.0G   2% /aix5
