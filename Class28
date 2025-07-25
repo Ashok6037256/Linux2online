@@ -1,0 +1,191 @@
+Class28 25/07/2025
+
+NFS:
+
+Linux Filesystem types:
+=======================
+1) disk based file systems: ext4, xfs, fat, ntfs
+2) distributed file systems: samba, nfs, ftp
+3) pseudo file systems: tmpfs, procfs, swapfs
+
+NFS (Network file system): The Linux Operating Environment supports the sharing of remote file system resources and presents them to users as if they were local files and directories. The sharing of remote file system resources is administered through 
+distributed file systems (DPS) file system types. This file system type provides the architectural support required for mounting resources over the network.    
+
+The NFS environment contains the following components: 
+======================================================
+NFS server - A system that contains the file resources to be shared with other systems on the network. 
+
+NFS client - A system that mounts the file resources shared over the network and presents the file resources as if they were local
+
+The benefits of an NFS include: 
+===============================
+1) Centralized file access : Files are located in centralized locations. You can make a copy of a file accessible to many users or systems simultaneously. This is an especially useful feature with home directories or common data files. 
+2) Common software access : Systems can share one or more software packages that are located in a central location. This reduces the disk space requirements for individual systems. 
+3) Easy to use :Remote file sharing is transparent to the user and to any applications, because these resources appear as if they were resident on the local system. 
+
+Package   : nfs-utils 
+Daemons   : rpc.nfsd, rpc.mountd, rpc.statd, rpc.lockd 
+Script   : /etc/init.d/nfs-server 
+Port number  : 2049 
+Configuration File  : /etc/exports 
+
+Server Sutup for NFS:
+=====================
+[root@c111abc ~]# cat /etc/hostname
+nfscli
+[root@c111abc ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.29.120  nfssrv
+192.168.29.160  nfscli
+[root@c111abc ~]#
+[root@c111abc ~]# cat /etc/selinux/config
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of three two values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+[root@c111abc ~]#
+[root@c111abc ~]# systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+[root@c111abc ~]#
+
+[root@nfscli ~]# mount /dev/sr0 /mnt/
+mount: /dev/sr0 is write-protected, mounting read-only
+[root@nfscli ~]#
+[root@nfscli ~]# rpm -ivh /mnt/Packages/ftp-0.17-67.el7.x86_64.rpm
+warning: /mnt/Packages/ftp-0.17-67.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:ftp-0.17-67.el7                  ################################# [100%]
+
+[root@nfscli ~]# rpm -ivh /mnt/Packages/vsftpd-3.0.2-22.el7.x86_64.rpm
+warning: /mnt/Packages/vsftpd-3.0.2-22.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:vsftpd-3.0.2-22.el7              ################################# [100%]
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# systemctl status vsftpd
+● vsftpd.service - Vsftpd ftp daemon
+   Loaded: loaded (/usr/lib/systemd/system/vsftpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+
+[root@nfscli ~]# systemctl start vsftpd
+
+[root@nfscli ~]# systemctl enable vsftpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# mkdir /var/ftp/pub/rhel7
+[root@nfscli ~]# cp /mnt/Packages/* /var/ftp/pub/rhel7/
+[root@nfscli ~]# rpm -ivh /mnt/Packages/deltarpm-3.6-3.el7.x86_64.rpm
+warning: /mnt/Packages/deltarpm-3.6-3.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:deltarpm-3.6-3.el7               ################################# [100%]
+
+[root@nfscli ~]# rpm -ivh /mnt/Packages/python-deltarpm-3.6-3.el7.x86_64.rpm
+warning: /mnt/Packages/python-deltarpm-3.6-3.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:python-deltarpm-3.6-3.el7        ################################# [100%]
+[root@nfscli ~]#
+[root@nfscli ~]# rpm -ivh /mnt/Packages/createrepo-0.9.9-28.el7.noarch.rpm
+warning: /mnt/Packages/createrepo-0.9.9-28.el7.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:createrepo-0.9.9-28.el7          ################################# [100%]
+[root@nfscli ~]# createrepo -v /var/ftp/pub/rhel7/
+Starting other db creation: Fri Jul 25 20:13:33 2025
+Ending other db creation: Fri Jul 25 20:13:35 2025
+Starting filelists db creation: Fri Jul 25 20:13:36 2025
+Ending filelists db creation: Fri Jul 25 20:13:41 2025
+Starting primary db creation: Fri Jul 25 20:13:41 2025
+Ending primary db creation: Fri Jul 25 20:13:46 2025
+Sqlite DBs complete
+[root@nfscli ~]#
+[root@nfscli ~]# vi /etc/yum.repos.d/rhel7.repo
+[root@nfscli ~]# cat /etc/yum.repos.d/rhel7.repo
+[rhel7]
+name=rhel7
+baseurl=file:///var/ftp/pub/rhel7
+enabled=1
+gpgcheck=0
+[root@nfscli ~]#
+[root@nfscli ~]# yum clean all
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+Cleaning repos: rhel7
+Cleaning up everything
+Maybe you want: rm -rf /var/cache/yum, to also free up space taken by orphaned data from disabled or removed repos
+[root@nfscli ~]# yum makecache
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+rhel7                                                                                              | 2.9 kB  00:00:00
+(1/3): rhel7/filelists_db                                                                          | 3.3 MB  00:00:00
+(2/3): rhel7/other_db                                                                              | 1.5 MB  00:00:00
+(3/3): rhel7/primary_db                                                                            | 4.0 MB  00:00:00
+Metadata Cache Created
+[root@nfscli ~]#
+
+Reboot the server
+
+Steps to configure NFS server:
+============================== 
+Step1: Install the NFS package using yum or rpm and enable the service
+	# rpm -qa |grep -i nfs
+	# yum install nfs-utils
+	# rpm -qa |grep -i nfs
+	# systemctl status nfs
+	# systemctl start nfs
+	# systemctl enable nfs
+Step2: Create new file system /infra 10Gb add some data
+	# df -h
+	Filesystem                   Size  Used Avail Use% Mounted on
+	/dev/mapper/infravg-infralv  1.5G   38M  1.5G   3% /infra
+Step3: Export the directory by editing /etc/exports file and using exportfs command
+	# vi /etc/exports
+	# cat /etc/exports
+	/infra   *(sync,rw,no_root_squash)
+	# exportfs -avr
+	exporting *:/infra
+	# showmount -e
+	Export list for nfssrv:
+	/infra nfscli
+
+Step4: Restart the services and make it permanent
+	# systemctl restart nfs
+	# systemctl status nfs
+ 
+Steps to configure NFS client:
+==============================
+Step1: Install the NFS package using yum or rpm and enable the service
+	# rpm -qa |grep -i nfs
+	# yum install nfs-utils
+	# rpm -qa |grep -i nfs
+	# systemctl status nfs
+	# systemctl start nfs
+	# systemctl enable nfs
+Step2: check the NFS server access and shared file system information
+	# ping nfssrv
+	# showmount -e nfssrv
+Step3: mount the file system on clinet server
+	# mount -t nfs nfssrv:/infra /mnt
+	# df -h /mnt
+	# cd /mnt; ls -l
+	# cd /
+	# umount /mnt
+	# mkdir /shareinfra
+	# mount -t nfs nfssrv:/infra /shareinfra
+Step3: utilize the data
+	# cd /shareinfra
+	# ls -l 
