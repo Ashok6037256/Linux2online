@@ -1,0 +1,782 @@
+Class 29 28/07/2025
+
+Autofs File system Configuration
+
+NFS is like mounting a complete partition remotely and you will have availability of whole content of the partition.
+
+1 Shares are accessed automatically and transparently when a user tries to access any files or directories under the designated mount point of the remote filesystem to be mounted.
+
+2 Booting time is significantly reduced because no mounting is done at boot time.
+
+3 Network access and efficiency are improved by reducing the number of permanently active mount points.
+
+4 Failed mount requests can be reduced by designating alternate servers as the source of a filesystem.
+
+5 Security for file systems
+
+NFS file system types:
+======================
+1) Hard mounts (NFS)
+2) soft mounts (autofs) 
+	a) auto direct (webdata)
+	b) auto indirect (servers/prod)
+
+Steps to configure NFS server:
+============================== 
+Step1: Install the NFS package using yum or rpm and enable the service
+	# rpm -qa |grep -i nfs
+	# yum install nfs-utils
+	# rpm -qa |grep -i nfs
+	# systemctl start nfs
+	# systemctl enable nfs
+Step2: Create new file system /data 500Mb added some data
+	# df -h
+	Filesystem                   Size  Used Avail Use% Mounted on
+	/dev/mapper/datavg-data1lv   477M   69M  379M  16% /data1
+	/dev/mapper/datavg-data2lv   477M   62M  387M  14% /data2
+Step3: Export the directory by editing /etc/exports file and using exportfs command
+	# vi /etc/exports
+	# cat /etc/exports
+	/data1  c111xyz(sync,rw,no_root_sqash)
+	/data6  c111xyz(sync,rw,root_sqash)
+	# exportfs -avr
+	exporting c111xyz:/data2
+	exporting c111xyz:/data1
+	# showmount -e nfsserver
+	exporting c111xyz:/data2
+	exporting c111xyz:/data1
+Step4: Restart the services and make it permanent
+	# systemctl restart nfs
+	# systemctl status nfs
+ 
+Steps to configure Autofs Direct (Soft direct mounts):
+======================================================
+Step1: check the NFS server access and shared file system information
+	# ping nfsserver
+	# ssh nfsserver
+	# showmount -e nfsserver
+Step2: mount the file system on clinet server
+	# mount -t nfs nfsserver:/data1 /mnt
+	# df -h /mnt
+	# cd /mnt; ls -l
+	# cd /
+	# umount /mnt
+	# mount -t nfs nfsserver:/data2 /mnt
+	# df -h /mnt
+	# cd /mnt; ls -l
+	# cd /
+	# umount /mnt
+Step3: confugure autofs direct mount (soft direct mounts)
+	# rpm -qa |grep -i autofs
+	# yum install autofs
+	# systemctl enable autofs
+	# systemctl start autofs
+	# systemctl status autofs
+Step4: Add file system entires into autofs files
+	# vi /etc/auto.master
+	# cat /etc/auto.master
+	/-      /etc/auto.direct        --timeout=60
+	# vi /etc/auto.direct
+	# cat /etc/auto.direct
+	/sharedata1     -rw,sync,intr   nfsserver:/data1
+	/sharedata2     -rw,sync,intr   nfsserver:/data2
+	# systectl restart autofs
+Step5: mount the file system by entering into auto directory
+	# cd /sharedata1
+	# df -h 
+	nfsserver:/data1       477M  119M  329M  27% /sharedata1
+	# ls -l 
+	# cd /       ======> move to other location from the autofs file system
+	# df -h 
+	Not show any /sharedata1 file system information
+	# cd /sharedata1
+	# df -h 
+	nfsserver:/data2       477M  119M  329M  27% /sharedata2
+	# ls -l 
+	# cd /       ======> move to other location from the autofs file system
+	# df -h 
+	Not show any /sharedata1 file system information
+
+Lab Session:
+============
+5Gb disk (sdb) crmappvg ====> crmdata1,crmdata2,crmdata3,crmdata4,crmdata5
+4Gb disk (sdc) oradbvg =====> oradb1,oradb2,oradb3,oradb4,oradb5
+3Gb disk (sdd) wasvg =======> wasdata1,wasdata2,wasdata3,wasdata4,wasdata5,wasdata6 
+
+NFS Server Session Outputs:
+===========================
+login as: root
+root@192.168.29.120's password:
+Last login: Mon Jul 28 20:04:05 2025
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root         17G  1.5G   16G   9% /
+devtmpfs                     901M     0  901M   0% /dev
+tmpfs                        912M     0  912M   0% /dev/shm
+tmpfs                        912M  8.8M  903M   1% /run
+tmpfs                        912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                   1014M  143M  872M  15% /boot
+/dev/mapper/infravg-infralv  3.0G   33M  3.0G   2% /infra
+tmpfs                        183M     0  183M   0% /run/user/0
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# systemctl status nfs
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)
+  Drop-In: /run/systemd/generator/nfs-server.service.d
+           └─order-with-mounts.conf
+   Active: inactive (dead)
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# systemctl enable nfs
+Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.service to /usr/lib/systemd/system/nfs-server.service.
+[root@nfssrv ~]#
+[root@nfssrv ~]# systemctl start nfs
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# showmount -e
+Export list for nfssrv:
+/infra nfscli
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root         17G  1.5G   16G   9% /
+devtmpfs                     901M     0  901M   0% /dev
+tmpfs                        912M     0  912M   0% /dev/shm
+tmpfs                        912M  8.8M  903M   1% /run
+tmpfs                        912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                   1014M  143M  872M  15% /boot
+/dev/mapper/infravg-infralv  3.0G   33M  3.0G   2% /infra
+tmpfs                        183M     0  183M   0% /run/user/0
+/dev/mapper/datavg-data1lv  1014M   33M  982M   4% /data1
+/dev/mapper/datavg-data2lv  1017M   33M  985M   4% /data2
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# ls /data1
+datafile1  datafile2  datafile3
+[root@nfssrv ~]# ls /data2
+publicdata1  publicdata2  publicdata3
+[root@nfssrv ~]#
+[root@nfssrv ~]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root         17G  1.5G   16G   9% /
+devtmpfs                     901M     0  901M   0% /dev
+tmpfs                        912M     0  912M   0% /dev/shm
+tmpfs                        912M  8.8M  903M   1% /run
+tmpfs                        912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                   1014M  143M  872M  15% /boot
+/dev/mapper/infravg-infralv  3.0G   33M  3.0G   2% /infra
+tmpfs                        183M     0  183M   0% /run/user/0
+/dev/mapper/datavg-data1lv  1014M   33M  982M   4% /data1
+/dev/mapper/datavg-data2lv  1017M   33M  985M   4% /data2
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# rpm -qa |grep -i nfs
+nfs-utils-1.3.0-0.48.el7_4.1.x86_64
+libnfsidmap-0.25-17.el7.x86_64
+[root@nfssrv ~]#
+[root@nfssrv ~]# systemctl status nfs
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/usr/lib/systemd/system/nfs-server.service; enabled; vendor preset: disabled)
+  Drop-In: /run/systemd/generator/nfs-server.service.d
+           └─order-with-mounts.conf
+   Active: active (exited) since Mon 2025-07-28 20:11:09 IST; 13min ago
+  Process: 12229 ExecStart=/usr/sbin/rpc.nfsd $RPCNFSDARGS (code=exited, status=0/SUCCESS)
+  Process: 12224 ExecStartPre=/bin/sh -c /bin/kill -HUP `cat /run/gssproxy.pid` (code=exited, status=0/SUCCESS)
+  Process: 12223 ExecStartPre=/usr/sbin/exportfs -r (code=exited, status=0/SUCCESS)
+ Main PID: 12229 (code=exited, status=0/SUCCESS)
+   CGroup: /system.slice/nfs-server.service
+
+Jul 28 20:11:09 nfssrv systemd[1]: Starting NFS server and services...
+Jul 28 20:11:09 nfssrv systemd[1]: Started NFS server and services.
+[root@nfssrv ~]#
+[root@nfssrv ~]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Thu May 22 20:19:16 2025
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/rhel-root   /                       xfs     defaults        0 0
+UUID=366b7a0b-c2ee-4474-816b-9418785b2cb2 /boot                   xfs     defaults        0 0
+/dev/mapper/rhel-swap   swap                    swap    defaults        0 0
+/dev/infravg/infralv    /infra  xfs     defaults        0       0
+/dev/datavg/data1lv     /data1  xfs     defaults        0       0
+/dev/datavg/data2lv     /data2  xfs     defaults        0       0
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# vi /etc/exports
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# cat /etc/exports
+/infra  nfscli(sync,rw,no_root_squash)
+/data1  *(sync,rw,no_root_squash)
+/data2  *(sync,rw,root_squash)
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]# exportfs -avr
+exporting nfscli:/infra
+exporting *:/data2
+exporting *:/data1
+[root@nfssrv ~]#
+[root@nfssrv ~]# showmount -e
+Export list for nfssrv:
+/data2 *
+/data1 *
+/infra nfscli
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+[root@nfssrv ~]#
+
+
+NFS Client Configuration outputs:
+=================================
+login as: root
+root@192.168.29.160's password:
+Last failed login: Mon Jul 28 20:08:08 IST 2025 from 2405:201:c037:d269:c268:ccff:fe6b:db71 on ssh:notty
+There were 40 failed login attempts since the last successful login.
+Last login: Fri Jul 25 19:38:06 2025 from 192.168.29.211
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  905M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Wed Jul 23 20:24:31 2025
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/rootvg-rootlv /                       xfs     defaults        0 0
+UUID=4d1cf2fc-9594-4e7e-bb18-378a013f0b7b /boot                   xfs     defaults        0 0
+/dev/mapper/rootvg-homelv /home                   xfs     defaults        0 0
+/dev/mapper/rootvg-optlv /opt                    xfs     defaults        0 0
+/dev/mapper/rootvg-tmplv /tmp                    xfs     defaults        0 0
+/dev/mapper/rootvg-varlv /var                    xfs     defaults        0 0
+UUID=e79b310b-ccd3-424f-8fce-e18aa930b49b swap                    swap    defaults        0 0
+nfssrv:/infra   /shareinfra     nfs     rw,intr,sync,nosuid,noacl       0       0
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# mount /shareinfra/
+^C
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# showmount -e nfssrv
+clnt_create: RPC: Program not registered
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# showmount -e nfssrv
+Export list for nfssrv:
+/infra nfscli
+[root@nfscli ~]#
+[root@nfscli ~]# mount /shareinfra/
+[root@nfscli ~]#
+[root@nfscli ~]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  905M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# rpm -qa |grep -i nfs
+libnfsidmap-0.25-17.el7.x86_64
+nfs-utils-1.3.0-0.48.el7_4.1.x86_64
+[root@nfscli ~]#
+[root@nfscli ~]# systemctl status nfs
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/usr/lib/systemd/system/nfs-server.service; enabled; vendor preset: disabled)
+   Active: active (exited) since Mon 2025-07-28 20:05:49 IST; 21min ago
+  Process: 1076 ExecStart=/usr/sbin/rpc.nfsd $RPCNFSDARGS (code=exited, status=0/SUCCESS)
+  Process: 1070 ExecStartPre=/bin/sh -c /bin/kill -HUP `cat /run/gssproxy.pid` (code=exited, status=0/SUCCESS)
+  Process: 1069 ExecStartPre=/usr/sbin/exportfs -r (code=exited, status=0/SUCCESS)
+ Main PID: 1076 (code=exited, status=0/SUCCESS)
+   CGroup: /system.slice/nfs-server.service
+
+Jul 28 20:05:49 nfscli systemd[1]: Starting NFS server and services...
+Jul 28 20:05:49 nfscli systemd[1]: Started NFS server and services.
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ping nfssv
+ping: nfssv: Name or service not known
+[root@nfscli ~]# ping nfssrv
+PING c111xyz (192.168.29.120) 56(84) bytes of data.
+64 bytes from c111xyz (192.168.29.120): icmp_seq=1 ttl=64 time=0.543 ms
+64 bytes from c111xyz (192.168.29.120): icmp_seq=2 ttl=64 time=0.404 ms
+64 bytes from c111xyz (192.168.29.120): icmp_seq=3 ttl=64 time=2.97 ms
+64 bytes from c111xyz (192.168.29.120): icmp_seq=4 ttl=64 time=0.348 ms
+64 bytes from c111xyz (192.168.29.120): icmp_seq=5 ttl=64 time=0.310 ms
+^C
+--- c111xyz ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4004ms
+rtt min/avg/max/mdev = 0.310/0.915/2.970/1.030 ms
+[root@nfscli ~]#
+[root@nfscli ~]# showmount -e nfssrv
+Export list for nfssrv:
+/data2 *
+/data1 *
+/infra nfscli
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# mount -t nfs nfssrv:/data1 /mnt
+[root@nfscli ~]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  905M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data1             1014M   32M  982M   4% /mnt
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cd /mnt
+[root@nfscli mnt]#
+[root@nfscli mnt]#
+[root@nfscli mnt]# ls
+datafile1  datafile2  datafile3
+[root@nfscli mnt]#
+[root@nfscli mnt]#
+[root@nfscli mnt]# ls -l
+total 0
+-rw-r--r-- 1 root root 0 Jul 28 20:21 datafile1
+-rw-r--r-- 1 root root 0 Jul 28 20:21 datafile2
+-rw-r--r-- 1 root root 0 Jul 28 20:21 datafile3
+[root@nfscli mnt]#
+[root@nfscli mnt]#
+[root@nfscli mnt]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# umount /mnt
+[root@nfscli /]#
+[root@nfscli /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  905M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# mount -t nfs nfssrv:/data2 /mnt
+[root@nfscli /]# cd /mnt
+[root@nfscli mnt]# ls -lrt
+total 0
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata1
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata2
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata3
+[root@nfscli mnt]#
+[root@nfscli mnt]#
+[root@nfscli mnt]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  905M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data2             1017M   33M  985M   4% /mnt
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# umount /mnt
+[root@nfscli /]#
+[root@nfscli /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  905M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# rpm -qa |grep -i autofs
+[root@nfscli /]#
+[root@nfscli /]# yum install autofs
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+rhel7                                                                                                                                                 | 2.9 kB  00:00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package autofs.x86_64 1:5.0.7-70.el7_4 will be installed
+--> Processing Dependency: libhesiod.so.0()(64bit) for package: 1:autofs-5.0.7-70.el7_4.x86_64
+--> Running transaction check
+---> Package hesiod.x86_64 0:3.2.1-3.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================================================================================================================================
+ Package                                Arch                                   Version                                           Repository                             Size
+=============================================================================================================================================================================
+Installing:
+ autofs                                 x86_64                                 1:5.0.7-70.el7_4                                  rhel7                                 809 k
+Installing for dependencies:
+ hesiod                                 x86_64                                 3.2.1-3.el7                                       rhel7                                  30 k
+
+Transaction Summary
+=============================================================================================================================================================================
+Install  1 Package (+1 Dependent package)
+
+Total download size: 839 k
+Installed size: 5.1 M
+Is this ok [y/d/N]: yes
+Downloading packages:
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                        4.3 MB/s | 839 kB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : hesiod-3.2.1-3.el7.x86_64                                                                                                                                 1/2
+  Installing : 1:autofs-5.0.7-70.el7_4.x86_64                                                                                                                            2/2
+  Verifying  : hesiod-3.2.1-3.el7.x86_64                                                                                                                                 1/2
+  Verifying  : 1:autofs-5.0.7-70.el7_4.x86_64                                                                                                                            2/2
+
+Installed:
+  autofs.x86_64 1:5.0.7-70.el7_4
+
+Dependency Installed:
+  hesiod.x86_64 0:3.2.1-3.el7
+
+Complete!
+[root@nfscli /]#
+[root@nfscli /]# systemctl start autofs
+[root@nfscli /]# systemctl enable autofs
+Created symlink from /etc/systemd/system/multi-user.target.wants/autofs.service to /usr/lib/systemd/system/autofs.service.
+[root@nfscli /]#
+[root@nfscli /]# systemctl status autofs
+● autofs.service - Automounts filesystems on demand
+   Loaded: loaded (/usr/lib/systemd/system/autofs.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mon 2025-07-28 20:31:48 IST; 14s ago
+ Main PID: 12171 (automount)
+   CGroup: /system.slice/autofs.service
+           └─12171 /usr/sbin/automount --pid-file /run/autofs.pid
+
+Jul 28 20:31:44 nfscli automount[12171]: open_sss_lib:78: lookup(sss): failed to open /usr/lib64/sssd/modules/libsss_autofs.so: /usr/lib64/sssd/modules/libsss_...r directory
+Jul 28 20:31:46 nfscli automount[12171]: master_add_map_source: map source used without taking reference
+Jul 28 20:31:46 nfscli automount[12171]: master_add_map_source: map source used without taking reference
+Jul 28 20:31:46 nfscli automount[12171]: open_sss_lib:78: lookup(sss): failed to open /usr/lib64/sssd/modules/libsss_autofs.so: /usr/lib64/sssd/modules/libsss_...r directory
+Jul 28 20:31:48 nfscli automount[12171]: problem reading master map, maximum wait exceeded
+Jul 28 20:31:48 nfscli automount[12171]: /usr/sbin/automount: warning: could not read at least one map source after waiting, continuing ...
+Jul 28 20:31:48 nfscli automount[12171]: master_add_map_source: map source used without taking reference
+Jul 28 20:31:48 nfscli automount[12171]: master_add_map_source: map source used without taking reference
+Jul 28 20:31:48 nfscli automount[12171]: open_sss_lib:78: lookup(sss): failed to open /usr/lib64/sssd/modules/libsss_autofs.so: /usr/lib64/sssd/modules/libsss_...r directory
+Jul 28 20:31:48 nfscli systemd[1]: Started Automounts filesystems on demand.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# vi /etc/auto.master
+[root@nfscli /]#
+[root@nfscli /]# tail -2 /etc/auto.master
++auto.master
+/-      /etc/auto.data  --timeout=60
+[root@nfscli /]#
+[root@nfscli /]# vi /etc/auto.data
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/auto.data
+/sharedata1     -rw,sync,intr   nfssrv:/data1
+/sharedata2     -rw,sync,intr   nfssrv:/data2
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# ls -l /
+total 20
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Jul 28 20:08 boot
+drwxr-xr-x   20 root root 3320 Jul 28 20:05 dev
+drwxr-xr-x.  81 root root 8192 Jul 28 20:35 etc
+drwxr-xr-x.   2 root root    6 Mar 10  2016 home
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Jul 23 20:24 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x    2 root root    0 Jul 28 20:31 misc
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x    2 root root    0 Jul 28 20:31 net
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x  225 root root    0 Jul 28 20:05 proc
+dr-xr-x---.   2 root root  135 Jul 23 21:08 root
+drwxr-xr-x   26 root root  940 Jul 28 20:31 run
+lrwxrwxrwx.   1 root root    8 Jul 23 20:24 sbin -> usr/sbin
+drwxr-xr-x    2 root root    6 Jul 25 20:27 shareinfra
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 Jul 28 20:05 sys
+drwxrwxrwt.   9 root root 4096 Jul 28 20:31 tmp
+drwxr-xr-x.  13 root root  155 Jul 23 20:24 usr
+drwxr-xr-x.  20 root root  278 Jul 25 20:01 var
+[root@nfscli /]#
+[root@nfscli /]# systemctl restart autofs
+[root@nfscli /]# ls -l /
+total 20
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Jul 28 20:08 boot
+drwxr-xr-x   20 root root 3320 Jul 28 20:05 dev
+drwxr-xr-x.  81 root root 8192 Jul 28 20:35 etc
+drwxr-xr-x.   2 root root    6 Mar 10  2016 home
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Jul 23 20:24 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x    2 root root    0 Jul 28 20:36 misc
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x    2 root root    0 Jul 28 20:36 net
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x  225 root root    0 Jul 28 20:05 proc
+dr-xr-x---.   2 root root  135 Jul 23 21:08 root
+drwxr-xr-x   26 root root  960 Jul 28 20:36 run
+lrwxrwxrwx.   1 root root    8 Jul 23 20:24 sbin -> usr/sbin
+drwxr-xr-x    2 root root    0 Jul 28 20:36 sharedata1
+drwxr-xr-x    2 root root    0 Jul 28 20:36 sharedata2
+drwxr-xr-x    2 root root    6 Jul 25 20:27 shareinfra
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 Jul 28 20:05 sys
+drwxrwxrwt.   9 root root 4096 Jul 28 20:36 tmp
+drwxr-xr-x.  13 root root  155 Jul 23 20:24 usr
+drwxr-xr-x.  20 root root  278 Jul 25 20:01 var
+[root@nfscli /]#
+[root@nfscli /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cd /sharedata1
+[root@nfscli sharedata1]# ls -l
+total 0
+-rw-r--r-- 1 root root 0 Jul 28 20:21 datafile1
+-rw-r--r-- 1 root root 0 Jul 28 20:21 datafile2
+-rw-r--r-- 1 root root 0 Jul 28 20:21 datafile3
+[root@nfscli sharedata1]#
+[root@nfscli sharedata1]#
+[root@nfscli sharedata1]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data1             1014M   32M  982M   4% /sharedata1
+[root@nfscli sharedata1]#
+[root@nfscli sharedata1]#
+[root@nfscli sharedata1]# cd /sharedata2
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata1
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata2
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata3
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+nfssrv:/data2  1017M   33M  985M   4% /sharedata2
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data1             1014M   32M  982M   4% /sharedata1
+nfssrv:/data2             1017M   33M  985M   4% /sharedata2
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data2             1017M   33M  985M   4% /sharedata2
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+[root@nfscli /]#
+[root@nfscli /]# ls -l /
+total 20
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Jul 28 20:08 boot
+drwxr-xr-x   20 root root 3320 Jul 28 20:05 dev
+drwxr-xr-x.  81 root root 8192 Jul 28 20:35 etc
+drwxr-xr-x.   2 root root    6 Mar 10  2016 home
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Jul 23 20:24 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x    2 root root    0 Jul 28 20:36 misc
+drwxr-xr-x.   2 root root    6 Mar 10  2016 mnt
+drwxr-xr-x    2 root root    0 Jul 28 20:36 net
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x  224 root root    0 Jul 28 20:05 proc
+dr-xr-x---.   2 root root  135 Jul 23 21:08 root
+drwxr-xr-x   26 root root  960 Jul 28 20:36 run
+lrwxrwxrwx.   1 root root    8 Jul 23 20:24 sbin -> usr/sbin
+drwxr-xr-x    2 root root    0 Jul 28 20:36 sharedata1
+drwxr-xr-x    2 root root    0 Jul 28 20:36 sharedata2
+drwxr-xr-x    2 root root    6 Jul 25 20:27 shareinfra
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 Jul 28 20:05 sys
+drwxrwxrwt.   9 root root 4096 Jul 28 20:36 tmp
+drwxr-xr-x.  13 root root  155 Jul 23 20:24 usr
+drwxr-xr-x.  20 root root  278 Jul 25 20:01 var
+[root@nfscli /]#
+[root@nfscli /]# cd sharedata2
+[root@nfscli sharedata2]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data2             1017M   33M  985M   4% /sharedata2
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# ls -l
+total 0
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata1
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata2
+drwxr-xr-x 2 root root 6 Jul 28 20:21 publicdata3
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]#
+[root@nfscli sharedata2]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+tmpfs                      183M     0  183M   0% /run/user/0
+nfssrv:/infra              3.0G   32M  3.0G   2% /shareinfra
+nfssrv:/data2             1017M   33M  985M   4% /sharedata2
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
