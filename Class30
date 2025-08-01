@@ -73,6 +73,12 @@ Step: mount the file systems by entering into autofs directories
 	# df -h 
 	Not show any /packages/solaris file system information
 
+Lab Tasks:
+==========
+1) sdb 5Gb==> tsmvg ===> tsmdata1,tsmdata2,tsmdata3,tsmdata4,tsmdata5
+2) sdc 6Gb==> gridvg====> grid1,grid2,grid3,grid4,grid5,grid6
+3) sdd 8Gb==> sybasevg====> sybasedb1,sybasedb2,sybasedb3,sybasedb4      =====> all file systems mount on /database/XXXX in nfsclient server.
+
 NFS Server Session Outputs:
 ===========================
 login as: root
