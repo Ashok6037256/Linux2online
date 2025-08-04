@@ -1,0 +1,41 @@
+Test1 04/08/2025
+
+1) New OS Build with LVM
+/dev/sda			50Gb
+/dev/rootvg/rootlv		20Gb
+/boot				1Gb
+/dev/rootvg/varlv		5Gb
+/dev/rootvg/tmplv		3Gb
+/dev/rootvg/optlv		5Gb
+swap				1Gb
+/dev/rootvg/homelv		2Gb
+Servername: ll3369srv, IP: 192.168.29/1.180
+
+2) create users asadmin, was, oracle, web and grid users, primary groups also same as usernames and then modify attributes as per the below values.
+Home directory: /export/app/home; Shell: /bin/sh; Secondary Groups: unix, backup and dba; oracle & grid umask value should be 0002.
+
+3) Configure /publicdata file system with 10Gb (/dev/sdb) and migrate to 20Gb 
+
+4) Configure below file systems with sdc-10Gb Webvg, sdd-20Gb javavg, sde-5Gb oraclevg, sdf-5Gb sybasevg, sdg-2Gb salesvg.
+
+5) Export below file systems on nfsclient
+/webdata1	hardmount to nfsclient
+/webdata2	hardmount to nfsclient
+/javadata1	softdirect to *
+/javadata2	softdirect to *
+/oracle		softindirect to 192.168.29.0/24	/database
+/sybase		softindirect to 192.168.29.0/24	/database
+/salesforce	softindirect to 192.168.29.0/24	/database
+
+6) modify all shared file systems to respective owners on nfsclient server
+drwxr-xr-x 2 web web  1024 Aug  1 20:14 /webdata1
+drwxr-xr-x 2 web web  1024 Aug  1 20:14 /webdata2
+drwxr-xr-x 2 asadmin asadmin  1024 Aug  1 20:14 /javadata1
+drwxr-xr-x 2 asadmin asadmin  1024 Aug  1 20:14 /javadata2
+drwxr-xr-x 2 oracle oracle  1024 Aug  1 20:14 /oracle
+drwxr-xr-x 2 was was  1024 Aug  1 20:14 /sybase
+drwxr-xr-x 2 grid grid  1024 Aug  1 20:14 /salesforce
+
+7) oracle, was, grid users need to run all service, disk & packages related commands. web & asadmin should be run all unix commands. All these configurations need to setup with individual sudo files
+
+8) /webdata (XFS) file system creation with 10Gb /dev/sdh1(5Gb), /dev/sdi1(5Gb) and extented to 20Gb /dev/sdj1 & /dev/sdh1
