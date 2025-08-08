@@ -1,0 +1,588 @@
+Class31 08/08/2025
+
+Job Management: Auto metically run the jobs and programes on the servers without manual interventions.
+
+Job Schedulers:
+===============
+Any operating system, it is possible to create jobs that you want to reoccur. This process, known as job scheduling, is usually done based on user-defined jobs.
+The importance of the  job scheduling is that the critical tasks like taking backups, which the clients usually wants to be taken in nights, can  easily be performed without the intervention of the administrator by scheduling a job. 
+
+Job Schedulers:
+1) cron
+2) at
+3) anacron
+
+Cron Scheduling:
+================
+All repeated jobs can be scheduled with cron 
+
+min	hours	dayofmonth	monthofyear	dayofweek	command/instruction
+23	20	10		07		3		/usr/bin/df -h >> /tmp/dfoutput
+
+Important Files related to cron
+===============================
+/etc/crontab is the file which stores all scheduled jobs 
+/etc/cron.deny is the file used to restrict the users from using cron jobs. 
+/etc/cron.allow is used to allow only users whose names are mentioned in this file to use cron jobs. (this file does not exist by default) 
+/var/spool/cron/ is the file which store all users related scheduled jobs
+/var/log/cron is the file will capture all cron related logs
+
+Cron Service:
+=============
+# systemctl start crond		====> To start the service
+# systemctl stop crond		====> To stop the service
+# systemctl status crond	====> To check the service status
+# systemctl restart crond	====> To restart the service
+
+Crontab Commands
+================ 
+# crontab –e		====> Edit your crontab file, or create one if it doesn’t already exist. 
+# crontab –l 		====> Display your crontab file. 
+# crontab –r		====> Remove your crontab file. 
+# crontab -u		====> If combined with –e, edit a particular user’s crontab file and if combined with –l, display a particular user’s crontab file. If combined with –r, deletes a particular user’s crontab file  
+
+at Scheduling:
+==============
+One time jobs can be scheduled with at 
+
+Important Files related to cron
+===============================
+/etc/at.deny same as cron.deny for restricting at jobs 
+/etc/at.allow same as cron.allow for allowing user to use at jobs
+
+at commands
+================ 
+# at now; at <time stamp>	====> Schedule at job 
+# atq			====> Display your scheduled at jobs
+# at –l 		====> Display your scheduled at jobs 
+# atrm <job ID>		====> Remove your scheduled at jobs
+# at -c <job ID>	====> Show detailed entry of the job
+
+Session Outputs:
+================
+login as: root
+root@192.168.29.160's password:
+Last failed login: Fri Aug  8 19:55:51 IST 2025 from 2405:201:c037:d269:c268:ccf                                                                                             f:fe6b:db71 on ssh:notty
+There were 8 failed login attempts since the last successful login.
+Last login: Fri Aug  1 19:59:20 2025 from 192.168.29.211
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /etc/fstab
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+/dev/sda1                 1014M  143M  872M  15% /boot
+tmpfs                      183M     0  183M   0% /run/user/0
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# who
+root     pts/0        2025-08-08 19:56 (192.168.29.211)
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ls -l /tmp/
+total 4
+-rwx------. 1 root root 836 Jul 23 20:38 ks-script-frBOXZ
+drwx------  3 root root  17 Aug  1 19:51 systemd-private-78de1f74215d48c1815b270441058ff4-vgauthd.service-xQxF7X
+drwx------  3 root root  17 Aug  1 19:51 systemd-private-78de1f74215d48c1815b270441058ff4-vmtoolsd.service-WceUfe
+drwx------  3 root root  17 Aug  8 19:54 systemd-private-88bd601b705048c4bac69851019f6576-vgauthd.service-KWimak
+drwx------  3 root root  17 Aug  8 19:54 systemd-private-88bd601b705048c4bac69851019f6576-vmtoolsd.service-7wpQR9
+-rw-------. 1 root root   0 Jul 23 20:24 yum.log
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ls -l
+total 4
+-rw-------. 1 root root 2046 Jul 23 20:38 anaconda-ks.cfg
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 19:58:17 IST 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at 20:01
+-bash: at: command not found
+[root@nfscli /]#
+[root@nfscli /]# yum install at
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+rhel7                                                                                                                                                 | 2.9 kB  00:00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package at.x86_64 0:3.1.13-22.el7_4.2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================================================================================================================================
+ Package                             Arch                                    Version                                            Repository                              Size
+=============================================================================================================================================================================
+Installing:
+ at                                  x86_64                                  3.1.13-22.el7_4.2                                  rhel7                                   51 k
+
+Transaction Summary
+=============================================================================================================================================================================
+Install  1 Package
+
+Total download size: 51 k
+Installed size: 95 k
+Is this ok [y/d/N]: yes
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : at-3.1.13-22.el7_4.2.x86_64                                                                                                                               1/1
+  Verifying  : at-3.1.13-22.el7_4.2.x86_64                                                                                                                               1/1
+
+Installed:
+  at.x86_64 0:3.1.13-22.el7_4.2
+
+Complete!
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at 20:01
+at> df -h >> /tmp/dfoutput
+at> <EOT>
+job 1 at Fri Aug  8 20:01:00 2025
+Can't open /var/run/atd.pid to signal atd. No atd running?
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# systemctl status atd
+● atd.service - Job spooling tools
+   Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)
+   Active: inactive (dead)
+[root@nfscli /]#
+[root@nfscli /]# systemctl start atd
+[root@nfscli /]#
+[root@nfscli /]# systemctl status atd
+● atd.service - Job spooling tools
+   Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2025-08-08 19:59:40 IST; 3s ago
+ Main PID: 1597 (atd)
+   CGroup: /system.slice/atd.service
+           └─1597 /usr/sbin/atd -f
+
+Aug 08 19:59:40 nfscli systemd[1]: Started Job spooling tools.
+Aug 08 19:59:40 nfscli systemd[1]: Starting Job spooling tools...
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:00:05 IST 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:00:17 IST 2025
+[root@nfscli /]# at 20:03
+at> df -h >> /tmp/dfoutput
+at> <EOT>
+job 2 at Fri Aug  8 20:03:00 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:00:44 IST 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at 20:04
+at> ls -l /var >> /dev/pts/1
+at> <EOT>
+job 3 at Fri Aug  8 20:04:00 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:01:43 IST 2025
+[root@nfscli /]#
+[root@nfscli /]# at -l
+2       Fri Aug  8 20:03:00 2025 a root
+3       Fri Aug  8 20:04:00 2025 a root
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# atq
+2       Fri Aug  8 20:03:00 2025 a root
+3       Fri Aug  8 20:04:00 2025 a root
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at -c 3
+#!/bin/sh
+# atrun uid=0 gid=0
+# mail root 0
+umask 22
+XDG_SESSION_ID=1; export XDG_SESSION_ID
+HOSTNAME=nfscli; export HOSTNAME
+SHELL=/bin/bash; export SHELL
+HISTSIZE=1000; export HISTSIZE
+SSH_CLIENT=192.168.29.211\ 63877\ 22; export SSH_CLIENT
+SSH_TTY=/dev/pts/0; export SSH_TTY
+USER=root; export USER
+LS_COLORS=rs=0:di=01\;34:ln=01\;36:mh=00:pi=40\;33:so=01\;35:do=01\;35:bd=40\;33\;01:cd=40\;33\;01:or=40\;31\;01:mi=01\;05\;37\;41:su=37\;41:sg=30\;43:ca=30\;41:tw=30\;42:ow=34\;42:st=37\;44:ex=01\;32:\*.tar=01\;31:\*.tgz=01\;31:\*.arc=01\;31:\*.arj=01\;31:\*.taz=01\;31:\*.lha=01\;31:\*.lz4=01\;31:\*.lzh=01\;31:\*.lzma=01\;31:\*.tlz=01\;31:\*.txz=01\;31:\*.tzo=01\;31:\*.t7z=01\;31:\*.zip=01\;31:\*.z=01\;31:\*.Z=01\;31:\*.dz=01\;31:\*.gz=01\;31:\*.lrz=01\;31:\*.lz=01\;31:\*.lzo=01\;31:\*.xz=01\;31:\*.bz2=01\;31:\*.bz=01\;31:\*.tbz=01\;31:\*.tbz2=01\;31:\*.tz=01\;31:\*.deb=01\;31:\*.rpm=01\;31:\*.jar=01\;31:\*.war=01\;31:\*.ear=01\;31:\*.sar=01\;31:\*.rar=01\;31:\*.alz=01\;31:\*.ace=01\;31:\*.zoo=01\;31:\*.cpio=01\;31:\*.7z=01\;31:\*.rz=01\;31:\*.cab=01\;31:\*.jpg=01\;35:\*.jpeg=01\;35:\*.gif=01\;35:\*.bmp=01\;35:\*.pbm=01\;35:\*.pgm=01\;35:\*.ppm=01\;35:\*.tga=01\;35:\*.xbm=01\;35:\*.xpm=01\;35:\*.tif=01\;35:\*.tiff=01\;35:\*.png=01\;35:\*.svg=01\;35:\*.svgz=01\;35:\*.mng=01\;35:\*.pcx=01\;35:\*.mov=01\;35:\*.mpg=01\;35:\*.mpeg=01\;35:\*.m2v=01\;35:\*.mkv=01\;35:\*.webm=01\;35:\*.ogm=01\;35:\*.mp4=01\;35:\*.m4v=01\;35:\*.mp4v=01\;35:\*.vob=01\;35:\*.qt=01\;35:\*.nuv=01\;35:\*.wmv=01\;35:\*.asf=01\;35:\*.rm=01\;35:\*.rmvb=01\;35:\*.flc=01\;35:\*.avi=01\;35:\*.fli=01\;35:\*.flv=01\;35:\*.gl=01\;35:\*.dl=01\;35:\*.xcf=01\;35:\*.xwd=01\;35:\*.yuv=01\;35:\*.cgm=01\;35:\*.emf=01\;35:\*.axv=01\;35:\*.anx=01\;35:\*.ogv=01\;35:\*.ogx=01\;35:\*.aac=01\;36:\*.au=01\;36:\*.flac=01\;36:\*.mid=01\;36:\*.midi=01\;36:\*.mka=01\;36:\*.mp3=01\;36:\*.mpc=01\;36:\*.ogg=01\;36:\*.ra=01\;36:\*.wav=01\;36:\*.axa=01\;36:\*.oga=01\;36:\*.spx=01\;36:\*.xspf=01\;36:; export LS_COLORS
+MAIL=/var/spool/mail/root; export MAIL
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin; export PATH
+PWD=/; export PWD
+LANG=en_US.UTF-8; export LANG
+HISTCONTROL=ignoredups; export HISTCONTROL
+SHLVL=1; export SHLVL
+HOME=/root; export HOME
+LOGNAME=root; export LOGNAME
+SSH_CONNECTION=192.168.29.211\ 63877\ 192.168.29.160\ 22; export SSH_CONNECTION
+LESSOPEN=\|\|/usr/bin/lesspipe.sh\ %s; export LESSOPEN
+XDG_RUNTIME_DIR=/run/user/0; export XDG_RUNTIME_DIR
+OLDPWD=/root; export OLDPWD
+cd / || {
+         echo 'Execution directory inaccessible' >&2
+         exit 1
+}
+${SHELL:-/bin/sh} << 'marcinDELIMITER69eaad6a'
+ls -l /var >> /dev/pts/1
+
+marcinDELIMITER69eaad6a
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:03:01 IST 2025
+[root@nfscli /]#
+[root@nfscli /]# at -l
+3       Fri Aug  8 20:04:00 2025 a root
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# who
+root     pts/0        2025-08-08 19:56 (192.168.29.211)
+root     pts/1        2025-08-08 19:57 (192.168.29.211)
+[root@nfscli /]# who am i
+root     pts/0        2025-08-08 19:56 (192.168.29.211)
+[root@nfscli /]# wall
+The server is going to be reboot in next 15 min. Save your data before that
+[root@nfscli /]#
+Broadcast message from root@nfscli (pts/0) (Fri Aug  8 20:05:34 2025):
+
+The server is going to be reboot in next 15 min. Save your data before that
+
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at -l
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# tail /etc/passwd
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:997:User for polkitd:/:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# useradd ashok
+[root@nfscli /]# passwd ashok
+Changing password for user ashok.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@nfscli /]#
+[root@nfscli /]# at -l
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:10:14 IST 2025
+[root@nfscli /]#
+[root@nfscli /]# at -l
+7       Fri Aug  8 20:19:00 2025 a ashok
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at -l
+7       Fri Aug  8 20:19:00 2025 a ashok
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# atrm 7
+[root@nfscli /]# at -l
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/at.deny
+
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# echo "ashok" >> /etc/at.deny
+[root@nfscli /]# cat /etc/at.deny
+
+ashok
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# useradd admin
+[root@nfscli /]# passwd admin
+Changing password for user admin.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@nfscli /]#
+[root@nfscli /]# at -l
+8       Fri Aug  8 20:25:00 2025 a admin
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/at.deny
+
+ashok
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# > /etc/at.deny
+[root@nfscli /]# cat /etc/at.deny
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# vi /etc/at.allow
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/at.allow
+root
+ashok
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# at -l
+8       Fri Aug  8 20:25:00 2025 a admin
+9       Fri Aug  8 20:25:00 2025 a ashok
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# useradd temproot
+[root@nfscli /]# passwd temproot
+Changing password for user temproot.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/crontab
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+# For details see man 4 crontabs
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
+
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:33:28 IST 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -e
+no crontab for root - using an empty one
+crontab: installing new crontab
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -l
+30      20      08      08      5       /usr/bin/df -h >> /tmp/crondfoutput
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# ls -l /var/spool/cron/
+total 4
+-rw------- 1 root root 50 Aug  8 20:35 root
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /var/spool/cron/root
+30      20      08      08      5       /usr/bin/df -h >> /tmp/crondfoutput
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# ls -l /var/spool/cron/
+total 8
+-rw------- 1 admin admin 57 Aug  8 20:39 admin
+-rw------- 1 root  root  50 Aug  8 20:35 root
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /var/spool/cron/admin
+20      20      08      08      *       /usr/bin/ls -l / >> /home/admin/rootfsinfo
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -e
+crontab: installing new crontab
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -l
+30      20      08      08      5       /usr/bin/df -h >> /tmp/crondfoutput
+
+######### Cron for appication restart ###############
+00      01      5,10,15,20,25,30        *       2,3,4   /usr/bin/df -h >> /tmp/crondfoutput
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -r
+[root@nfscli /]# crontab -l
+no crontab for root
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# ls -l /var/spool/cron/
+total 4
+-rw------- 1 admin admin 57 Aug  8 20:39 admin
+[root@nfscli /]#
+[root@nfscli /]# crontab -e
+no crontab for root - using an empty one
+crontab: installing new crontab
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -l
+30      20      08      08      5       /usr/bin/df -h >> /tmp/crondfoutput
+
+######### Cron for appication restart ###############
+#00      01      5,10,15,20,25,30        *       2,3,4   /usr/bin/df -h >> /tmp/crondfoutput
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:45:01 IST 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -e
+crontab: installing new crontab
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:45:58 IST 2025
+[root@nfscli /]#
+[root@nfscli /]# crontab -e
+crontab: installing new crontab
+[root@nfscli /]# \
+> ^C
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# crontab -l
+30      20      08      08      5       /usr/bin/df -h >> /tmp/crondfoutput
+
+######### Cron for appication restart ###############
+#00      01      5,10,15,20,25,30        *       2,3,4   /usr/bin/df -h >> /tmp/crondfoutput
+
+47      20      08      08      5       /usr/bin/df -h >> /dev/pts/2
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# date
+Fri Aug  8 20:46:16 IST 2025
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# who
+root     pts/0        2025-08-08 19:56 (192.168.29.211)
+root     pts/1        2025-08-08 19:57 (192.168.29.211)
+ashok    pts/2        2025-08-08 20:08 (192.168.29.211)
+admin    pts/3        2025-08-08 20:20 (192.168.29.211)
+temproot pts/4        2025-08-08 20:25 (192.168.29.211)
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# tail /var/log/secure
+Aug  8 20:47:00 c111abc sshd[3143]: Failed password for invalid user default from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37158 ssh2
+Aug  8 20:47:00 c111abc sshd[3143]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37158:11: SSH client disconnected [preauth]
+Aug  8 20:47:00 c111abc sshd[3143]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37158 [preauth]
+Aug  8 20:47:00 c111abc sshd[3146]: Invalid user default from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37159
+Aug  8 20:47:00 c111abc sshd[3146]: input_userauth_request: invalid user default [preauth]
+Aug  8 20:47:00 c111abc sshd[3146]: pam_unix(sshd:auth): check pass; user unknown
+Aug  8 20:47:00 c111abc sshd[3146]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=2405:201:c037:d269:c268:ccff:fe6b:db71
+Aug  8 20:47:03 c111abc sshd[3146]: Failed password for invalid user default from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37159 ssh2
+Aug  8 20:47:03 c111abc sshd[3146]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37159:11: SSH client disconnected [preauth]
+Aug  8 20:47:03 c111abc sshd[3146]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 37159 [preauth]
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# tail /var/log/cron
+Aug  8 20:45:55 c111abc crontab[3094]: PAM pam_end: NULL pam handle passed
+Aug  8 20:46:01 c111abc crond[1247]: (root) RELOAD (/var/spool/cron/root)
+Aug  8 20:46:03 c111abc crontab[3119]: (root) BEGIN EDIT (root)
+Aug  8 20:46:07 c111abc crontab[3119]: (root) REPLACE (root)
+Aug  8 20:46:07 c111abc crontab[3119]: (root) END EDIT (root)
+Aug  8 20:46:07 c111abc crontab[3119]: PAM pam_end: NULL pam handle passed
+Aug  8 20:46:13 c111abc crontab[3123]: (root) LIST (root)
+Aug  8 20:46:13 c111abc crontab[3123]: PAM pam_end: NULL pam handle passed
+Aug  8 20:47:01 c111abc crond[1247]: (root) RELOAD (/var/spool/cron/root)
+Aug  8 20:47:01 c111abc CROND[3149]: (root) CMD (/usr/bin/df -h >> /dev/pts/2)
+[root@nfscli /]#
+[root@nfscli /]# systemctl status crond
+● crond.service - Command Scheduler
+   Loaded: loaded (/usr/lib/systemd/system/crond.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2025-08-08 19:56:02 IST; 55min ago
+ Main PID: 1247 (crond)
+   CGroup: /system.slice/crond.service
+           └─1247 /usr/sbin/crond -n
+
+Aug 08 19:56:02 nfscli systemd[1]: Started Command Scheduler.
+Aug 08 19:56:02 nfscli systemd[1]: Starting Command Scheduler...
+Aug 08 19:56:02 nfscli crond[1247]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 40% if used.)
+Aug 08 19:56:02 nfscli crond[1247]: (CRON) INFO (running with inotify support)
+Aug 08 20:46:01 nfscli crond[1247]: (root) RELOAD (/var/spool/cron/root)
+Aug 08 20:47:01 nfscli crond[1247]: (root) RELOAD (/var/spool/cron/root)
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# vi /etc/cron.deny
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/cron.deny
+admin
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/cron.
+cron.d/       cron.daily/   cron.deny     cron.hourly/  cron.monthly/ cron.weekly/
+[root@nfscli /]# vi /etc/cron.allow
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/cron.allow
+root
+admin
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/cron.deny
+admin
+[root@nfscli /]#
+[root@nfscli /]# > /etc/cron.deny
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/cron.deny
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cat /etc/at.allow
+root
+ashok
+[root@nfscli /]# cat /etc/cron.allow
+root
+admin
+[root@nfscli /]#
+[root@nfscli /]# who
+root     pts/0        2025-08-08 19:56 (192.168.29.211)
+root     pts/1        2025-08-08 19:57 (192.168.29.211)
+ashok    pts/2        2025-08-08 20:08 (192.168.29.211)
+admin    pts/3        2025-08-08 20:20 (192.168.29.211)
+temproot pts/4        2025-08-08 20:25 (192.168.29.211)
+[root@nfscli /]#
