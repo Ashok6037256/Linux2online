@@ -1,0 +1,1230 @@
+Class 32 13/08/2025
+
+Process Management
+===================
+A Linux process is a program running in the Linux system. Depending on linux distributions, it's also known as service. In Linux community however, a Linux process is called daemon. 
+
+When you start a program or running an application in Linux, you actually execute that program. A Linux process (a daemon), running in foreground or in the background, uses memory and CPU resources. That's why we need to manage Linux process. Keeping unused Linux process running in the system is a waste and also exposes your system to security threat. 
+ 
+In Linux, every running process or daemon is given an identity number called PID (ProcessID). The process id is unique. We can terminate unused program in the system by stopping its processID. 
+ 
+There are generally three types of processes that run on Linux.  
+ 
+1) Interactive Processes 
+2) System Process or Daemon 
+3) Automatic or batch processes
+
+Interactive Processes:
+======================
+Interactive processes are those processes that are invoked by a user and can interact with the user. VI is an example of an interactive process. Interactive processes can be classified into foreground and background processes.
+
+System Process or Daemon:
+=========================
+The second general type of process that runs on Linux is a System Process or Daemon. Daemon is the term used to refer to processes that are running on the computer and provide services but do not interact with the console. Most server software is implemented as a daemon. Apache, Samba, and sshd are examples of daemons.  
+
+Automatic Processes:
+====================
+Automatic processes are not connected to a terminal. Rather, these are tasks that can be queued into a spooler area, where they wait to be executed on a FIFO (first-in, first-out) basis. Such tasks can be executed using one of two criteria.At certain date and time: done using the "at"command.
+
+Parent and Child Process:
+========================= 
+1) The Process which starts or creates another process is called parent process and the one which got created is known as child process. 
+2) Every process will be having a parent process except systemd process. 
+3) The systemd process is the parent of all the process in the system. It is the first process which gets started by the kernel at the time of booting. 
+4) The PID of systemd will be 1. 
+5) Only after systemd process gets started the remaining process are called by it, and hence it is responsible for all the remaining processes in the system. 
+
+# ps	    =====> Check the running processess info of the session
+# ps -ef    =====> this will show all running processes information of the server
+# ps -aux   =====> CPU usage sorting of running processes
+# top	    =====> Dynamical running processes information
+
+Signals in Linux:
+=================
+Every signal has a unique signal name, an abbreviation that begins with SIG (SIGINT for interrupt signal, for example). Each signal name is a macro which stands for a positive integer - the signal number for that kind of signal. Your programs should never make assumptions about the numeric code for a particular kind of signal, but rather refer to them always by the names defined.
+
+The most common signals used are:
+================================= 
+1 for reloading the process 
+9 for killing the process 
+15 for Terminating the process 
+20 for stopping the process 
+
+
+# kill -9 PID  ===> kill the process
+# kill -1 PID  ===> Reload the process
+# pkill -9 processname
+# pkill -1 processname
+
+nohup command =====> the procees will run eventhogh the parent got killed
+
+Lab Sessions:
+=============
+login as: root
+root@192.168.29.160's password:
+Last login: Wed Aug 13 19:57:02 2025
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps
+   PID TTY          TIME CMD
+ 12253 pts/0    00:00:00 bash
+ 12286 pts/0    00:00:00 ps
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i 12253
+root      12253  12249  0 19:57 pts/0    00:00:00 -bash
+root      12292  12253  0 19:58 pts/0    00:00:00 ps -ef
+root      12293  12253  0 19:58 pts/0    00:00:00 grep --color=auto -i 12253
+[root@nfscli ~]# ps -ef |grep -i 12249
+root      12249   1058  0 19:57 ?        00:00:00 sshd: root@pts/0
+root      12253  12249  0 19:57 pts/0    00:00:00 -bash
+root      12312  12253  0 19:58 pts/0    00:00:00 grep --color=auto -i 12249
+[root@nfscli ~]# ps -ef |grep -i 1058
+root       1058      1  0 19:36 ?        00:00:00 /usr/sbin/sshd -D
+root      12249   1058  0 19:57 ?        00:00:00 sshd: root@pts/0
+root      12317  12253  0 19:59 pts/0    00:00:00 grep --color=auto -i 1058
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i 1
+root          1      0  0 19:35 ?        00:00:02 /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+root          2      0  0 19:35 ?        00:00:00 [kthreadd]
+root          3      2  0 19:35 ?        00:00:00 [ksoftirqd/0]
+root          5      2  0 19:35 ?        00:00:00 [kworker/0:0H]
+root          7      2  0 19:35 ?        00:00:00 [migration/0]
+root          8      2  0 19:35 ?        00:00:00 [rcu_bh]
+root          9      2  0 19:35 ?        00:00:00 [rcu_sched]
+root         10      2  0 19:35 ?        00:00:00 [watchdog/0]
+root         12      2  0 19:35 ?        00:00:00 [kdevtmpfs]
+root         13      2  0 19:35 ?        00:00:00 [netns]
+root         14      2  0 19:35 ?        00:00:00 [khungtaskd]
+root         15      2  0 19:35 ?        00:00:00 [writeback]
+root         16      2  0 19:35 ?        00:00:00 [kintegrityd]
+root         17      2  0 19:35 ?        00:00:00 [bioset]
+root         18      2  0 19:35 ?        00:00:00 [kblockd]
+root         19      2  0 19:35 ?        00:00:00 [md]
+root         25      2  0 19:36 ?        00:00:00 [kswapd0]
+root         26      2  0 19:36 ?        00:00:00 [ksmd]
+root         27      2  0 19:36 ?        00:00:00 [khugepaged]
+root         28      2  0 19:36 ?        00:00:00 [crypto]
+root         36      2  0 19:36 ?        00:00:00 [kthrotld]
+root         38      2  0 19:36 ?        00:00:00 [kmpath_rdacd]
+root         39      2  0 19:36 ?        00:00:00 [kpsmoused]
+root         41      2  0 19:36 ?        00:00:00 [ipv6_addrconf]
+root         60      2  0 19:36 ?        00:00:00 [deferwq]
+root         92      2  0 19:36 ?        00:00:00 [kauditd]
+root        266      2  0 19:36 ?        00:00:00 [mpt_poll_0]
+root        267      2  0 19:36 ?        00:00:00 [ata_sff]
+root        268      2  0 19:36 ?        00:00:00 [mpt/0]
+root        272      2  0 19:36 ?        00:00:00 [scsi_eh_0]
+root        274      2  0 19:36 ?        00:00:00 [scsi_tmf_0]
+root        278      2  0 19:36 ?        00:00:00 [scsi_eh_1]
+root        280      2  0 19:36 ?        00:00:00 [scsi_tmf_1]
+root        281      2  0 19:36 ?        00:00:00 [scsi_eh_2]
+root        283      2  0 19:36 ?        00:00:00 [scsi_tmf_2]
+root        287      2  0 19:36 ?        00:00:00 [ttm_swap]
+root        316      2  0 19:36 ?        00:00:00 [scsi_eh_3]
+root        317      2  0 19:36 ?        00:00:00 [scsi_tmf_3]
+root        318      2  0 19:36 ?        00:00:00 [scsi_eh_4]
+root        319      2  0 19:36 ?        00:00:00 [scsi_tmf_4]
+root        320      2  0 19:36 ?        00:00:00 [scsi_eh_5]
+root        321      2  0 19:36 ?        00:00:00 [scsi_tmf_5]
+root        322      2  0 19:36 ?        00:00:00 [scsi_eh_6]
+root        323      2  0 19:36 ?        00:00:00 [scsi_tmf_6]
+root        324      2  0 19:36 ?        00:00:00 [scsi_eh_7]
+root        325      2  0 19:36 ?        00:00:00 [scsi_tmf_7]
+root        326      2  0 19:36 ?        00:00:00 [scsi_eh_8]
+root        327      2  0 19:36 ?        00:00:00 [scsi_tmf_8]
+root        328      2  0 19:36 ?        00:00:00 [scsi_eh_9]
+root        329      2  0 19:36 ?        00:00:00 [scsi_tmf_9]
+root        330      2  0 19:36 ?        00:00:00 [scsi_eh_10]
+root        331      2  0 19:36 ?        00:00:00 [scsi_tmf_10]
+root        332      2  0 19:36 ?        00:00:00 [scsi_eh_11]
+root        333      2  0 19:36 ?        00:00:00 [scsi_tmf_11]
+root        334      2  0 19:36 ?        00:00:00 [scsi_eh_12]
+root        335      2  0 19:36 ?        00:00:00 [scsi_tmf_12]
+root        336      2  0 19:36 ?        00:00:00 [scsi_eh_13]
+root        337      2  0 19:36 ?        00:00:00 [scsi_tmf_13]
+root        338      2  0 19:36 ?        00:00:00 [scsi_eh_14]
+root        339      2  0 19:36 ?        00:00:00 [scsi_tmf_14]
+root        340      2  0 19:36 ?        00:00:00 [scsi_eh_15]
+root        341      2  0 19:36 ?        00:00:00 [scsi_tmf_15]
+root        342      2  0 19:36 ?        00:00:00 [scsi_eh_16]
+root        343      2  0 19:36 ?        00:00:00 [scsi_tmf_16]
+root        344      2  0 19:36 ?        00:00:00 [scsi_eh_17]
+root        345      2  0 19:36 ?        00:00:00 [scsi_tmf_17]
+root        346      2  0 19:36 ?        00:00:00 [scsi_eh_18]
+root        347      2  0 19:36 ?        00:00:00 [scsi_tmf_18]
+root        348      2  0 19:36 ?        00:00:00 [scsi_eh_19]
+root        349      2  0 19:36 ?        00:00:00 [scsi_tmf_19]
+root        350      2  0 19:36 ?        00:00:00 [scsi_eh_20]
+root        351      2  0 19:36 ?        00:00:00 [scsi_tmf_20]
+root        352      2  0 19:36 ?        00:00:00 [scsi_eh_21]
+root        353      2  0 19:36 ?        00:00:00 [scsi_tmf_21]
+root        354      2  0 19:36 ?        00:00:00 [scsi_eh_22]
+root        355      2  0 19:36 ?        00:00:00 [scsi_tmf_22]
+root        356      2  0 19:36 ?        00:00:00 [scsi_eh_23]
+root        357      2  0 19:36 ?        00:00:00 [scsi_tmf_23]
+root        358      2  0 19:36 ?        00:00:00 [scsi_eh_24]
+root        359      2  0 19:36 ?        00:00:00 [scsi_tmf_24]
+root        360      2  0 19:36 ?        00:00:00 [scsi_eh_25]
+root        361      2  0 19:36 ?        00:00:00 [scsi_tmf_25]
+root        362      2  0 19:36 ?        00:00:00 [scsi_eh_26]
+root        363      2  0 19:36 ?        00:00:00 [scsi_tmf_26]
+root        364      2  0 19:36 ?        00:00:00 [scsi_eh_27]
+root        365      2  0 19:36 ?        00:00:00 [scsi_tmf_27]
+root        366      2  0 19:36 ?        00:00:00 [scsi_eh_28]
+root        367      2  0 19:36 ?        00:00:00 [scsi_tmf_28]
+root        368      2  0 19:36 ?        00:00:00 [scsi_eh_29]
+root        369      2  0 19:36 ?        00:00:00 [scsi_tmf_29]
+root        370      2  0 19:36 ?        00:00:00 [scsi_eh_30]
+root        371      2  0 19:36 ?        00:00:00 [scsi_tmf_30]
+root        372      2  0 19:36 ?        00:00:00 [scsi_eh_31]
+root        373      2  0 19:36 ?        00:00:00 [scsi_tmf_31]
+root        374      2  0 19:36 ?        00:00:00 [scsi_eh_32]
+root        375      2  0 19:36 ?        00:00:00 [scsi_tmf_32]
+root        391      2  0 19:36 ?        00:00:00 [kworker/u256:20]
+root        400      2  0 19:36 ?        00:00:00 [kworker/u256:29]
+root        446      2  0 19:36 ?        00:00:00 [kdmflush]
+root        447      2  0 19:36 ?        00:00:00 [bioset]
+root        463      2  0 19:36 ?        00:00:00 [bioset]
+root        464      2  0 19:36 ?        00:00:00 [xfsalloc]
+root        465      2  0 19:36 ?        00:00:00 [xfs_mru_cache]
+root        466      2  0 19:36 ?        00:00:00 [xfs-buf/dm-0]
+root        467      2  0 19:36 ?        00:00:00 [xfs-data/dm-0]
+root        468      2  0 19:36 ?        00:00:00 [xfs-conv/dm-0]
+root        469      2  0 19:36 ?        00:00:00 [xfs-cil/dm-0]
+root        470      2  0 19:36 ?        00:00:00 [xfs-reclaim/dm-]
+root        471      2  0 19:36 ?        00:00:00 [xfs-log/dm-0]
+root        472      2  0 19:36 ?        00:00:00 [xfs-eofblocks/d]
+root        473      2  0 19:36 ?        00:00:00 [xfsaild/dm-0]
+root        543      2  0 19:36 ?        00:00:00 [kworker/0:1H]
+root        551      1  0 19:36 ?        00:00:00 /usr/lib/systemd/systemd-journald
+root        575      1  0 19:36 ?        00:00:00 /usr/sbin/lvmetad -f
+root        577      2  0 19:36 ?        00:00:00 [rpciod]
+root        578      2  0 19:36 ?        00:00:00 [xprtiod]
+root        584      1  0 19:36 ?        00:00:00 /usr/lib/systemd/systemd-udevd
+root        599      2  0 19:36 ?        00:00:00 [nfit]
+root        635      2  0 19:36 ?        00:00:00 [kworker/u257:0]
+root        636      2  0 19:36 ?        00:00:00 [hci0]
+root        637      2  0 19:36 ?        00:00:00 [hci0]
+root        639      2  0 19:36 ?        00:00:00 [kworker/u257:2]
+root        668      2  0 19:36 ?        00:00:00 [xfs-buf/sda1]
+root        669      2  0 19:36 ?        00:00:00 [xfs-data/sda1]
+root        670      2  0 19:36 ?        00:00:00 [xfs-conv/sda1]
+root        671      2  0 19:36 ?        00:00:00 [xfs-cil/sda1]
+root        672      2  0 19:36 ?        00:00:00 [xfs-reclaim/sda]
+root        673      2  0 19:36 ?        00:00:00 [xfs-log/sda1]
+root        674      2  0 19:36 ?        00:00:00 [xfs-eofblocks/s]
+root        675      2  0 19:36 ?        00:00:00 [xfsaild/sda1]
+root        685      2  0 19:36 ?        00:00:00 [kdmflush]
+root        686      2  0 19:36 ?        00:00:00 [bioset]
+root        688      2  0 19:36 ?        00:00:00 [kdmflush]
+root        689      2  0 19:36 ?        00:00:00 [bioset]
+root        691      2  0 19:36 ?        00:00:00 [kdmflush]
+root        692      2  0 19:36 ?        00:00:00 [bioset]
+root        694      2  0 19:36 ?        00:00:00 [kdmflush]
+root        695      2  0 19:36 ?        00:00:00 [bioset]
+root        703      2  0 19:36 ?        00:00:00 [xfs-buf/dm-1]
+root        704      2  0 19:36 ?        00:00:00 [xfs-data/dm-1]
+root        705      2  0 19:36 ?        00:00:00 [xfs-conv/dm-1]
+root        706      2  0 19:36 ?        00:00:00 [xfs-cil/dm-1]
+root        707      2  0 19:36 ?        00:00:00 [xfs-reclaim/dm-]
+root        708      2  0 19:36 ?        00:00:00 [xfs-log/dm-1]
+root        709      2  0 19:36 ?        00:00:00 [xfs-eofblocks/d]
+root        710      2  0 19:36 ?        00:00:00 [xfsaild/dm-1]
+root        713      2  0 19:36 ?        00:00:00 [xfs-buf/dm-4]
+root        714      2  0 19:36 ?        00:00:00 [xfs-data/dm-4]
+root        715      2  0 19:36 ?        00:00:00 [xfs-conv/dm-4]
+root        716      2  0 19:36 ?        00:00:00 [xfs-cil/dm-4]
+root        717      2  0 19:36 ?        00:00:00 [xfs-reclaim/dm-]
+root        718      2  0 19:36 ?        00:00:00 [xfs-log/dm-4]
+root        719      2  0 19:36 ?        00:00:00 [xfs-eofblocks/d]
+root        720      2  0 19:36 ?        00:00:00 [xfsaild/dm-4]
+root        723      2  0 19:36 ?        00:00:00 [xfs-buf/dm-3]
+root        724      2  0 19:36 ?        00:00:00 [xfs-data/dm-3]
+root        725      2  0 19:36 ?        00:00:00 [xfs-conv/dm-3]
+root        726      2  0 19:36 ?        00:00:00 [xfs-cil/dm-3]
+root        727      2  0 19:36 ?        00:00:00 [xfs-reclaim/dm-]
+root        728      2  0 19:36 ?        00:00:00 [xfs-log/dm-3]
+root        729      2  0 19:36 ?        00:00:00 [xfs-eofblocks/d]
+root        730      2  0 19:36 ?        00:00:00 [xfsaild/dm-3]
+root        737      2  0 19:36 ?        00:00:00 [xfs-buf/dm-2]
+root        738      2  0 19:36 ?        00:00:00 [xfs-data/dm-2]
+root        739      2  0 19:36 ?        00:00:00 [xfs-conv/dm-2]
+root        740      2  0 19:36 ?        00:00:00 [xfs-cil/dm-2]
+root        741      2  0 19:36 ?        00:00:00 [xfs-reclaim/dm-]
+root        742      2  0 19:36 ?        00:00:00 [xfs-log/dm-2]
+root        743      2  0 19:36 ?        00:00:00 [xfs-eofblocks/d]
+root        744      2  0 19:36 ?        00:00:00 [xfsaild/dm-2]
+root        773      1  0 19:36 ?        00:00:00 /sbin/auditd
+root        777      1  0 19:36 ?        00:00:00 /usr/sbin/rpc.idmapd
+root        797      1  0 19:36 ?        00:00:00 /usr/sbin/rsyslogd -n
+polkitd     799      1  0 19:36 ?        00:00:00 /usr/lib/polkit-1/polkitd --no-debug
+dbus        800      1  0 19:36 ?        00:00:00 /bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root        806      1  0 19:36 ?        00:00:00 /usr/sbin/NetworkManager --no-daemon
+root        814      1  0 19:36 ?        00:00:00 /usr/bin/VGAuthService -s
+root        817      1  0 19:36 ?        00:00:02 /usr/bin/vmtoolsd
+root        818      1  0 19:36 ?        00:00:00 /usr/lib/systemd/systemd-logind
+root        830      1  0 19:36 ?        00:00:00 /usr/sbin/gssproxy -D
+root        840      1  0 19:36 ?        00:00:00 /usr/sbin/crond -n
+root        843      1  0 19:36 ?        00:00:00 /usr/sbin/atd -f
+root        845      1  0 19:36 ?        00:00:00 login -- root
+root       1056      1  0 19:36 ?        00:00:00 /usr/bin/python -Es /usr/sbin/tuned -l -P
+root       1058      1  0 19:36 ?        00:00:00 /usr/sbin/sshd -D
+root       1071      1  0 19:36 ?        00:00:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+root       1082      1  0 19:36 ?        00:00:00 rhnsd
+root       1083      1  0 19:36 ?        00:00:00 /usr/bin/rhsmcertd
+rpcuser    1090      1  0 19:36 ?        00:00:00 /usr/sbin/rpc.statd
+root       1095      1  0 19:36 ?        00:00:00 /usr/sbin/automount --pid-file /run/autofs.pid
+rpc        1105      1  0 19:36 ?        00:00:00 /sbin/rpcbind -w
+root       1164      1  0 19:36 ?        00:00:00 /usr/sbin/rpc.mountd
+root       1226      2  0 19:36 ?        00:00:00 [nfsd4_callbacks]
+root       1228      2  0 19:36 ?        00:00:00 [lockd]
+root       1255      2  0 19:36 ?        00:00:00 [nfsd]
+root       1257      2  0 19:36 ?        00:00:00 [nfsd]
+root       1258      2  0 19:36 ?        00:00:00 [nfsd]
+root       1260      2  0 19:36 ?        00:00:00 [nfsd]
+root       1261      2  0 19:36 ?        00:00:00 [nfsd]
+root       1262      2  0 19:36 ?        00:00:00 [nfsd]
+root       1264      2  0 19:36 ?        00:00:00 [nfsd]
+root       1267      2  0 19:36 ?        00:00:00 [nfsd]
+root       1879      1  0 19:36 ?        00:00:00 /usr/libexec/postfix/master -w
+postfix    2084   1879  0 19:36 ?        00:00:00 pickup -l -t unix -u
+postfix    2085   1879  0 19:36 ?        00:00:00 qmgr -l -t unix -u
+root      11980      2  0 19:46 ?        00:00:00 [kworker/0:2]
+root      12101      2  0 19:51 ?        00:00:00 [kworker/0:1]
+root      12208      2  0 19:56 ?        00:00:00 [kworker/0:0]
+root      12230    845  0 19:57 tty1     00:00:00 -bash
+root      12249   1058  0 19:57 ?        00:00:00 sshd: root@pts/0
+root      12253  12249  0 19:57 pts/0    00:00:00 -bash
+root      12319  12253  0 19:59 pts/0    00:00:00 ps -ef
+root      12320  12253  0 19:59 pts/0    00:00:00 grep --color=auto -i 1
+[root@nfscli ~]# ps -ef |grep -i 1058
+root       1058      1  0 19:36 ?        00:00:00 /usr/sbin/sshd -D
+root      12249   1058  0 19:57 ?        00:00:00 sshd: root@pts/0
+root      12357   1058  0 20:00 ?        00:00:00 sshd: unknown [priv]
+root      12360  12253  0 20:00 pts/0    00:00:00 grep --color=auto -i 1058
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps
+   PID TTY          TIME CMD
+ 12253 pts/0    00:00:00 bash
+ 12385 pts/0    00:00:00 ps
+[root@nfscli ~]# ps -ef |wc -l
+215
+[root@nfscli ~]# ps -aux |more
+USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          1  0.1  0.2 125284  3832 ?        Ss   19:35   0:02 /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+root          2  0.0  0.0      0     0 ?        S    19:35   0:00 [kthreadd]
+root          3  0.0  0.0      0     0 ?        S    19:35   0:00 [ksoftirqd/0]
+root          5  0.0  0.0      0     0 ?        S<   19:35   0:00 [kworker/0:0H]
+root          7  0.0  0.0      0     0 ?        S    19:35   0:00 [migration/0]
+root          8  0.0  0.0      0     0 ?        S    19:35   0:00 [rcu_bh]
+root          9  0.0  0.0      0     0 ?        R    19:35   0:00 [rcu_sched]
+root         10  0.0  0.0      0     0 ?        S    19:35   0:00 [watchdog/0]
+root         12  0.0  0.0      0     0 ?        S    19:35   0:00 [kdevtmpfs]
+root         13  0.0  0.0      0     0 ?        S<   19:35   0:00 [netns]
+root         14  0.0  0.0      0     0 ?        S    19:35   0:00 [khungtaskd]
+root         15  0.0  0.0      0     0 ?        S<   19:35   0:00 [writeback]
+root         16  0.0  0.0      0     0 ?        S<   19:35   0:00 [kintegrityd]
+root         17  0.0  0.0      0     0 ?        S<   19:35   0:00 [bioset]
+root         18  0.0  0.0      0     0 ?        S<   19:35   0:00 [kblockd]
+root         19  0.0  0.0      0     0 ?        S<   19:35   0:00 [md]
+root         25  0.0  0.0      0     0 ?        S    19:36   0:00 [kswapd0]
+root         26  0.0  0.0      0     0 ?        SN   19:36   0:00 [ksmd]
+root         27  0.0  0.0      0     0 ?        SN   19:36   0:00 [khugepaged]
+root         28  0.0  0.0      0     0 ?        S<   19:36   0:00 [crypto]
+root         36  0.0  0.0      0     0 ?        S<   19:36   0:00 [kthrotld]
+root         38  0.0  0.0      0     0 ?        S<   19:36   0:00 [kmpath_rdacd]
+root         39  0.0  0.0      0     0 ?        S<   19:36   0:00 [kpsmoused]
+root         41  0.0  0.0      0     0 ?        S<   19:36   0:00 [ipv6_addrconf]
+root         60  0.0  0.0      0     0 ?        S<   19:36   0:00 [deferwq]
+root         92  0.0  0.0      0     0 ?        S    19:36   0:00 [kauditd]
+root        266  0.0  0.0      0     0 ?        S<   19:36   0:00 [mpt_poll_0]
+root        267  0.0  0.0      0     0 ?        S<   19:36   0:00 [ata_sff]
+root        268  0.0  0.0      0     0 ?        S<   19:36   0:00 [mpt/0]
+root        272  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_0]
+root        274  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_0]
+root        278  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_1]
+root        280  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_1]
+root        281  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_2]
+root        283  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_2]
+root        287  0.0  0.0      0     0 ?        S<   19:36   0:00 [ttm_swap]
+root        316  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_3]
+root        317  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_3]
+root        318  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_4]
+root        319  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_4]
+root        320  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_5]
+root        321  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_5]
+root        322  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_6]
+root        323  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_6]
+root        324  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_7]
+root        325  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_7]
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# top
+top - 20:18:35 up 42 min,  2 users,  load average: 0.25, 0.10, 0.07
+Tasks: 213 total,   3 running, 210 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1865964 total,  1517208 free,   125700 used,   223056 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  1557424 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 12565 root      20   0  157736   2352   1560 R  0.3  0.1   0:02.26 top
+     1 root      20   0  125284   3832   2504 S  0.0  0.2   0:02.38 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+     3 root      20   0       0      0      0 S  0.0  0.0   0:00.45 ksoftirqd/0
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+     9 root      20   0       0      0      0 S  0.0  0.0   0:01.01 rcu_sched
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:00.03 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    25 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kswapd0
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root      39  19       0      0      0 S  0.0  0.0   0:00.01 khugepaged
+    28 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    36 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    39 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    41 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    60 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    92 root      20   0       0      0      0 S  0.0  0.0   0:00.02 kauditd
+   266 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+   267 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ata_sff
+   268 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt/0
+   272 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_0
+   274 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_0
+   278 root      20   0       0      0      0 S  0.0  0.0   0:00.02 scsi_eh_1
+   280 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_1
+   281 root      20   0       0      0      0 S  0.0  0.0   0:00.01 scsi_eh_2
+   283 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_2
+   287 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ttm_swap
+   316 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_3
+   317 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_3
+   318 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_4
+   319 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_4
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -aux |more
+USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          1  0.0  0.2 125284  3832 ?        Ss   19:35   0:02 /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+root          2  0.0  0.0      0     0 ?        S    19:35   0:00 [kthreadd]
+root          3  0.0  0.0      0     0 ?        S    19:35   0:00 [ksoftirqd/0]
+root          5  0.0  0.0      0     0 ?        S<   19:35   0:00 [kworker/0:0H]
+root          7  0.0  0.0      0     0 ?        S    19:35   0:00 [migration/0]
+root          8  0.0  0.0      0     0 ?        S    19:35   0:00 [rcu_bh]
+root          9  0.0  0.0      0     0 ?        R    19:35   0:01 [rcu_sched]
+root         10  0.0  0.0      0     0 ?        S    19:35   0:00 [watchdog/0]
+root         12  0.0  0.0      0     0 ?        S    19:35   0:00 [kdevtmpfs]
+root         13  0.0  0.0      0     0 ?        S<   19:35   0:00 [netns]
+root         14  0.0  0.0      0     0 ?        S    19:35   0:00 [khungtaskd]
+root         15  0.0  0.0      0     0 ?        S<   19:35   0:00 [writeback]
+root         16  0.0  0.0      0     0 ?        S<   19:35   0:00 [kintegrityd]
+root         17  0.0  0.0      0     0 ?        S<   19:35   0:00 [bioset]
+root         18  0.0  0.0      0     0 ?        S<   19:35   0:00 [kblockd]
+root         19  0.0  0.0      0     0 ?        S<   19:35   0:00 [md]
+root         25  0.0  0.0      0     0 ?        S    19:36   0:00 [kswapd0]
+root         26  0.0  0.0      0     0 ?        SN   19:36   0:00 [ksmd]
+root         27  0.0  0.0      0     0 ?        SN   19:36   0:00 [khugepaged]
+root         28  0.0  0.0      0     0 ?        S<   19:36   0:00 [crypto]
+root         36  0.0  0.0      0     0 ?        S<   19:36   0:00 [kthrotld]
+root         38  0.0  0.0      0     0 ?        S<   19:36   0:00 [kmpath_rdacd]
+root         39  0.0  0.0      0     0 ?        S<   19:36   0:00 [kpsmoused]
+root         41  0.0  0.0      0     0 ?        S<   19:36   0:00 [ipv6_addrconf]
+root         60  0.0  0.0      0     0 ?        S<   19:36   0:00 [deferwq]
+root         92  0.0  0.0      0     0 ?        S    19:36   0:00 [kauditd]
+root        266  0.0  0.0      0     0 ?        S<   19:36   0:00 [mpt_poll_0]
+root        267  0.0  0.0      0     0 ?        S<   19:36   0:00 [ata_sff]
+root        268  0.0  0.0      0     0 ?        S<   19:36   0:00 [mpt/0]
+root        272  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_0]
+root        274  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_0]
+root        278  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_1]
+root        280  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_1]
+root        281  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_2]
+root        283  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_2]
+root        287  0.0  0.0      0     0 ?        S<   19:36   0:00 [ttm_swap]
+root        316  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_3]
+root        317  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_3]
+root        318  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_4]
+root        319  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_4]
+root        320  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_5]
+root        321  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_5]
+root        322  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_6]
+root        323  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_6]
+root        324  0.0  0.0      0     0 ?        S    19:36   0:00 [scsi_eh_7]
+root        325  0.0  0.0      0     0 ?        S<   19:36   0:00 [scsi_tmf_7]
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# kill -l
+ 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL       5) SIGTRAP
+ 6) SIGABRT      7) SIGBUS       8) SIGFPE       9) SIGKILL     10) SIGUSR1
+11) SIGSEGV     12) SIGUSR2     13) SIGPIPE     14) SIGALRM     15) SIGTERM
+16) SIGSTKFLT   17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU     25) SIGXFSZ
+26) SIGVTALRM   27) SIGPROF     28) SIGWINCH    29) SIGIO       30) SIGPWR
+31) SIGSYS      34) SIGRTMIN    35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3
+38) SIGRTMIN+4  39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13
+48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12
+53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7
+58) SIGRTMAX-6  59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i tomcat
+root      12930  12253  0 20:23 pts/0    00:00:00 grep --color=auto -i tomcat
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /tmp/ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /tmp/ashok &
+[1] 12942
+[root@nfscli ~]#
+
+[1]+  Stopped                 vi /tmp/ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+tmpfs                      183M     0  183M   0% /run/user/0
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# mount /dev/sr0 /mnt
+mount: /dev/sr0 is write-protected, mounting read-only
+[root@nfscli ~]#
+[root@nfscli ~]# mkdir /ashok
+[root@nfscli ~]#
+[root@nfscli ~]# cp -r /mnt/* /ashok &
+[2] 12978
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# jobs
+[1]+  Stopped                 vi /tmp/ashok
+[2]-  Running                 cp -i -r /mnt/* /ashok &
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# fg 1
+vi /tmp/ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# jobs
+[2]+  Running                 cp -i -r /mnt/* /ashok &
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /tmp/ashok1 &
+[3] 13034
+[root@nfscli ~]# vi /tmp/ashok2 &
+[4] 13038
+
+[3]+  Stopped                 vi /tmp/ashok1
+[root@nfscli ~]# vi /tmp/ashok3 &
+[5] 13044
+
+[4]+  Stopped                 vi /tmp/ashok2
+[root@nfscli ~]# vi /tmp/ashok4 &
+[6] 13049
+
+[5]+  Stopped                 vi /tmp/ashok3
+[root@nfscli ~]# vi /tmp/ashok5 &
+[7] 13050
+
+[6]+  Stopped                 vi /tmp/ashok4
+[root@nfscli ~]#
+
+[7]+  Stopped                 vi /tmp/ashok5
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# jobs
+[2]   Running                 cp -i -r /mnt/* /ashok &
+[3]   Stopped                 vi /tmp/ashok1
+[4]   Stopped                 vi /tmp/ashok2
+[5]   Stopped                 vi /tmp/ashok3
+[6]-  Stopped                 vi /tmp/ashok4
+[7]+  Stopped                 vi /tmp/ashok5
+[root@nfscli ~]#
+[root@nfscli ~]# top
+top - 20:28:44 up 52 min,  2 users,  load average: 1.01, 0.74, 0.34
+Tasks: 219 total,   2 running, 212 sleeping,   5 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1865964 total,    67668 free,   121556 used,  1676740 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  1546528 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 12249 root      20   0  154772   6416   4956 S  0.3  0.3   0:01.90 sshd
+ 12495 root      20   0       0      0      0 S  0.3  0.0   0:01.59 kworker/0:1
+     1 root      20   0  125284   3832   2504 S  0.0  0.2   0:02.41 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+     3 root      20   0       0      0      0 S  0.0  0.0   0:04.26 ksoftirqd/0
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+     9 root      20   0       0      0      0 R  0.0  0.0   0:01.24 rcu_sched
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:00.20 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    25 root      20   0       0      0      0 S  0.0  0.0   0:01.74 kswapd0
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root      39  19       0      0      0 S  0.0  0.0   0:00.07 khugepaged
+    28 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    36 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    39 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    41 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    60 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    92 root      20   0       0      0      0 S  0.0  0.0   0:00.02 kauditd
+   266 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+   267 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ata_sff
+   268 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt/0
+   272 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_0
+   274 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_0
+   278 root      20   0       0      0      0 S  0.0  0.0   0:00.02 scsi_eh_1
+   280 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_1
+   281 root      20   0       0      0      0 S  0.0  0.0   0:00.01 scsi_eh_2
+   283 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_2
+   287 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ttm_swap
+   316 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_3
+   317 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_3
+   318 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_4
+[2]   Done                    cp -i -r /mnt/* /ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ls -l /ashok/
+total 396
+dr-xr-xr-x 4 root root     54 Aug 13 20:25 addons
+dr-xr-xr-x 3 root root     18 Aug 13 20:25 EFI
+-r--r--r-- 1 root root   8266 Aug 13 20:25 EULA
+-r--r--r-- 1 root root   1455 Aug 13 20:25 extra_files.json
+-r--r--r-- 1 root root  18092 Aug 13 20:25 GPL
+dr-xr-xr-x 3 root root     57 Aug 13 20:25 images
+dr-xr-xr-x 2 root root    217 Aug 13 20:25 isolinux
+dr-xr-xr-x 2 root root     43 Aug 13 20:25 LiveOS
+-r--r--r-- 1 root root    114 Aug 13 20:26 media.repo
+dr-xr-xr-x 2 root root 270336 Aug 13 20:28 Packages
+dr-xr-xr-x 2 root root   4096 Aug 13 20:28 repodata
+-r--r--r-- 1 root root   3375 Aug 13 20:28 RPM-GPG-KEY-redhat-beta
+-r--r--r-- 1 root root   3211 Aug 13 20:28 RPM-GPG-KEY-redhat-release
+-r--r--r-- 1 root root   1796 Aug 13 20:28 TRANS.TBL
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# rm -rf /ashok/*
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cp -r /mnt/* /ashok &
+[8] 13083
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# top
+top - 20:29:46 up 53 min,  2 users,  load average: 0.68, 0.68, 0.34
+Tasks: 219 total,   4 running, 210 sleeping,   5 stopped,   0 zombie
+%Cpu(s):  0.4 us, 21.4 sy,  0.0 ni,  0.0 id, 75.0 wa,  0.0 hi,  3.1 si,  0.0 st
+KiB Mem :  1865964 total,    83416 free,   120904 used,  1661644 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  1548852 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 13083 root      20   0  121312   1180    788 R 16.3  0.1   0:04.55 cp
+   391 root      20   0       0      0      0 R 15.7  0.0   0:40.93 kworker/u256:20
+   817 root      20   0  305076   6132   4768 S  3.1  0.3   0:11.03 vmtoolsd
+     3 root      20   0       0      0      0 S  2.8  0.0   0:04.58 ksoftirqd/0
+ 12249 root      20   0  154772   6416   4956 S  2.5  0.3   0:02.09 sshd
+    25 root      20   0       0      0      0 S  1.6  0.0   0:01.93 kswapd0
+ 12495 root      20   0       0      0      0 R  0.6  0.0   0:02.36 kworker/0:1
+     9 root      20   0       0      0      0 S  0.3  0.0   0:01.27 rcu_sched
+   543 root       0 -20       0      0      0 S  0.3  0.0   0:00.89 kworker/0:1H
+     1 root      20   0  125284   3832   2504 S  0.0  0.2   0:02.41 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:00.20 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root      39  19       0      0      0 S  0.0  0.0   0:00.07 khugepaged
+    28 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    36 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    39 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    41 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    60 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    92 root      20   0       0      0      0 S  0.0  0.0   0:00.02 kauditd
+   266 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+   267 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ata_sff
+   268 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt/0
+   272 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_0
+   274 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_0
+   278 root      20   0       0      0      0 S  0.0  0.0   0:00.02 scsi_eh_1
+   280 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_1
+   281 root      20   0       0      0      0 S  0.0  0.0   0:00.01 scsi_eh_2
+   283 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_2
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i 13083
+root      13083  12253 15 20:29 pts/0    00:00:05 cp -i -r /mnt/addons /mnt/EFI /mnt/EULA /mnt/extra_files.json /mnt/GPL /mnt/images /mnt/isolinux /mnt/LiveOS /mnt/media.repo /mnt/Packages /mnt/repodata /mnt/RPM-GPG-KEY-redhat-beta /mnt/RPM-GPG-KEY-redhat-release /mnt/TRANS.TBL /ashok
+root      13093  12253  0 20:29 pts/0    00:00:00 grep --color=auto -i 13083
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i 13083
+root      13083  12253 14 20:29 pts/0    00:00:09 cp -i -r /mnt/addons /mnt/EFI /mnt/EULA /mnt/extra_files.json /mnt/GPL /mnt/images /mnt/isolinux /mnt/LiveOS /mnt/media.repo /mnt/Packages /mnt/repodata /mnt/RPM-GPG-KEY-redhat-beta /mnt/RPM-GPG-KEY-redhat-release /mnt/TRANS.TBL /ashok
+root      13113  12253  0 20:30 pts/0    00:00:00 grep --color=auto -i 13083
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# top
+top - 20:31:08 up 55 min,  2 users,  load average: 1.20, 0.83, 0.42
+Tasks: 224 total,   2 running, 217 sleeping,   5 stopped,   0 zombie
+%Cpu(s):  2.5 us, 26.4 sy,  0.0 ni,  0.0 id, 60.7 wa,  0.0 hi, 10.4 si,  0.0 st
+KiB Mem :  1865964 total,    75344 free,   125496 used,  1665124 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  1539560 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 13083 root      20   0  121312   1180    788 R 19.0  0.1   0:16.50 cp
+   391 root      20   0       0      0      0 S 10.8  0.0   1:00.47 kworker/u256:20
+ 12495 root      20   0       0      0      0 S  8.2  0.0   0:03.48 kworker/0:1
+   543 root       0 -20       0      0      0 S  6.2  0.0   0:01.38 kworker/0:1H
+     9 root      20   0       0      0      0 S  4.6  0.0   0:01.53 rcu_sched
+ 13124 root      20   0  122660   4720   3612 D  4.3  0.3   0:00.13 sshd
+     3 root      20   0       0      0      0 S  3.6  0.0   0:05.60 ksoftirqd/0
+ 13123 root      20   0  122660   4708   3596 D  2.6  0.3   0:00.08 sshd
+   473 root      20   0       0      0      0 S  2.0  0.0   0:01.51 xfsaild/dm-0
+    25 root      20   0       0      0      0 S  1.3  0.0   0:03.11 kswapd0
+   817 root      20   0  305076   6132   4768 S  1.3  0.3   0:12.86 vmtoolsd
+ 12249 root      20   0  154772   6416   4956 S  0.7  0.3   0:02.71 sshd
+   797 root      20   0  214248   6008   5152 S  0.3  0.3   0:01.12 rsyslogd
+ 13116 root      20   0  157736   2336   1544 R  0.3  0.1   0:00.12 top
+     1 root      20   0  125284   3832   2504 S  0.0  0.2   0:02.41 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:00.20 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root      39  19       0      0      0 S  0.0  0.0   0:00.07 khugepaged
+    28 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    36 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    39 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    41 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    60 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    92 root      20   0       0      0      0 S  0.0  0.0   0:00.03 kauditd
+   266 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+   267 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ata_sff
+   268 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt/0
+   272 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_0
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i vi
+root        814      1  0 19:36 ?        00:00:00 /usr/bin/VGAuthService -s
+root      13034  12253  0 20:27 pts/0    00:00:00 vi /tmp/ashok1
+root      13038  12253  0 20:27 pts/0    00:00:00 vi /tmp/ashok2
+root      13044  12253  0 20:27 pts/0    00:00:00 vi /tmp/ashok3
+root      13049  12253  0 20:27 pts/0    00:00:00 vi /tmp/ashok4
+root      13050  12253  0 20:27 pts/0    00:00:00 vi /tmp/ashok5
+root      13140  12253  0 20:31 pts/0    00:00:00 grep --color=auto -i vi
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i 13044
+root      13044  12253  0 20:27 pts/0    00:00:00 vi /tmp/ashok3
+root      13147  12253  0 20:31 pts/0    00:00:00 grep --color=auto -i 13044
+[8]   Done                    cp -i -r /mnt/* /ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# kill -9 13044
+[root@nfscli ~]#
+[5]   Killed                  vi /tmp/ashok3
+[root@nfscli ~]#
+[root@nfscli ~]# jobs
+[3]   Stopped                 vi /tmp/ashok1
+[4]   Stopped                 vi /tmp/ashok2
+[6]-  Stopped                 vi /tmp/ashok4
+[7]+  Stopped                 vi /tmp/ashok5
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# pkill -9 vi
+[3]   Killed                  vi /tmp/ashok1
+[4]   Killed                  vi /tmp/ashok2
+[6]-  Killed                  vi /tmp/ashok4
+[7]+  Killed                  vi /tmp/ashok5
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i vi
+root      13179  12253  0 20:33 pts/0    00:00:00 grep --color=auto -i vi
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# jobs
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# kill -l
+ 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL       5) SIGTRAP
+ 6) SIGABRT      7) SIGBUS       8) SIGFPE       9) SIGKILL     10) SIGUSR1
+11) SIGSEGV     12) SIGUSR2     13) SIGPIPE     14) SIGALRM     15) SIGTERM
+16) SIGSTKFLT   17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU     25) SIGXFSZ
+26) SIGVTALRM   27) SIGPROF     28) SIGWINCH    29) SIGIO       30) SIGPWR
+31) SIGSYS      34) SIGRTMIN    35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3
+38) SIGRTMIN+4  39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13
+48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12
+53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7
+58) SIGRTMAX-6  59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# rm -rf /ashok/*
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  911M   17G   6% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.7M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+tmpfs                      183M     0  183M   0% /run/user/0
+/dev/sr0                   4.1G  4.1G     0 100% /mnt
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# du -sh /ashok
+0       /ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps
+   PID TTY          TIME CMD
+ 12253 pts/0    00:00:00 bash
+ 13283 pts/0    00:00:00 ps
+[root@nfscli ~]#
+[root@nfscli ~]# cp -r /mnt/* /ashok &
+[1] 13289
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps
+   PID TTY          TIME CMD
+ 12253 pts/0    00:00:00 bash
+ 13289 pts/0    00:00:00 cp
+ 13290 pts/0    00:00:00 ps
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+login as: root
+root@192.168.29.160's password:
+Last login: Wed Aug 13 20:40:26 2025 from 192.168.29.211
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# systemctl status sshd
+● sshd.service - OpenSSH server daemon
+   Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2025-08-13 19:36:21 IST; 1h 4min ago
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+ Main PID: 1058 (sshd)
+   CGroup: /system.slice/sshd.service
+           └─1058 /usr/sbin/sshd -D
+
+Aug 13 20:40:11 nfscli sshd[13362]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 42642:11: SSH client disconnected [preauth]
+Aug 13 20:40:11 nfscli sshd[13362]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 42642 [preauth]
+Aug 13 20:40:11 nfscli sshd[13363]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Aug 13 20:40:11 nfscli sshd[13363]: Invalid user Dinion from fe80::c268:ccff:fe6b:db71%ens33 port 43465
+Aug 13 20:40:11 nfscli sshd[13363]: input_userauth_request: invalid user Dinion [preauth]
+Aug 13 20:40:11 nfscli sshd[13363]: Failed none for invalid user Dinion from fe80::c268:ccff:fe6b:db71%ens33 port 43465 ssh2
+Aug 13 20:40:11 nfscli sshd[13363]: Received disconnect from fe80::c268:ccff:fe6b:db71%ens33 port 43465:11: SSH client disconnected [preauth]
+Aug 13 20:40:11 nfscli sshd[13363]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 43465 [preauth]
+Aug 13 20:40:26 nfscli sshd[13367]: Accepted password for root from 192.168.29.211 port 57912 ssh2
+Aug 13 20:41:03 nfscli sshd[13393]: Accepted password for root from 192.168.29.211 port 57919 ssh2
+[root@nfscli ~]#
+[root@nfscli ~]# systemctl stop sshd
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# systemctl status sshd
+● sshd.service - OpenSSH server daemon
+   Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Wed 2025-08-13 20:41:36 IST; 5s ago
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+  Process: 1058 ExecStart=/usr/sbin/sshd -D $OPTIONS (code=exited, status=0/SUCCESS)
+ Main PID: 1058 (code=exited, status=0/SUCCESS)
+
+Aug 13 20:41:14 nfscli sshd[13423]: Disconnected from fe80::c268:ccff:fe6b:db71%ens33 port 43469 [preauth]
+Aug 13 20:41:14 nfscli sshd[13425]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=2405:201:c037:d269:c268:ccff:fe6b:d... user=admin
+Aug 13 20:41:14 nfscli sshd[13431]: Address fe80::c268:ccff:fe6b:db71%ens33 maps to gateway, but this does not map back to the address - POSSIBLE BREAK-IN ATTEMPT!
+Aug 13 20:41:14 nfscli sshd[13431]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=fe80::c268:ccff:fe6b:db71%ens33  user=admin
+Aug 13 20:41:16 nfscli sshd[13425]: Failed password for admin from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 42648 ssh2
+Aug 13 20:41:16 nfscli sshd[13425]: Received disconnect from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 42648:11: SSH client disconnected [preauth]
+Aug 13 20:41:16 nfscli sshd[13425]: Disconnected from 2405:201:c037:d269:c268:ccff:fe6b:db71 port 42648 [preauth]
+Aug 13 20:41:16 nfscli sshd[13431]: Failed password for admin from fe80::c268:ccff:fe6b:db71%ens33 port 43471 ssh2
+Aug 13 20:41:36 nfscli systemd[1]: Stopping OpenSSH server daemon...
+Aug 13 20:41:36 nfscli systemd[1]: Stopped OpenSSH server daemon.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# du -sh /ashok/
+4.2G    /ashok/
+[root@nfscli ~]#
+[root@nfscli ~]# rm -rf /ashok/*
+[root@nfscli ~]#
+[root@nfscli ~]# nohup cp -r /mnt/* /ashok &
+[1] 13491
+[root@nfscli ~]# nohup: ignoring input and appending output to ‘nohup.out’
+
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ls -l
+total 4
+-rw-------. 1 root root 2046 Jul 23 20:38 anaconda-ks.cfg
+-rw-------  1 root root    0 Aug 13 20:44 nohup.out
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# ps
+   PID TTY          TIME CMD
+ 13397 pts/1    00:00:00 bash
+ 13491 pts/1    00:00:06 cp
+ 13503 pts/1    00:00:00 ps
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# top
+top - 20:46:44 up  1:10,  3 users,  load average: 0.87, 0.80, 0.61
+Tasks: 215 total,   1 running, 214 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1865964 total,    73464 free,   117784 used,  1674716 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  1548356 avail Mem
+
+   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+   473 root      20   0       0      0      0 S  0.3  0.0   0:02.77 xfsaild/dm-0
+   817 root      20   0  305076   6136   4768 S  0.3  0.3   0:31.75 vmtoolsd
+ 13300 root      20   0       0      0      0 S  0.3  0.0   0:08.60 kworker/0:2
+     1 root      20   0  125284   3860   2508 S  0.0  0.2   0:02.54 systemd
+     2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+     3 root      20   0       0      0      0 S  0.0  0.0   0:10.60 ksoftirqd/0
+     5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+     7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+     8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+     9 root      20   0       0      0      0 S  0.0  0.0   0:03.40 rcu_sched
+    10 root      rt   0       0      0      0 S  0.0  0.0   0:01.06 watchdog/0
+    12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+    13 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+    14 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+    15 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+    16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+    17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 md
+    25 root      20   0       0      0      0 S  0.0  0.0   0:07.70 kswapd0
+    26 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+    27 root      39  19       0      0      0 S  0.0  0.0   0:00.12 khugepaged
+    28 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 crypto
+    36 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kthrotld
+    38 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kmpath_rdacd
+    39 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kpsmoused
+    41 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ipv6_addrconf
+    60 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 deferwq
+    92 root      20   0       0      0      0 S  0.0  0.0   0:00.04 kauditd
+   266 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt_poll_0
+   267 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ata_sff
+   268 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 mpt/0
+   272 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_0
+   274 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_0
+   278 root      20   0       0      0      0 S  0.0  0.0   0:00.02 scsi_eh_1
+   280 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_1
+   281 root      20   0       0      0      0 S  0.0  0.0   0:00.01 scsi_eh_2
+   283 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_2
+   287 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 ttm_swap
+   316 root      20   0       0      0      0 S  0.0  0.0   0:00.00 scsi_eh_3
+   317 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 scsi_tmf_3
+[1]+  Done                    nohup cp -r /mnt/* /ashok
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cat /etc/auto.master
+#
+# Sample auto.master file
+# This is a 'master' automounter map and it has the following format:
+# mount-point [map-type[,format]:]map [options]
+# For details of the format look at auto.master(5).
+#
+/misc   /etc/auto.misc
+#
+# NOTE: mounts done from a hosts map will be mounted with the
+#       "nosuid" and "nodev" options unless the "suid" and "dev"
+#       options are explicitly given.
+#
+/net    -hosts
+#
+# Include /etc/auto.master.d/*.autofs
+# The included files must conform to the format of this file.
+#
++dir:/etc/auto.master.d
+#
+# Include central master map if it can be found using
+# nsswitch sources.
+#
+# Note that if there are entries for /net or /misc (as
+# above) in the included master map any keys that are the
+# same will not be seen as the first read key seen takes
+# precedence.
+#
++auto.master
+/-      /etc/auto.data  --timeout=60
+/packages       /etc/auto.indirect      --timeout=40
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /etc/auto.master
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cat /etc/auto.data
+/sharedata1     -rw,sync,intr   nfssrv:/data1
+/sharedata2     -rw,sync,intr   nfssrv:/data2
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# showmount -e nfssrv
+Export list for nfssrv:
+/infra nfscli
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /etc/auto.master
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# vi /etc/auto.infra
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cat /etc/auto.infra
+/infrashare     -rw,sync,intr   nfssrv:/infra
+[root@nfscli ~]#
+[root@nfscli ~]# cat /etc/auto.master |tail -1
+/-      /etc/auto.infra --timeout=60
+[root@nfscli ~]#
+[root@nfscli ~]# cd /infrashare
+-bash: cd: /infrashare: No such file or directory
+[root@nfscli ~]#
+[root@nfscli ~]# ps -ef |grep -i automount
+root       1095      1  0 19:36 ?        00:00:03 /usr/sbin/automount --pid-file /run/autofs.pid
+root      13670  13397  0 20:58 pts/1    00:00:00 grep --color=auto -i automount
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# kill -1 1095
+[root@nfscli ~]#
+[root@nfscli ~]#
+[root@nfscli ~]# cd /infrashare/
+[root@nfscli infrashare]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  5.1G   12G  30% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.8M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+tmpfs                      183M     0  183M   0% /run/user/0
+/dev/sr0                   4.1G  4.1G     0 100% /mnt
+nfssrv:/infra              3.0G   32M  3.0G   2% /infrashare
+[root@nfscli infrashare]#
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# ps -ef |grep -i automount
+root       1095      1  0 19:36 ?        00:00:04 /usr/sbin/automount --pid-file /run/autofs.pid
+root      13706  13397  0 20:59 pts/1    00:00:00 grep --color=auto -i automount
+[root@nfscli infrashare]#
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# vi /etc/auto.master
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cd /infrashare/
+[root@nfscli infrashare]#
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# df -h
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/rootvg-rootlv   17G  5.1G   12G  30% /
+devtmpfs                   901M     0  901M   0% /dev
+tmpfs                      912M     0  912M   0% /dev/shm
+tmpfs                      912M  8.8M  903M   1% /run
+tmpfs                      912M     0  912M   0% /sys/fs/cgroup
+/dev/sda1                 1014M  143M  872M  15% /boot
+/dev/mapper/rootvg-homelv  2.0G   33M  2.0G   2% /home
+/dev/mapper/rootvg-optlv   3.0G   33M  3.0G   2% /opt
+/dev/mapper/rootvg-varlv    10G  3.8G  6.3G  38% /var
+/dev/mapper/rootvg-tmplv   5.0G   33M  5.0G   1% /tmp
+tmpfs                      183M     0  183M   0% /run/user/0
+/dev/sr0                   4.1G  4.1G     0 100% /mnt
+nfssrv:/infra              3.0G   32M  3.0G   2% /infrashare
+[root@nfscli infrashare]#
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# tail /etc/auto.master
+#
+# Note that if there are entries for /net or /misc (as
+# above) in the included master map any keys that are the
+# same will not be seen as the first read key seen takes
+# precedence.
+#
++auto.master
+#/-     /etc/auto.data  --timeout=60
+#/packages      /etc/auto.indirect      --timeout=40
+#/-     /etc/auto.infra --timeout=60
+[root@nfscli infrashare]#
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# systemctl restart autofs
+[root@nfscli /]#
+[root@nfscli /]# ps -ef |grep -i automount
+root      13767      1  3 21:01 ?        00:00:00 /usr/sbin/automount --pid-file /run/autofs.pid
+root      13791  13397 10 21:02 pts/1    00:00:00 grep --color=auto -i automount
+[root@nfscli /]# cd /infrashare
+-bash: cd: /infrashare: No such file or directory
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# ls -l /
+total 24
+-rw-r--r--    1 root root   50 Aug  8 20:35 1
+drwxr-xr-x    9 root root  254 Aug 13 20:46 ashok
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 bin -> usr/bin
+dr-xr-xr-x.   4 root root 4096 Aug 13 19:37 boot
+drwxr-xr-x   20 root root 3320 Aug 13 19:36 dev
+drwxr-xr-x.  81 root root 8192 Aug 13 21:00 etc
+drwxr-xr-x.   5 root root   48 Aug  8 20:24 home
+lrwxrwxrwx.   1 root root    7 Jul 23 20:24 lib -> usr/lib
+lrwxrwxrwx.   1 root root    9 Jul 23 20:24 lib64 -> usr/lib64
+drwxr-xr-x.   2 root root    6 Mar 10  2016 media
+drwxr-xr-x    2 root root    0 Aug 13 21:01 misc
+dr-xr-xr-x    9 root root 4096 Jan 19  2018 mnt
+drwxr-xr-x    2 root root    0 Aug 13 21:01 net
+drwxr-xr-x.   2 root root    6 Mar 10  2016 opt
+dr-xr-xr-x  227 root root    0 Aug 13 19:35 proc
+dr-xr-x---.   2 root root  152 Aug 13 20:44 root
+drwxr-xr-x   26 root root  940 Aug 13 21:01 run
+lrwxrwxrwx.   1 root root    8 Jul 23 20:24 sbin -> usr/sbin
+dr-xr-xr-x    2 root root    6 Aug 13 19:36 sharedata1
+dr-xr-xr-x    2 root root    6 Aug 13 19:36 sharedata2
+drwxr-xr-x    2 root root    6 Jul 25 20:25 shareinfra
+drwxr-xr-x.   2 root root    6 Mar 10  2016 srv
+dr-xr-xr-x   13 root root    0 Aug 13 19:35 sys
+drwxrwxrwt.   8 root root  268 Aug 13 21:01 tmp
+drwxr-xr-x.  13 root root  155 Jul 23 20:24 usr
+drwxr-xr-x.  20 root root  278 Jul 25 20:01 var
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# vi /etc/auto.master
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# cd /infrashare
+-bash: cd: /infrashare: No such file or directory
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]# ps -ef |grep -i automount
+root      13767      1  0 21:01 ?        00:00:00 /usr/sbin/automount --pid-file /run/autofs.pid
+root      13795  13397 28 21:03 pts/1    00:00:00 grep --color=auto -i automount
+[root@nfscli /]#
+[root@nfscli /]# kill -1 13767
+[root@nfscli /]#
+[root@nfscli /]# cd /infrashare
+[root@nfscli infrashare]# df -h  .
+Filesystem      Size  Used Avail Use% Mounted on
+nfssrv:/infra   3.0G   32M  3.0G   2% /infrashare
+[root@nfscli infrashare]#
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# ps -ef |grep -i automount
+root      13767      1  1 21:01 ?        00:00:01 /usr/sbin/automount --pid-file /run/autofs.pid
+root      13817  13397  0 21:03 pts/1    00:00:00 grep --color=auto -i automount
+[root@nfscli infrashare]#
+[root@nfscli infrashare]# cd /
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
+[root@nfscli /]#
