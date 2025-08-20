@@ -1,0 +1,52 @@
+Class 33 20/08/2025
+
+Service Management: 
+
+Upto RedHat 6:
+==============
+Service or deamon is program that stats at background and continuously run in the background. The service or deamon is ready for input or monitor the changes in our computer and respond to them. For example the Apache server has a deamon called httpd that listens on port 80 on our computer and when it receives a request for a page it sends the appropriate data back to the client machine.
+Example : apache, samba, NFS, FTP, ....etc.
+
+# service <name of the service> status	=====> This command is used to view service status
+# service <name of the service> start	=====> This command is used to start service
+# service <name of the service> stop	=====> This command is used to stop running service
+# service <name of the service> restart	=====> This command is used to restart running service
+# service <name of the service> reload	=====> This command is used to reload running service
+
+# chkconfig --list			=====> To view all configured services
+# chkconfig <name of the service> on	=====> This command is used to enable services
+# chkconfig <name of the service> off	=====> This command is used to disable services
+# chkconfig --levels <0-6> <name of the service> on/off	=====> This command is used to enable services on specifed runlevels
+
+RedHat 7 onwards:
+=================
+Systemd is a service manager in rhel7 onwards. it is designed to be backwards compatible with old init scripts, and provide a number of features such as parellel startup of system services at boot time, On-demand activation of daemons, dependency based service controls. 
+
+# systemctl -a 					=====> To view all configured services
+# systemctl status <name of the service>	=====> This command is used to view service status
+# systemctl start <name of the service>		=====> This command is used to start service
+# systemctl stop <name of the service>		=====> This command is used to stop running service
+# systemctl restart <name of the service>	=====> This command is used to restart running service
+# systemctl reload <name of the service>	=====> This command is used to reload running service
+# systemctl enable <name of the service>	=====> This command is used to enable services
+# systemctl disable <name of the service>	=====> This command is used to disable services
+# systemctl mask <name of the service>		=====> This command is used to lock the service
+# systemctl unmask <name of the service>	=====> This command is used to unlock the service
+
+Initd Deamon
+============
+(a) It is the starting process  in RHEL - 4, 5  and  6.
+(b) It's process  id (pid) is 1  
+(c) It will take more time to the system and services. 
+(d) It will start the services  one by one.
+(e) All service related files are located at /etc/init.d directory 
+    Example : sshd, httpd, crond, ...etc., 
+
+systemd deamon:
+===============
+(a) It is starting process in RHEL - 7
+(b) It's process  id (pid) is 1 
+(c) It will take less time to start the system and services when compared to RHEL - 6
+(d) It will start the services parallel not one by one
+(e) All service related files are located at /etc/systemd/system/ directory
+    Example : sshd.service, httpd.service,  ...etc., 
