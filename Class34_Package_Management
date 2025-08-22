@@ -1,0 +1,161 @@
+Class 34 22/08/2025
+
+Package Management
+
+To manage the software in Linux, two utilities are used:
+========================================================
+1. RPM – REDHAT PACKAGE MANAGER 
+2. YUM – YELLOWDOG UPDATE MODIFIED 
+ 
+RPM –REDHAT PACKAGE MANAGER 
+RPM is a package managing system (collection of tools to manage software packages). RPM is a powerful software management tool for installing, uninstalling, verifying, querying and updating software packages. RPM is a straight forward program to perform the above software management tasks.  
+
+Features: 
+=========
+1) RPM can verify software packages.  
+2) RPM can be served as a powerful search engine to search for software’s.  
+3) Components, software’s etc can be upgraded using RPM without having to reinstall them  
+4) Installing, reinstalling can be done with ease using RPM  
+5) During updates RPM handles configuration files carefully, so that the customization is not lost.  
+ 
+RPM Commands:
+============= 
+# rpm –q <package name>  ======> To check all the installed packages in the system
+
+# rpm –qa | grep –i <package name> (where q stands for query, and a stands for all)
+
+# rpm –ivh <.rpm file path>  =========> To install the package
+Where i = install, v= verbose view, and h = hash progress
+
+# rpm –qi <package name> ========> To see the information or details about the installed package 
+
+# rpm –qf  <path of the command> ======> To check package of the installed command
+
+# rpm –qlc <package name> ===========> To see the configuration files of the installed package
+
+# rpm –qld <package name>  =========> To see the directory with which a package is associated
+
+# rpm –ivh <.rpm file path> --nodeps =========> To install a package without installing dependencies 
+
+# rpm –ivh <.rpm file path> --force =========> To install a re-package forcefully
+
+# rpm –Uvh <.rpm file path> ===========> To update a package
+
+# rpm -qip <.rpm package path> =========> To check package detailled information before installation
+
+# rpm -e <package name> ========> To remove the package
+
+Prones:
+=======
+1) Before installtion of the package need to download .rpm file into server
+2) rpm package installation will not install dependency packges.
+
+YUM – YELLOWDOG UPDATE MODIFIED
+
+Features: 
+=========
+1) The Yellow dog Updater Modified (YUM) is a package management application for computers running Linux operating systems. 
+2) Yum is a standard method of managing the installation and removal of software. Several graphical applications exist to allow users to easily add and remove packages; however, many are simply friendly interfaces with yum running underneath. These programs present the user with a list of available software and pass the user's selection on for processing. It is yum that actually downloads the packages and installs them in the background. 
+3) Packages are downloaded from collections called repositories, which may be online, on a network, and/or on installation media. If one package due to be installed relies on another being present, this dependency can usually be resolved without the user needing to know the details. For example, a game being installed may depend on specific software to play its music. The problem of solving such dependencies can be handled by yum because it knows about all the other packages that are available in the repository.
+4) Yum will work only from Cantos 5 / Red hat 5 and latest versions of fedora. For Old releases like RHEL 4 you need to use up2date command to update your rpm based packages.
+5) Yum uses a configuration file at /etc/yum.conf
+6) Yum is having server and client architecture and both are different configuration setup.
+
+Yum Server Configuration:
+=========================
+1) Mount the CDROM image file into /mnt
+# mount /dev/sr0 /mnt/
+2) Install basic ftp, vsftpd packages
+# rpm -ivh /mnt/Packages/ftp-0.17-67.el7.x86_64.rpm
+# rpm -ivh /mnt/Packages/vsftpd-3.0.2-22.el7.x86_64.rpm
+3) Start and enable vftpd service
+# systemctl status vsftpd
+# systemctl start vsftpd
+# systemctl enable vsftpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/vsftpd.service to /usr/lib/systemd/system/vsftpd.service.
+4) Create repo directory
+# mkdir /var/ftp/pub/rhel7
+5) Copy all packages into new repo directory
+# cp /mnt/Packages/* /var/ftp/pub/rhel7/
+6) Install createrepo package to get createrepo command to build package DB
+# rpm -ivh /mnt/Packages/deltarpm-3.6-3.el7.x86_64.rpm
+# rpm -ivh /mnt/Packages/python-deltarpm-3.6-3.el7.x86_64.rpm
+# rpm -ivh /mnt/Packages/createrepo-0.9.9-28.el7.noarch.rpm
+7) Run createrepo command to build package DB (Repository)
+# createrepo -v /var/ftp/pub/rhel7/
+8) Create repo file to communicate repository
+# vi /etc/yum.repos.d/rhel7.repo
+# cat /etc/yum.repos.d/rhel7.repo
+[rhel7]
+name=rhel7
+baseurl=file:///var/ftp/pub/rhel7
+enabled=1
+gpgcheck=0
+9) Build the repository cache
+# yum clean all
+# yum makecache
+10) Run package installation commands with yum
+# yum list all
+# yum install zsh
+
+Yum Client Configuration:
+=========================
+1) Check yum server connectivity
+# ping yumserver-IP
+2) Mount the CDROM image file into /mnt
+# mount /dev/sr0 /mnt/
+3) Install basic ftp, vsftpd packages
+# rpm -ivh /mnt/Packages/ftp-0.17-67.el7.x86_64.rpm
+# rpm -ivh /mnt/Packages/vsftpd-3.0.2-22.el7.x86_64.rpm
+4) Start and enable vftpd service
+# systemctl status vsftpd
+# systemctl start vsftpd
+# systemctl enable vsftpd
+5) Create repo file to communicate repository
+# vi /etc/yum.repos.d/rhel7.repo
+# cat /etc/yum.repos.d/rhel7.repo
+[rhel7]
+name=rhel7
+baseurl=ftp://<yumserver-IP>/rhel7
+enabled=1
+gpgcheck=0
+6) Build the repository cache
+# yum clean all
+# yum makecache
+7) Run package installation commands with yum
+# yum list all
+# yum install zsh
+
+YUM Commands:
+=============
+# yum list all ===========> To check all packges list from configured repositories
+
+# yum list installed ==========> To view all the installed packages in the system
+
+# yum install <package name> ===========> To install package from the server
+
+# yum remove <package name> ============> To remove package from the server
+
+# yum update <package name> ==========> To update the package using yum command
+
+# yum clean all =======> To clean all cache repository packages information
+
+# yum makecache =======> To create cache repository packages information
+
+# yum search <package name> =========> To check package availabulity in repositories
+
+# yum info <package name> ===========> To check details information of the package
+
+# yum history list ==========> TO check last 10 trasactions of the yum command
+
+# yum history info <ID> ========> This command will show detailled information of the specified yum ID transaction
+
+# yum history undo <ID> ========> This command revert he changes happened with the specified ID
+
+# yum localinstall <.rpm file path> ==========> To install the package with specified rpm file
+
+Lab Session:
+============
+rhel71 with redhat 7.1 version
+rhel74 with redhat 7.4 version
+2 client configurations
