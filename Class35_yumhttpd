@@ -1,0 +1,57 @@
+Class 35 26/08/2025
+
+Repository setup with httpd service
+
+Yum Server Setup:
+=================
+Step1: install the httpd package
+Step2: enable and start the service
+Step3: create repository directory at : /var/www/html/ directory
+Step4: copy all packages to repository directory
+Step5: run createrepo command ot generate yum DB
+Step6: add httpd configuration file with below steps
+<Directory "/var/www/html/rhel7">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+Step7: restart the httpd service
+Step8: create repo file with below entires
+[local_yum_server]
+name=Local Yum Repository
+baseurl=http://<your-server-ip>/rhel7/
+enabled=1
+gpgcheck=0
+Step9: clear the cache and generate the metadata
+
+Yum Client Setup:
+=================
+Step1: install the httpd package
+Step2: enable and start the service
+Step3: create repo file with below entires
+[local_yum_server]
+name=Local Yum Repository
+baseurl=http://<your-server-ip>/rhel7/
+enabled=1
+gpgcheck=0
+Step4: clear the cache and generate the metadata
+
+
+Repofile entries:
+=================
+1) [XXXX] = The first field represents a unique repository ID.
+You can give any repo ID you wish if you are configuring a local repository but do not allow it to conflict with an already given repo ID on the system.
+
+2) name=XXXX ===> The name field is the name of the repository. If you are configuring your own local repository, you can give any name you wish. It is advisable you give a name you can easily relate to.
+
+3) baseurl=XXXXXXXXXXX  ======> The baseurl is the repository’s URL. That is, the repository location where the packages are in. It can be located on an HTTP, FTP, NFS, etc servers.
+
+4) enabled=0(OR)1 ====> The enabled field means you either want to enable or disable a repository. If the value is set to 1, it means the repository will be enabled but if it is set to 0, it means the repository will be disabled.
+
+5) gpgcheck=XXXXXXX ====> The gpgcheck fied is used to check the genuinity or authenticity of the packages in a repository. In the default Red Hat repository file, “gpgcheck=1” by default.
+
+[local_yum_server]
+name=Local Yum Repository
+baseurl=http://<your-server-ip>/rhel7_repo/
+enabled=1
+gpgcheck=0
