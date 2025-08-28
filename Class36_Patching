@@ -1,0 +1,70 @@
+Class35 25/08/2025
+
+Package?
+Patch? 
+
+OS patching procedure
+=====================
+
+Package: Every software will come with compressed .rpm file is nothing but a package
+Patch: Due to bugfix OR enhancement add few files and directories to existing package configuration
+
+1) OS patching
+2) Application patching
+3) Oracle patching
+
+Unix team will handle only OS patching. Remaining patching will perform respective teams
+
+Patching required for 2 senario's 1) OLD OS has issues(Bugfix) 2) Adding new features(Enhancements)
+Application patching not required server reboot only application services will be rebooted.
+Oracle patching activity performed by oracle team and then unix team perform reboot
+
+OS patching 80% servers will perform auto patching with the help of Bigfix(besclient), Puppet and yum servers
+Remaining 20% servers can be performed manual patching
+
+Autometic OS Patching Steps:
+============================
+1) with the help of besclient service server configured all packages info can be gathered to bigfix server
+2) As per the scheduled window bigfix server will trigger the patching
+3) Prechecks, perfomed and sanitory reboot the server
+	
+	
+
+Manual Patching Steps:
+======================
+1) Pre-patching checks
+	Check current OS version and validate version upgrade procedure
+	Check current Hardware compatibility of new OS version
+	Check free spaces of /, /boot, /var and swap area
+	Perform server full backup 
+	download all latest packages along with dependency packages
+	sanitory reboot
+2) Apply patching
+	rpm -Uvh kernel-release.<version>.rpm 
+	rpm -Uvh <HW Packages>.<version>.rpm
+	reboot
+3) Post-patching checks
+	Check the booted kernel version and filesystems 
+	validate server configurations before and after patching
+	Handover to application team
+4) Apps team validations 
+	start the applications and monitor the apps behaviour
+	no issues encountered apps team send email and unix team close the change
+	If any issues encountered unix team rollback OS patching
+5) Close the change request
+	Update all details and close the change
+
+Rollback Steps:
+===============
+1) Take nesessary backups and boot the server with old kernel
+	disk, file systems, users and critical service related configuration files
+	modify kernel image in grub configuration
+	# grubby --set-default=/boot/vmlinuz-<old version>
+	# systemctl reboot
+2) Login the server and run all system health checks and handover to application team
+	disk, file systems, users and critical service related configuration files
+3) Whenever apps team need the new kernel then modify kernel image in grub and reboot the server
+	# grubby --set-default=/boot/vmlinuz-<new version>
+	# systemctl reboot
+
+
