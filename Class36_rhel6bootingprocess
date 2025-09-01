@@ -1,0 +1,79 @@
+Class 36 01/09/2025
+
+RHEL6 BOOTING PROCEDURE AND KERNEL PARAMETER:
+=============================================
+Press the power button on your system, and after few moments you see the Linux login prompt.(booting) 
+Have you ever wondered what happens behind the scenes from the time you press the power button until the Linux login prompt appears? 
+
+BIOS (Basic Inout/Output of the System)
+MBR
+GRUB2
+KERNEL
+INIT
+RUNLEVELS
+
+1. BIOS:
+========
+1) BIOS stands for Basic Input/Output System (POST- Power On Self Test)
+2) Performs some system integrity checks 
+3) Searches, loads, and executes the boot loader program.(PROM) 
+4) It looks for boot loader in floppy, cd-rom, or hard drive. You can press a key (typically F12 of F2, but it depends on your system) during the BIOS startup to change the boot sequence. 
+5) Once the boot loader program is detected and loaded into the memory, BIOS gives the control to it. 
+6) So, in simple terms BIOS loads and executes the MBR boot loader. 
+
+2. MBR:
+=======
+1) MBR stands for Master Boot Record. 
+2) It is located in the 1st sector of the bootable disk. Typically /dev/hda, or /dev/sda 
+3) MBR is less than 512 bytes in size. This has three components 1) primary boot loader info in 1st 446 bytes 2) partition table info in next 64 bytes 3) mbr validation check in last 2 bytes. 
+4) It contains information about GRUB (or LILO in old systems). 
+5) So, in simple terms MBR loads and executes the GRUB boot loader. 
+
+3. GRUB:
+======== 
+1) GRUB stands for Grand Unified Bootloader. 
+2) If you have multiple kernel images installed on your system, you can choose which one to be executed. 
+3) GRUB displays a splash screen, waits for few seconds, if you don’t enter anything, it loads the default (latest) kernel image as specified in the grub configuration file. 
+4) GRUB has the knowledge of the filesystem (the older Linux loader LILO didn’t understand filesystem). 
+5) Grub configuration file is /boot/grub/grub.conf (/etc/grub.conf is a link to this). The following is sample grub.conf  
+
+4. Kernel:
+========== 
+1) Mounts the root file system in read-only as specified in the “root=” in grub.conf 
+2) Maps Physical names to logical names
+3) Kernel executes the /sbin/init program Since init was the 1st program to be executed by Linux Kernel, it has the process id (PID) of 1. Do a ‘ps -ef | grep init’ and check the pid. 
+4) initrd stands for Initial RAM Disk. 
+5) initrd is used by kernel as temporary root file system until kernel is booted and the real root file system is mounted. It also contains necessary drivers compiled inside, which helps it to access the hard drive partitions, and other hardware.
+
+/PCI2/@sd:45:07hgr/5fefagetee54 - /dev/sda
+
+XXXXXXXXXXXXXXXXXXXXXXXX - ens33
+
+5. Init: 
+========
+1. Looks at the /etc/inittab file to decide the Linux run level. 
+2. Following are the available run levels  
+	0 – halt 
+	1 – Single user mode 
+	2 – Multiuser, without NFS 
+	3 – Full multiuser mode 
+	4 – unused 
+	5 – X11 (GUI)
+	6 – reboot 
+3. Init identifies the default initlevel from /etc/inittab and uses that to load all appropriate program. 
+4. Execute ‘grep initdefault /etc/inittab’ on your system to identify the default run level 
+5. If you want to get into trouble, you can set the default run level to 0 or 6. Since you know what 0 and 6 means, probably you might not do that. 
+6. Typically you would set the default run level to either 3 or 5. 
+
+6. Runlevel programs:
+=====================
+1) When the Linux system is booting up, you might see various services getting started. For example, it might say “starting sendmail …. OK”. Those are the run level programs, executed from the run level directory as defined by your run level. 
+2) Depending on your default init level setting, the system will execute the programs from 
+one of the following directories.  
+Run level 0 – /etc/rc.d/rc0.d/ 
+Run level 1 – /etc/rc.d/rc1.d/ 
+Run level 2 – /etc/rc.d/rc2.d/ 
+Run level 3 – /etc/rc.d/rc3.d/ 
+Run level 4 – /etc/rc.d/rc4.d/ 
+Run level 5 – /etc/rc.d/rc5.d/ 
+Run level 6 – /etc/rc.d/rc6.d/ 
