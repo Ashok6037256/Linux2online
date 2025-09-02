@@ -1,0 +1,78 @@
+Class 37 01/09/2025
+
+RHEL7 BOOTING PROCEDURE AND KERNEL PARAMETER:
+=============================================
+
+BIOS (Basic Inout/Output of the System)
+MBR
+GRUB2
+KERNEL
+SYSTEMD
+RUNLEVELS
+
+1. BIOS:
+========
+1) BIOS stands for Basic Input/Output System (POST- Power On Self Test)
+2) Performs some system integrity checks 
+3) Searches, loads, and executes the boot loader program.(PROM) 
+4) It looks for boot loader in floppy, cd-rom, or hard drive. You can press a key (typically F12 of F2, but it depends on your system) during the BIOS startup to change the boot sequence. 
+5) Once the boot loader program is detected and loaded into the memory, BIOS gives the control to it. 
+6) So, in simple terms BIOS loads and executes the MBR boot loader. 
+
+2. MBR:
+=======
+1) MBR stands for Master Boot Record. 
+2) It is located in the 1st sector of the bootable disk. Typically /dev/hda, or /dev/sda 
+3) MBR is less than 512 bytes in size. This has three components 1) primary boot loader info in 1st 446 bytes 2) partition table info in next 64 bytes 3) mbr validation check in last 2 bytes. 
+4) It contains information about GRUB (or LILO in old systems). 
+5) So, in simple terms MBR loads and executes the GRUB boot loader. 
+
+3. GRUB2:
+========= 
+1) GRUB2 stands for Grand Unified Bootloader. 
+2) If you have multiple kernel images installed on your system, you can choose which one to be executed. 
+3) GRUB displays a splash screen, waits for few seconds, if you don’t enter anything, it loads the default (latest) kernel image as specified in the grub configuration file. 
+4) GRUB has the knowledge of the filesystem (the older Linux loader LILO didn’t understand filesystem). 
+5) Grub configuration file is /boot/grub2/grub.conf (/etc/grub.conf is a link to this). The following is sample grub.conf
+6) Can edit the grub configuration in /etc/default/grub  
+
+4. Kernel:
+========== 
+1) Mounts the root file system in read-only as specified in the “root=” in grub.conf 
+2) Maps Physical names to logical names
+3) Kernel starts the systemd program Since it was the 1st program to be executed by Linux Kernel, it has the process id (PID) of 1. Do a ‘ps -ef | grep systemd’ and check the pid. 
+4) initramfs image will load the all installed server modules. 
+5) initramfs is used by kernel as temporary root file system until kernel is booted and the real root file system is mounted. It also contains necessary drivers compiled inside, which helps it to access the hard drive partitions, and other hardware.
+
+5. Systemd: 
+===========
+1) systemd is the primary program to be excuted by linux kernel it has the process ID 1.
+2) systemd reads the file linked by /etc/systemd/system/default.target/
+3) systemd starts services all at once parlelly, due to that we have less booting time compared to rhel6
+4) systemd bring the system to the state defined by the system target and do the below things
+	setting the hostname
+	initialing the network
+	initializing selinux based configuration
+	print the welcome banner based on the post test
+	mount the file systems
+	cleaning /var file system
+	starting swap	
+
+6. Runlevel programs:
+=====================
+1) When the Linux system is booting up, you might see various services getting started. For example, it might say “starting sendmail …. OK”. Those are the run level programs, executed from the run level directory as defined by your run level. 
+2) Depending on your default init level setting, the system will execute the programs from 
+one of the following directories.  
+Run level 0 – /etc/rc.d/rc0.d/ - poweroff mode 		- Poweroff.target
+Run level 1 – /etc/rc.d/rc1.d/ - singleuser mode	- rescue.target
+Run level 2 – /etc/rc.d/rc2.d/ - multiuser mode without nfs	- multiuser.target
+Run level 3 – /etc/rc.d/rc3.d/ - multiuser mode with nfs	- multiuser.target
+Run level 4 – /etc/rc.d/rc4.d/ - unused mode		- multiuser.target
+Run level 5 – /etc/rc.d/rc5.d/ - GUI mode		- graphical.target
+Run level 6 – /etc/rc.d/rc6.d/ - reboot	mode 		- reboot.target
+
+# who -r
+# uname -r
+# uname -a
+# arch
+# cat /etc/redhat-release
