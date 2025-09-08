@@ -1,0 +1,44 @@
+Class 39 08/09/2025
+
+Grub recovery in RHEL
+
+Occurences:
+===========
+1) Whenever need server access (CHG's are INC's) +300 days
+2) After patching reboot
+3) Unexpected reboot/hung
+
+grub menu: Whenever the grub.cfg file missing we can see grub menu
+==================================================================
+Step1: recycle the server and see the console output
+Step2: rescue boot CDROM/NetworkBoot
+Step3: after rescue boot mount harddisk in "/mnt/sysimage"
+Step4: switch to root image from rescue image with below command
+	# chroot /mnt/sysimage
+Step5: validate the grub.cfg file and regenarate with below command
+	# mv /boot/grub2/grub.cfg /tmp/   =====> If the file exist
+	# grub2-mkconfig -o /boot/grub2/grub.cfg ===> by reading /etc/default/grub
+Step6: boot the server with harddisk image
+Step7: Login the server and validate the checkouts
+
+grub rescue menu: Whenever the grub2 directory corrupted we can see grub rescue menu
+====================================================================================
+Step1: recycle the server and see the console output
+Step2: rescue boot CDROM/NetworkBoot
+Step3: after rescue boot mount harddisk in "/mnt/sysimage"
+Step4: switch to root image from rescue image with below command
+	# chroot /mnt/sysimage
+Step5: Identify the boot device with below command
+	# parted -l |more
+Step6: Regenerate grub2 directory with belowcommand
+	# grub2-install /dev/sda   ====> boot device is sda
+	# grub2-mkconfig -o /boot/grub2/grub.cfg
+	# ls -l /boot/grub2  ===> make sure the grub.cfg file is generated
+	# exit from the OS harddisk image
+Step7: boot the server with harddisk image
+Step8: Login the server and validate the checkouts
+
+
+
+
+
