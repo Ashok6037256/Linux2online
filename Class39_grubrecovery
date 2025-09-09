@@ -8,8 +8,8 @@ Occurences:
 2) After patching reboot
 3) Unexpected reboot/hung
 
-grub menu: Whenever the grub.cfg file missing we can see grub menu
-==================================================================
+RHEL7 grub menu: Whenever the grub.cfg file missing we can see grub menu
+========================================================================
 Step1: recycle the server and see the console output
 Step2: rescue boot CDROM/NetworkBoot
 Step3: after rescue boot mount harddisk in "/mnt/sysimage"
@@ -21,8 +21,8 @@ Step5: validate the grub.cfg file and regenarate with below command
 Step6: boot the server with harddisk image
 Step7: Login the server and validate the checkouts
 
-grub rescue menu: Whenever the grub2 directory corrupted we can see grub rescue menu
-====================================================================================
+RHEL7 grub rescue menu: Whenever the grub2 directory corrupted we can see grub rescue menu
+==========================================================================================
 Step1: recycle the server and see the console output
 Step2: rescue boot CDROM/NetworkBoot
 Step3: after rescue boot mount harddisk in "/mnt/sysimage"
@@ -39,6 +39,49 @@ Step7: boot the server with harddisk image
 Step8: Login the server and validate the checkouts
 
 
+RHEL6 grub menu: Whenever the grub.cfg file missing we can see grub menu
+========================================================================
+Step1: recycle the server and see the console output
+Step2: rescue boot CDROM/NetworkBoot
+Step3: after rescue boot mount harddisk in "/mnt/sysimage"
+Step4: switch to root image from rescue image with below command
+	# chroot /mnt/sysimage
+Step5: validate the grub.conf file and regenarate with below commands
+	# mv /boot/grub/grub.conf /tmp/   =====> If the file exist
+	# vi /boot/grub/grub.conf  =====> create a new file and add below entries
+	default=0
+	timeout=5
+	splashimage=(hd0,0)/grub/splash.xpm.gz
+	hiddenmenu
+	title Red Hat Enterprise Linux (2.6.32-431.el6.x86_64)
+        	root (hd0,0)
+        	kernel /vmlinuz-2.6.32-431.el6.x86_64 ro root=/dev/mapper/vg_ns14606-lv_root
+	# ln -s /boot/grub/grub.conf /boot/grub/menu.lst
+	# exit
+Step6: boot the server with harddisk image
+Step7: Login the server and validate the checkouts
 
-
-
+RHEL6 Error15 menu: Whenever the grub2 directory corrupted we can see grub rescue menu
+==========================================================================================
+Step1: recycle the server and see the console output
+Step2: rescue boot CDROM/NetworkBoot
+Step3: after rescue boot mount harddisk in "/mnt/sysimage"
+Step4: switch to root image from rescue image with below command
+	# chroot /mnt/sysimage
+Step5: Identify the boot device with below command
+	# fdisk -l |more
+Step6: Regenerate grub2 directory with belowcommand
+	# grub-install /dev/sda   ====> boot device is sda
+Step7: validate the grub.conf file and regenarate with below commands
+	# vi /boot/grub/grub.conf  =====> create a new file and add below entries
+	default=0
+	timeout=5
+	splashimage=(hd0,0)/grub/splash.xpm.gz
+	hiddenmenu
+	title Red Hat Enterprise Linux (2.6.32-431.el6.x86_64)
+        	root (hd0,0)
+        	kernel /vmlinuz-2.6.32-431.el6.x86_64 ro root=/dev/mapper/vg_ns14606-lv_root
+	# ln -s /boot/grub/grub.conf /boot/grub/menu.lst
+	# exit
+Step8: boot the server with harddisk image
+Step9: Login the server and validate the checkouts
