@@ -56,6 +56,7 @@ Step5: validate the grub.conf file and regenarate with below commands
 	title Red Hat Enterprise Linux (2.6.32-431.el6.x86_64)
         	root (hd0,0)
         	kernel /vmlinuz-2.6.32-431.el6.x86_64 ro root=/dev/mapper/vg_ns14606-lv_root
+			initrd /initramfs-2.6.32-431.el6.x86_64.img
 	# ln -s /boot/grub/grub.conf /boot/grub/menu.lst
 	# exit
 Step6: boot the server with harddisk image
