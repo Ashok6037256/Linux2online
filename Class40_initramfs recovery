@@ -1,0 +1,35 @@
+Class 40 10/09/2025
+
+Grub recovery in RHEL
+
+Occurences:
+===========
+1) Whenever need server access (CHG's are INC's) +300 days
+2) After patching reboot
+3) Unexpected reboot/hung
+
+RHEL7 initramfs image Recovery: Whenever the initramfs image file missing we can see grub menu
+=============================================================================================
+Step1: recycle the server and see the console output
+Step2: rescue boot CDROM/NetworkBoot
+Step3: after rescue boot mount harddisk in "/mnt/sysimage"
+Step4: switch to root image from rescue image with below command
+	# chroot /mnt/sysimage
+Step5: validate the initramfs file and regenarate with below command
+	# mv /boot/initramfs image   =====> If the file exist
+	# dracut --force /boot/initramfs-`uname -r`.img `uname -r` ===> This command will genarate initramfs image file
+Step6: boot the server with harddisk image
+Step7: Login the server and validate the checkouts
+
+RHEL6 initramfs image Recovery: Whenever the initrd image file missing we can see grub menu
+========================================================================
+Step1: recycle the server and see the console output
+Step2: rescue boot CDROM/NetworkBoot
+Step3: after rescue boot mount harddisk in "/mnt/sysimage"
+Step4: switch to root image from rescue image with below command
+	# chroot /mnt/sysimage
+Step5: validate the initramfs image file and regenarate with below commands
+	# mv /boot/initramfs image   =====> If the file exist
+	# dracut --force /boot/initramfs-`uname -r`.img `uname -r` ===> This command will genarate initramfs image file
+Step6: boot the server with harddisk image
+Step7: Login the server and validate the checkouts
