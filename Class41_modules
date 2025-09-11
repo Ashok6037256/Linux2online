@@ -1,0 +1,35 @@
+Class 41 11/09/2025
+
+Linux Modules (Drivers)
+
+1) The drivers in linux are known as modules
+2) These modules are used to interact with attached hardware components
+3) Hardware devices will communicated properly and work efficiently when the proper module is loaded in the kernel
+4) All module related files will be stored in "/lib/modules/<kernel version>" directory
+5) all the kernel modules in the system will be ending with .ko extention.
+
+# lsmod 			====> Used to see loaded modules
+# modeprobe <module name>	====> Used to load the module
+# modinfo <module name>		====> Used to view detailed info of the module
+# modeprobe -r <module name>	====> Used to unload the module
+
+Block the module perminently:
+=============================
+Step1: Check the module with lsmod
+	# lsmod |grep -i <module name>
+Step2: Unload the module
+	# modprobe -r <module name>
+Step3: Add entry in configuration file
+	# vi /etc/modprobe.d/<modele name>-blacklist.conf
+	blacklist <module name>
+	install <module name> /bin/false
+Step4: regenarte the initramfs image
+	# mv /boot/initramfs-3.10.0-693.17.1.el7.x86_64.img /var/tmp
+	# dracut --force /boot/initramfs-`uname -r`.img `uname -r`
+	# ls -l /boot/initramfs-3.10.0-693.17.1.el7.x86_64.img
+	-rw------- 1 root root 20387371 Sep 11 17:48 /boot/initramfs-3.10.0-693.17.1.el7.x86_64.img
+Step5: Restart the server and try to load the module
+	# systemctl reboot
+	# lsmod|grep -i usb_storage
+	# modprobe usb_storage
+	# lsmod |grep -i usb_storage  ======> It's not loaded   
