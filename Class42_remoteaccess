@@ -1,0 +1,47 @@
+Class 42 12/09/2025
+
+Server access with ftp and ssh
+==============================
+SSH access:
+===========
+1) Environment servers can be access through ssh service and 22 port which is secure and encrypt data
+2) Each server we can login from jumpserver.
+3) jumpserver we can login with our own account (t506445)
+4) passwdless authontication configuration for few application related users to run a scripts from your jumpserver
+Step1: Create keys in source user
+	# ssh-keygen -t rsa
+	# scp username@server2:/tmp
+Step2: login server2 with required user and append the public key
+	# mkdir .ssh ===> if the .ssh directory not found
+	# cat /tmp/id_rsa.pub >> .ssh/authorized_keys
+	# ls -l authorized_keys
+	644
+	# cd ..; ls -la
+	700 .ssh
+Step3: logout from the second user and try to login again
+	# ssh seconduser@servernmae   =====> login possible 
+
+Lab Session: /etc/hostname ==========> for server name chnage
+============
+server1(rhel6): was, asadmin, tomcat, ashok, rajesh, sandeep
+
+server2(rhel7): was, asadmin, tomcat, ashok, rajesh, sandeep
+
+Server1 =====> Server2 : was(authorized_keys), asadmin, tomcat
+
+Server2 =====> Server1 : ashok(authorized_keys), rajesh, sandeep
+
+FTP access:
+===========
+1) Vendor site data sending can be done with ftp 21 port. 
+2) Whenever we have issues with the respective software/hardware we will collect the dump and upload to vendor case with required logs.
+3) all vendor sites can be login through with company emailID and password
+	Ex: Username = ashokkumar.kurella@wipro.com
+	    Password = XXXXXXXXXXXXXX
+4) once login into the vendor portal, route to raised request/case tab and upload collected dump and logs
+
+Lab Session:
+============
+# sosreport      ===> log will generate at /tmp 
+# ftp <file> username@vendor.com    ================> akumar3379@gmail.com
+
