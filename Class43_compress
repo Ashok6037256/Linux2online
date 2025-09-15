@@ -1,0 +1,41 @@
+Class 43 15/09/2025
+
+Files and Directories compression:
+==================================
+
+1) file compress with few below commands
+	# compress filename
+	# gzip filename
+	# bzip filename
+
+2) the above command will rename the file to compressed file with added extention
+
+3) if the file need to be uncompressed will need to run below commands
+	# uncompress filename.zip
+	# gunzip filename.gz
+	# bunzip filename.bg
+
+4) Compress the idrectory we use tar
+	# tar -cvf tarfile.tar <source directory> ====> Convert a directory into file
+	# tar -xvf tarfile.tar		=========> extract the content from tar file
+	# tar -tvf tarfile.tar		=========> Show the content of tar file
+	# tar -rvf tarfile.tar <new directory/file> ===> This will add new file/directory to existing tar file
+
+5) /var file system cleanup steps:
+Step1: first need to validate the alert
+	# df -h /var
+Step2: identify whic file is occupying in /var
+	# du -sh * =====> identify which file is occupying more space
+Step3: copy the high sized fileinto other file system
+	# cp /var/log/messages /backup/message
+	# ls -l /backup/messages
+Step4: nullify original active file
+	# > messages OR cat /dev/null > messages
+Step5: compress backup file and move to source path
+	# gzip /backup/messages
+	# mv /backup/messages /var/log/messages_15092025.gz
+
+dd if=/dev/zero of=/backup/oracle/file1 bs=100M count=2
+dd if=/dev/zero of=/backup/oracle/file2 bs=100M count=2
+dd if=/dev/zero of=/backup/oracle/file3 bs=100M count=2
+
