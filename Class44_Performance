@@ -1,0 +1,50 @@
+CLass 44 16/09/2025
+
+System Performance Anylysis
+============================
+
+# uptime ===> 18:15:32 up  1:14,  3 users,  load average: 0.00, 0.01, 0.05  ====> If the load is increasing then proceed with further troubleshoot
+
+# sar 5 5
+
+User Utilization: who, top ===> If the user is performing nedful activity, we will ge the ETA , kill the process
+
+System Utilization: top, free -m ===> If not not nessasary kill the process, if not extend the swap
+
+swap extention: disk extention
+Step1: first identify disk partion
+	# parted -l , pvs, cat /etc/fstab
+Step2: configure swap file system
+	# mkswap <devicename>
+	# blkid
+Step3: add new swap area
+	# swapon -s ===> to view current space
+	# swapon <devicename> ===> to add new disk space
+	# swapon -s 
+	Filename                                Type            Size    Used    Priority
+	/dev/dm-0                               partition       2097148 0       -1
+	/dev/sdb1                               partition       1046524 0       -2
+
+Swap file extention:
+====================
+Step1: identify free file system which will not reach maximum value after creating sized files
+	# df -h /
+Step2: create a sized files in the above file system
+	# dd if=/dev/zero of=/usr/local/swap/swapfile1 bs=1G count=1
+	# ls -l /usr/local/swap/swapfile1
+	# chmod 600 /usr/local/swap/swapfile1
+	# mkswap /usr/local/swap/swapfile1
+Step3: add new swap area
+	# swapon -s ===> to view current space
+	# swapon <devicename> ===> to add new disk space
+	# swapon -s 
+	Filename                                Type            Size    Used    Priority
+	/dev/dm-0                               partition       2097148 0       -1
+	/dev/sdb1                               partition       1046524 0       -2
+
+
+I/O Utilization: disk, Nic's
+
+disk: iostat -rn, df -h, ps -ef |grep -i <mountpoints>
+
+nic: ifconfig/ip addr, netstat -rn, ip link show
