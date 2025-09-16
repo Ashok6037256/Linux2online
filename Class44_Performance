@@ -11,7 +11,8 @@ User Utilization: who, top ===> If the user is performing nedful activity, we wi
 
 System Utilization: top, free -m ===> If not not nessasary kill the process, if not extend the swap
 
-swap extention: disk extention
+swap disk extention:
+====================
 Step1: first identify disk partion
 	# parted -l , pvs, cat /etc/fstab
 Step2: configure swap file system
@@ -24,6 +25,10 @@ Step3: add new swap area
 	Filename                                Type            Size    Used    Priority
 	/dev/dm-0                               partition       2097148 0       -1
 	/dev/sdb1                               partition       1046524 0       -2
+	# free -m 
+	              total        used        free      shared  buff/cache   available
+	Mem:           1826         139        1301           8         385        1507
+	Swap:          3069           0        3069
 
 Swap file extention:
 ====================
@@ -41,10 +46,7 @@ Step3: add new swap area
 	Filename                                Type            Size    Used    Priority
 	/dev/dm-0                               partition       2097148 0       -1
 	/dev/sdb1                               partition       1046524 0       -2
-
-
-I/O Utilization: disk, Nic's
-
-disk: iostat -rn, df -h, ps -ef |grep -i <mountpoints>
-
-nic: ifconfig/ip addr, netstat -rn, ip link show
+	# free -m
+              total        used        free      shared  buff/cache   available
+	Mem:           1826         139        1299           8         387        1507
+	Swap:          4093           0        4093
