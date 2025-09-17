@@ -14,7 +14,7 @@ System Utilization: top, free -m ===> If not not nessasary kill the process, if 
 swap disk extention:
 ====================
 Step1: first identify disk partion
-	# parted -l , pvs, cat /etc/fstab
+	# parted -l , pvs, cat /etc/fstab =====> Should be local device
 Step2: configure swap file system
 	# mkswap <devicename>
 	# blkid
@@ -41,12 +41,19 @@ Step2: create a sized files in the above file system
 	# mkswap /usr/local/swap/swapfile1
 Step3: add new swap area
 	# swapon -s ===> to view current space
-	# swapon <devicename> ===> to add new disk space
+	# swapon <swapfilepath> ===> to add new disk space
 	# swapon -s 
 	Filename                                Type            Size    Used    Priority
 	/dev/dm-0                               partition       2097148 0       -1
 	/dev/sdb1                               partition       1046524 0       -2
+	/usr/local/swap/swapfile1		partition	1097148	0	-3
 	# free -m
               total        used        free      shared  buff/cache   available
 	Mem:           1826         139        1299           8         387        1507
 	Swap:          4093           0        4093
+
+I/O Utilization: disk, Nic's
+
+disk: iostat -xtc, df -h, ps -ef |grep -i <mountpoints>
+
+nic: ifconfig/ip addr, netstat -rn, ip link show
