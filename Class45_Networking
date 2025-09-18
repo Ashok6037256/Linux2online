@@ -1,0 +1,33 @@
+Class 45 18/09/2025
+
+Networking:
+===========
+It is a connection between two or more machines to communicate with each other. 
+ 
+The basic requirements for Networking are: 
+ 
+1. NIC (Network Interface Controller or Card) 
+2. Media  
+3. Topology  
+4. Protocol 
+5. IP Addresses 
+ 
+1. NIC (Network Interface Controller or Card):
+==============================================
+A network interface controller (also known as a network interface card, network adapter, LAN adapter and by similar terms) is a computer hardware component that connects a computer to a computer network. Each NIC will be having a unique MAC addresses (Media Access Control address) to avoid conflicts between same NIC adapters. In Linux these NIC adapter is represented by the word “eth” OR "ens". Example if there are two Ethernet adapters in the system then it will be denoted as eth0, eth1, etc. 
+
+ifconfig / ip addr
+ 
+2. Media:
+========= 
+Media is the medium via which two different computer’s NIC card will be connected. The best example for media is Cable. Example RJ45, CAT5, CAT6 etc. 
+ 
+3. Topology:
+============
+Topology is the scheme or design in which the computers in the network will be connected to each other. Example for topology is Bus, Ring, star, mesh, tree topologies. The following pictures explain it better. 
+
+a) Bus topology
+b) Ring Topology
+c) Star Topology
+d) Mesh Topology
+e) Tree Topology
