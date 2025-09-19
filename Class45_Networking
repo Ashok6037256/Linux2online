@@ -24,10 +24,111 @@ Media is the medium via which two different computer’s NIC card will be connec
  
 3. Topology:
 ============
-Topology is the scheme or design in which the computers in the network will be connected to each other. Example for topology is Bus, Ring, star, mesh, tree topologies. The following pictures explain it better. 
+Topology is the scheme or design in which the computers in the network will be connected to each other. Example for topology is Bus, Ring, star, mesh, tree topologies. 
 
 a) Bus topology
 b) Ring Topology
 c) Star Topology
 d) Mesh Topology
 e) Tree Topology
+
+Network devices: Hub, Swith and Router
+
+Hub: Non inteligent device, broadcast the data, cost low, lot of bandwith will occupy, it's very usefull while doing the clustering configuration  same network devices only communicate
+
+Switch: semi inteligent device, peer to peer communication, Network physical layer device, dandwith low and speed comunication, same network devices only communicate.
+
+Router: Inteligent device, this will maintain mac, portnumber & IP Address of the server, will communicate all dirrent networks.
+
+4. Protocol:
+============
+A network protocol defines rules and conventions for communication between network devices. Protocols for computer networking all generally use packet switching techniques to send and receive messages in the form of packets. 
+Network protocols include mechanisms for devices to identify and make connections with each other, as well as formatting rules that specify how data is packaged into messages sent and received. Some protocols also support message acknowledgement and data compression designed for reliable and/or high-performance network communication. Hundreds of different computer network protocols have been developed each designed for specific purposes and environments.
+
+Example for Protocols are TCP/IP (Transmission Control Protocol), UDP (User Datagram Protocol), HTTP. The most widely and regularly used protocols for transferring data are TCP and UDP. Let’s analyze some basic differences between TCP/IP and UDP.
+
+TCP/IP UDP 
+===========
+
+Transmission Control Protocol
+=============================
+1) It is connection Oriented  
+2) Reliable  
+3) TCP Acknowledgement will be sent/received  
+4) Slow Communication  
+5) Protocol Number for TCP is 6 
+6) HTTP, FTP, SMTP uses TCP
+
+User Datagram Protocol
+======================
+1) Connectionless
+2) Non-Reliable
+3) No Acknowledgement for UDP
+4) Faster Communication
+5) Protocol Number for UDP is 17
+6) DNS, DHCP uses UDP
+
+IP ADDRESS
+===========
+An IP address can be thought of as being similar to a phone number. Just as every person who communicates with a telephone is using a phone with a unique phone number, every computer that is on the Internet has a unique IP address. Not only on internet but within an organization every computer is assigned an IP address so that they can communicate with each other. Basically IP 
+addressing is very deep concept. To understand the concept of IP address we need to understand some important aspect of IP Address which is 
+ 
+a) IP Address Classes 
+b) Subnet mask 
+c) Gateway  
+ 
+The above concepts in IP Addressing are very important to understand networking clearly. 
+
+IP Address Classes
+==================
+The IP addresses are further broken down into classes. These classes are A, B, C, D, E and their possible ranges can be seen in Figure below.
+
+IP Address Range:
+=================
+0.0.0.0 256.256.256.256
+
+IP classesss
+=============
+Class	Fix bits	First address Last address
+A	0		0		127.256.256.256
+B	10		128		191.256.256.256
+C	110		192		223
+D	1110		224		239
+E	1111		240		255
+
+Reserved IP Range:
+==================
+169.254.0.0 – 169.254.0.16 : Link-local addresses
+127.0.0.0 – 127.255.255.255 : Loop-back addresses
+0.0.0.0 – 0.0.0.8: used to communicate within the current network.
+
+Private IP Range:
+=================
+Class A –10.0.0.0 to 10.255.255.255
+Class B –172.16.0.0 to 172.31.255.255
+Class C –192.168.0.0 to 192.168.255.255
+
+Subnet Mask:
+============ 
+A subnet mask allows users to identify which part of an IP address is reserved for the network and which part is available for host use. By looking at the IP address alone, especially now with classless inter-domain routing, users cannot tell which part of the address is which. Adding the subnet mask or netmask gives users all the information needed to calculate network and host portions of the address with ease. In summary, knowing the subnet mask can allow users to easily calculate whether IP addresses are on the same subnet or not. 
+
+/24 (255.255.255.0):
+Network Address: 192.168.1.0
+Broadcast Address: 192.168.1.255
+Usable IP Range: 192.168.1.1 to 192.168.1.254
+
+/16 (255.255.0.0):
+Network Address: 192.168.0.0
+Broadcast Address: 192.168.255.255
+Usable IP Range: 192.168.0.1 to 192.168.255.254
+
+/8 (255.0.0.0):
+Network Address: 10.0.0.0
+Broadcast Address: 10.255.255.255
+Usable IP Range: 10.0.0.1 to 10.255.255.254
+
+Gateway: (Router)
+==================
+A gateway is a network point that provides entrance into another network. On the Internet, a node or stopping point can be either a gateway node or a host (end-point) node. Both the computers of Internet users and the computers that serve pages to users are host nodes. The computers that control traffic within your company's network or at your local Internet service 
+provider (ISP) are gateway nodes.  
+      For example let’s say our network is 192.168. something and we want to send a file to other computer on 10.10.network, so we need a gateway to communicate between two computers of different networks. 
