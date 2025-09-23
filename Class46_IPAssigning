@@ -59,3 +59,8 @@ Step4: Perminantly add IP
 Step5: Reboot the server and check IP details
 	# systemctl reboot
 	# ip addr
+
+Lab Session:
+============
+192.168.29.1 to 192.168.29.10 - 5 IP's to 5 NIC's
+
