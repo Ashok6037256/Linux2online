@@ -1,0 +1,143 @@
+Class 47 24/09/2025
+
+Network Bonding Configuration
+
+Active-Backup (MODE=1) Bonding Configuration:
+=============================================
+Step1: Add new nics and identify in server
+	# ip addr
+	ens39: UP
+	ens40: UP
+Step2: Create bonding configuration fie
+	# cd /etc/sysconfig/network-scripts
+	# cp ifcfg-ens33 ifcfg-bond0
+	# vi ifcfg-bond0
+	TYPE="Ethernet"
+	PROXY_METHOD="none"
+	BROWSER_ONLY="no"
+	BOOTPROTO="none"
+	DEFROUTE="yes"
+	IPV4_FAILURE_FATAL="no"
+	IPV6INIT="yes"
+	IPV6_AUTOCONF="yes"
+	IPV6_DEFROUTE="yes"
+	IPV6_FAILURE_FATAL="no"
+	IPV6_ADDR_GEN_MODE="stable-privacy"
+	NAME="bond0"
+	DEVICE="bond0"
+	ONBOOT="yes"
+	IPADDR="192.168.29.165"
+	PREFIX="24"
+	GATEWAY="192.168.29.1"
+	IPV6_PRIVACY="no"
+	BONDING_MASTER="yes"
+	BONDING_OPTS="mode=1 miimon=100"
+Step3: Create new nic files and tag to bonding
+	# cp ifcfg-ens33 ifcfg-ens39
+	# cp ifcfg-ens33 ifcfg-ens40
+	# vi ifcfg-ens39
+	NAME="ens39"
+	DEVICE="ens39"
+	MASTER="bond0"
+	SLAVE="yes"
+	# vi ifcfg-ens40
+	NAME="ens40"
+	DEVICE="ens40"
+	MASTER="bond0"
+	SLAVE="yes"
+Step4: Restart network service to enable bond0
+	# systemctl restart network
+	# ip addr
+	ens33: 192.168.29.120 UP (Primary IP)
+	bond0: 192.168.29.165 UP (Master)
+	ens39: Slave UP (bond0)
+	ens40: Slave UP (bond0)
+Step5: Recycle the server and check the configuration
+	# systemctl restart
+	# ip addr
+	ens33: 192.168.29.120 UP (Primary IP)
+	bond0: 192.168.29.165 UP (Master)
+	ens39: Slave UP (bond0)
+	ens40: Slave UP (bond0)
+
+Load-Balancer (MODE=0) Bonding Configuration:
+=============================================
+Step1: Add new nics and identify in server
+	# ip addr
+	ens41: UP
+	ens42: UP
+	ens43: UP
+Step2: Create bonding configuration fie
+	# cd /etc/sysconfig/network-scripts
+	# cp ifcfg-ens33 ifcfg-bond1
+	# vi ifcfg-bond1
+	TYPE="Ethernet"
+	PROXY_METHOD="none"
+	BROWSER_ONLY="no"
+	BOOTPROTO="none"
+	DEFROUTE="yes"
+	IPV4_FAILURE_FATAL="no"
+	IPV6INIT="yes"
+	IPV6_AUTOCONF="yes"
+	IPV6_DEFROUTE="yes"
+	IPV6_FAILURE_FATAL="no"
+	IPV6_ADDR_GEN_MODE="stable-privacy"
+	NAME="bond1"
+	DEVICE="bond1"
+	ONBOOT="yes"
+	IPADDR="192.168.29.125"
+	PREFIX="24"
+	GATEWAY="192.168.29.1"
+	IPV6_PRIVACY="no"
+	BONDING_MASTER="yes"
+	BONDING_OPTS="mode=1 miimon=100"
+Step3: Create new nic files and tag to bonding
+	# cp ifcfg-ens33 ifcfg-ens41
+	# cp ifcfg-ens33 ifcfg-ens42
+	# cp ifcfg-ens33 ifcfg-ens43
+	# vi ifcfg-ens41
+	NAME="ens41"
+	DEVICE="ens41"
+	MASTER="bond1"
+	SLAVE="yes"
+	# vi ifcfg-ens42
+	NAME="ens42"
+	DEVICE="ens42"
+	MASTER="bond1"
+	SLAVE="yes"
+	# vi ifcfg-ens43
+	NAME="ens43"
+	DEVICE="ens43"
+	MASTER="bond1"
+	SLAVE="yes"
+Step4: Restart network service to enable bond0
+	# systemctl restart network
+	# ip addr
+	ens33: 192.168.29.120 UP (Primary IP)
+	bond0: 192.168.29.165 UP (Master)
+	ens39: Slave UP (bond0)
+	ens40: Slave UP (bond0)
+	bond1: 192.168.29.125 UP (Master)
+	ens41: Slave UP (bond1)
+	ens42: Slave UP (bond1)
+	ens43: Slave UP (bond1)	
+Step5: Recycle the server and check the configuration
+	# systemctl restart
+	# ip addr
+	ens33: 192.168.29.120 UP (Primary IP)
+	bond0: 192.168.29.165 UP (Master)
+	ens39: Slave UP (bond0)
+	ens40: Slave UP (bond0)
+	bond1: 192.168.29.125 UP (Master)
+	ens41: Slave UP (bond1)
+	ens42: Slave UP (bond1)
+	ens43: Slave UP (bond1)
+
+
+Bonding Commands :
+==================
+	# ip addr		=====> view all NIC's along with configuration
+	# cat /proc/net/bonding/bond0	====> view bonding configuration
+	# ethtool <NIC NAME>	=====> view NIC detailed configuration
+	# ifdown <NIC NAME>	=====> bringdown the NIC
+	# ifup <NIC NAME>	=====> bringup the NIC 
