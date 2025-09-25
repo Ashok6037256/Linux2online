@@ -7,14 +7,14 @@ Step1: Install teamd package if not available
 	# yum install teamd -y
 
 Step2: Run nmcli commands to configure teaming
-	# nmcli conn add type team con-name team1 ifname team1 config '{"runner":{"name":"activebackup"}}'
+	# nmcli conn add type team con-name team0 ifname team0 config '{"runner":{"name":"activebackup"}}'
 	# nmcli conn add type team-slave con-name ens38 ifname ens38 master team0
 	# nmcli conn add type team-slave con-name ens39 ifname ens39 master team0
 
 Step3: Modify IP, Gateway and other Network details
 	# nmcli conn modify team0 ipv4.addresses 192.168.29.168/24
 	# nmcli conn mod team0 ipv4.gateway 192.168.29.1
-	# nmcli conn mod team0 ipv4.dns 192.168.168.1
+	# nmcli conn mod team0 ipv4.dns 192.168.29.1
 	# nmcli conn modify team0 ipv4.method manual
 
 Step4: Restart all nic's along with teaming NIC
@@ -25,3 +25,19 @@ Step4: Restart all nic's along with teaming NIC
 Step5: Verify the teaming configuration
 	# teamdctl team0 state view
 	# ip addr
+
+Removing Teaming Configuration:
+================================
+Step1: Down the Nics and Team NIC
+	# nmcli conn down ens38
+	# nmcli conn down ens39
+	# nmcli conn down team0
+
+Step2: Delete Teaming configuration
+	# nmcli conn delete team0
+	# nmcli conn delete ens38
+	# nmcli conn delete ens39
+
+Step3: Valdate with ip command
+	# ip addr
+	# ls /etc/sysconfig/network-scripts
