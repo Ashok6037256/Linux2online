@@ -1,0 +1,160 @@
+Class 49 26/09/2025
+
+Difference between bonding and teaming
+======================================
+
+1) Bonding is implemented entirely within the Linux kernel as a kernel module
+2) Bonding mainly configured upto RHEL6
+3) Types of bonding we called as modes 
+4) we have 7 types of modes in bonding
+5) Configuration is typically done through /etc/sysconfig/network-scripts/ifcfg-bondX Network files
+6) With the help of bonding we can avoid NIC failure, and Configure Highend NIC
+
+mode 0 (balance-rr): Round-robin policy. Transmits packets in sequential order from the first available slave through the last. This mode provides load balancing and fault tolerance.
+
+mode 1 (active-backup): Active-backup policy. Establishes that only one slave in the bond is active. A different slave becomes active if the active slave fails. The bond's MAC address is externally visible on only one port (network adapter) to avoid confusing the switch. This mode provides fault tolerance. The primary option affects the behavior of this mode.
+
+mode 2 (balance-xor): Transmits based on the selected transmit hash policy, which can be altered via the xmit_hash_policy option. This mode provides load balancing and fault tolerance.
+
+mode 3 (broadcast)
+Transmits everything on all slave interfaces. This mode provides fault tolerance.
+
+mode 4 (802.3ad)
+IEEE 802.3ad Dynamic link aggregation policy. Creates aggregation groups that share the same speed and duplex settings. Utilizes all slaves in the active aggregator according to the 802.3ad specification.
+
+mode 5 (balance-tlb)
+Adaptive transmit load balancing. Establishes channel bonding that does not require any special switch support. The outgoing traffic is distributed according to the current load (computed relative to the speed) on each slave. Incoming traffic is received by the current slave. If the receiving slave fails, another slave takes over the MAC address of the failed receiving slave.
+
+mode 6 (balance-alb)
+Adaptive load balancing. Includes balance-transmit load balancing plus receive-load balancing for IPv4 traffic, and does not require any special switch support. The receive-load balancing is achieved by ARP negotiation. The bonding driver intercepts the ARP replies sent by the local system on their way out and overwrites the source hardware address with the unique hardware address of one of the slaves in the bond. Thus, different peers use different hardware addresses for the server.
+
+1) Teaming is implemented and maintained by teamd daemon
+2) Teaming configured on RHEL 7 onwards
+3) Runners are teaming modes that are mostly written in JSON format. For Network bonding, runners are called bond modes.
+4) We have 7 runners in teaming
+5) Teamdctl is a utility or tool used to manage teaming
+6) With the help of bonding we can avoid NIC failure, and Configure Highend NIC
+
+a). activebackup: One interface/port will be active while the other interfaces/ports will be a backup for the active one in case it fails. A numeric way of specifying activebackup runner/mode is using the number, (1).
+
+b). roundrobin: Packets will be transmitted over all the interfaces/ports in turn, i.e, turn by turn. This runner/mode will do or rather supports both load balancing and fault tolerance. This runner/mode can also be specified as (balance-rr). A numeric way of specifying the roundrobin runner is using the number, (0).
+
+c). lacp: Known as dynamic link aggregation makes all the aggregated links/interfaces act as one for higher throughput. It is also known as 802.3ad. It uses the the 802.3ad protocol for link aggregation. It supports both fault tolerance, and load balancing. This runner can also be specified as 802.3ad.
+
+To use this runner on the system, lacp(802.3ad) must also be configured on the network switch, hence the switch must support IEEE 802.3ad dynamic link.
+
+d). loadbalance: The transmitted packets will be load balanced/distributed across all the interfaces/ports with active Tx load balancing and Berkeley Packet Filter (BPF)-based Tx port selectors.
+
+There are two types of this mode.
+
+(i) Adaptive transmit load balancing (tlb): A numeric way of specifying tlb is using the number, (5)
+
+(ii) Adaptive load balancing (alb): A numeric way of specifying alb is using the number, (6).
+
+e). broadcast: Packets will be broadcast/transmitted over all the interfaces/ports. A numeric way of specifying the broadcast runner is using the number, (3)
+
+f). random: Packets will be transmitted on selected ports randomly.
+
+g). xor: Known as exclusive OR. Here, the calculation is done in a way that the MAC address of the slave NIC is measured with the Mac address of the incoming packets, once there is a confirmed connection, the same NIC will be used for the destination MAC address.
+
+
+
+Virtual NIC's can be configured manually with commands:
+=======================================================
+Step1: add new nic to server
+	# ip addr
+	ens40: UP
+
+Step2: Configure Network files along with all IP and other details
+	# cd /etc/sysconfig/network
+	# cp ifcfg-ens33 ifcfg-ens40
+	# cp ifcfg-ens33 ifcfg-ens40:1
+	# cp ifcfg-ens33 ifcfg-ens40:2
+	# vi ifcfg-ens40
+	TYPE="Ethernet"
+	PROXY_METHOD="none"
+	BROWSER_ONLY="no"
+	BOOTPROTO="none"
+	DEFROUTE="yes"
+	IPV4_FAILURE_FATAL="no"
+	IPV6INIT="yes"
+	IPV6_AUTOCONF="yes"
+	IPV6_DEFROUTE="yes"
+	IPV6_FAILURE_FATAL="no"
+	IPV6_ADDR_GEN_MODE="stable-privacy"
+	NAME="ens40"
+	DEVICE="ens40"
+	ONBOOT="yes"
+	IPADDR="192.168.29.185"
+	PREFIX="24"
+	GATEWAY="192.168.29.1"
+
+	# vi ifcfg-ens40:1
+	TYPE="Ethernet"
+	PROXY_METHOD="none"
+	BROWSER_ONLY="no"
+	BOOTPROTO="none"
+	DEFROUTE="yes"
+	IPV4_FAILURE_FATAL="no"
+	IPV6INIT="yes"
+	IPV6_AUTOCONF="yes"
+	IPV6_DEFROUTE="yes"
+	IPV6_FAILURE_FATAL="no"
+	IPV6_ADDR_GEN_MODE="stable-privacy"
+	NAME="ens40:1"
+	DEVICE="ens40:1"
+	ONBOOT="yes"
+	IPADDR="192.168.29.175"
+	PREFIX="24"
+	GATEWAY="192.168.29.1"
+
+	# vi ifcfg-ens40:2
+	TYPE="Ethernet"
+	PROXY_METHOD="none"
+	BROWSER_ONLY="no"
+	BOOTPROTO="none"
+	DEFROUTE="yes"
+	IPV4_FAILURE_FATAL="no"
+	IPV6INIT="yes"
+	IPV6_AUTOCONF="yes"
+	IPV6_DEFROUTE="yes"
+	IPV6_FAILURE_FATAL="no"
+	IPV6_ADDR_GEN_MODE="stable-privacy"
+	NAME="ens40:2"
+	DEVICE="ens40:2"
+	ONBOOT="yes"
+	IPADDR="192.168.29.195"
+	PREFIX="24"
+	GATEWAY="192.168.29.1"
+
+Step3: Restart netowrk service
+	# systemctl restart network
+	# ip addr
+
+[root@rhel-upgrade ~]# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 00:0c:29:22:ea:e6 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.29.165/24 brd 192.168.29.255 scope global eno16777736
+       valid_lft forever preferred_lft forever
+    inet6 2405:201:c037:d269:20c:29ff:fe22:eae6/64 scope global dynamic
+       valid_lft 50883sec preferred_lft 50883sec
+    inet6 fe80::20c:29ff:fe22:eae6/64 scope link
+       valid_lft forever preferred_lft forever
+3: ens40: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 00:0c:29:22:ea:f0 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.29.185/24 brd 192.168.29.255 scope global eno33554992
+       valid_lft forever preferred_lft forever
+    inet 192.168.29.195/24 brd 192.168.29.255 scope global secondary eno33554992:1
+       valid_lft forever preferred_lft forever
+    inet 192.168.29.175/24 brd 192.168.29.255 scope global secondary eno33554992:2
+       valid_lft forever preferred_lft forever
+    inet6 2405:201:c037:d269:20c:29ff:fe22:eaf0/64 scope global dynamic
+       valid_lft 50883sec preferred_lft 50883sec
+    inet6 fe80::20c:29ff:fe22:eaf0/64 scope link
+       valid_lft forever preferred_lft forever
